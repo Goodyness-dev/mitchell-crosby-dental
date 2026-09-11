@@ -1,7 +1,7 @@
-﻿import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sparkles, Phone, ChevronRight, Play, Pause, RotateCcw } from 'lucide-react';
+import { Sparkles, Phone, ChevronRight, ChevronDown } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -10,75 +10,46 @@ export default function SmileScrollHero({ onOpenWizard }) {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
   const videoFrameRef = useRef(null);
-  const headlineRef = useRef(null);
-  const ctaRef = useRef(null);
-  const progressBarRef = useRef(null);
-  const scrubBadgeRef = useRef(null);
-
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [videoProgress, setVideoProgress] = useState(0);
+  const scrollIndicatorRef = useRef(null);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Ensure video is paused at start so scroll controls it
     video.pause();
     video.currentTime = 0;
 
     let scrubTrigger;
 
     const setupScrollAnimation = () => {
-      const duration = video.duration || 10;
+      const duration = video.duration || 10.006;
+      video.currentTime = 0;
 
-      // GSAP ScrollTrigger to scrub video currentTime based on scroll position
+      // GSAP ScrollTrigger to smoothly scrub video currentTime across a generous scroll distance
       scrubTrigger = ScrollTrigger.create({
         trigger: containerRef.current,
         start: 'top top',
-        end: '+=160%',
+        end: '+=340%', // Generous travel so the reveal is smooth, deliberate, and NOT too fast
         pin: true,
-        scrub: 0.6,
+        scrub: 1.5, // Buttery smooth interpolation with inertia
         anticipatePin: 1,
         onUpdate: (self) => {
           const progress = self.progress;
-          setVideoProgress(progress);
 
-          // Scrub video playback with scroll
+          // Scrub video playback seamlessly
           if (video && video.duration && !video.seeking) {
             const targetTime = Math.min(progress * video.duration, video.duration - 0.05);
-            if (Math.abs(video.currentTime - targetTime) > 0.04) {
+            if (Math.abs(video.currentTime - targetTime) > 0.03) {
               video.currentTime = targetTime;
             }
           }
 
-          // Update progress bar
-          if (progressBarRef.current) {
-            progressBarRef.current.style.width = `${progress * 100}%`;
-          }
-
-          // Animate CTA appearance when smile is revealed (around 35%-70% scroll)
-          if (ctaRef.current) {
-            if (progress > 0.35) {
-              const ctaProgress = Math.min((progress - 0.35) / 0.25, 1);
-              ctaRef.current.style.opacity = ctaProgress;
-              ctaRef.current.style.transform = `translateY(${(1 - ctaProgress) * 20}px) scale(${0.95 + ctaProgress * 0.05})`;
+          // Fade out scroll indicator as user begins scrolling
+          if (scrollIndicatorRef.current) {
+            if (progress > 0.05) {
+              scrollIndicatorRef.current.style.opacity = Math.max(0, 1 - (progress - 0.05) * 8).toString();
             } else {
-              ctaRef.current.style.opacity = 0;
-              ctaRef.current.style.transform = 'translateY(20px) scale(0.95)';
-            }
-          }
-
-          // Fade out slightly at the very end of pin to transition smoothly
-          if (progress > 0.85) {
-            const exitProgress = (progress - 0.85) / 0.15;
-            if (videoFrameRef.current) {
-              videoFrameRef.current.style.opacity = 1 - exitProgress * 0.4;
-              videoFrameRef.current.style.transform = `scale(${1 - exitProgress * 0.05})`;
-            }
-          } else {
-            if (videoFrameRef.current) {
-              videoFrameRef.current.style.opacity = 1;
-              videoFrameRef.current.style.transform = 'scale(1)';
+              scrollIndicatorRef.current.style.opacity = '1';
             }
           }
         },
@@ -97,59 +68,34 @@ export default function SmileScrollHero({ onOpenWizard }) {
     };
   }, []);
 
-  const togglePlayPause = () => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    if (video.paused) {
-      video.play();
-      setIsPlaying(true);
-    } else {
-      video.pause();
-      setIsPlaying(false);
-    }
-  };
-
-  const restartVideo = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.currentTime = 0;
-    video.play();
-    setIsPlaying(true);
-  };
-
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen min-h-[750px] bg-[#070707] text-white flex flex-col justify-between overflow-hidden sana-grid-bg transition-colors select-none"
-      aria-label="Cinematic Smile Transformation Showcase"
+      className="relative w-full min-h-screen bg-neutral-50 dark:bg-[#080808] text-neutral-900 dark:text-white flex flex-col justify-between py-6 sm:py-8 overflow-hidden sana-grid-bg transition-colors select-none"
+      aria-label="Mitchell and Crosby Smile Transformation"
     >
-      {/* Top Header & Headline */}
-      <div 
-        ref={headlineRef}
-        className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 text-center space-y-2.5"
-      >
-        <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[11px] font-bold tracking-[0.2em] uppercase text-sky-300">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>// 01 CINEMATIC SMILE REVEAL • CASA GRANDE, AZ</span>
+      {/* Editorial Headline Header */}
+      <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-3">
+        <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-neutral-200/80 dark:bg-white/10 backdrop-blur-md border border-neutral-300/80 dark:border-white/15 text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-800 dark:text-sky-300">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>// 01 ESTABLISHED 1953 • CASA GRANDE, AZ</span>
         </div>
 
-        <h1 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+        <h1 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-neutral-950 dark:text-white">
           Compassionate Family Care, <br />
-          <span className="text-stroke" style={{ WebkitTextStroke: '1.5px #ffffff' }}>Modern Radiant Smiles.</span>
+          <span className="text-stroke">Modern Radiant Smiles.</span>
         </h1>
 
-        <p className="text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto leading-relaxed">
-          Scroll down to watch the smile transformation unfold — single-visit CEREC® crowns & precision dental artistry.
+        <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
+          Casa Grande's trusted dental home for over 70 years. Scroll down to watch our signature single-visit smile transformation unfold.
         </p>
       </div>
 
-      {/* Main Selling Point: Crystal-Clear Cinematic Video Showcase (NO SVGs) */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 my-auto flex flex-col items-center">
-        
+      {/* Embedded High-Definition Video Centerpiece (Clean, No Player Buttons, Part of Website) */}
+      <div className="relative z-10 w-full max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 my-auto flex flex-col items-center">
         <div 
           ref={videoFrameRef}
-          className="relative w-full aspect-[16/9] sm:aspect-[16/9] rounded-3xl overflow-hidden border border-neutral-700/80 shadow-[0_25px_70px_rgba(0,0,0,0.85)] bg-black group transition-transform duration-200"
+          className="relative w-full aspect-[16/9] rounded-3xl overflow-hidden border border-neutral-200/90 dark:border-neutral-800 shadow-[0_20px_60px_rgba(0,0,0,0.12)] dark:shadow-[0_25px_70px_rgba(0,0,0,0.85)] bg-white dark:bg-neutral-950"
         >
           {/* Crystal Clear High-Definition Video */}
           <video
@@ -158,65 +104,27 @@ export default function SmileScrollHero({ onOpenWizard }) {
             muted
             playsInline
             preload="auto"
-            className="w-full h-full object-cover object-center opacity-100 filter contrast-[1.05] brightness-[1.02]"
-            onEnded={() => setIsPlaying(false)}
+            className="w-full h-full object-cover object-center opacity-100 filter contrast-[1.04] brightness-[1.01]"
           />
-
-          {/* Floating Subtle Status Pill */}
-          <div className="absolute top-4 left-4 z-20">
-            <div 
-              ref={scrubBadgeRef}
-              className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold tracking-wider uppercase"
-            >
-              <span className={`w-2 h-2 rounded-full ${videoProgress > 0.4 ? 'bg-emerald-400' : 'bg-sky-400 animate-ping'}`} />
-              <span>
-                {videoProgress > 0.4 ? '✨ Radiant Smile Revealed' : 'Scroll to Scrub Smile'}
-              </span>
-            </div>
-          </div>
-
-          {/* Play/Pause Control overlay button */}
-          <div className="absolute top-4 right-4 z-20 flex items-center space-x-2">
-            <button
-              onClick={togglePlayPause}
-              className="p-2.5 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white text-xs transition active:scale-95 cursor-pointer flex items-center space-x-1.5"
-              aria-label={isPlaying ? "Pause video" : "Play video"}
-            >
-              {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-white" />}
-              <span className="text-[10px] font-bold uppercase tracking-wider pr-1">
-                {isPlaying ? 'Pause' : 'Play'}
-              </span>
-            </button>
-            <button
-              onClick={restartVideo}
-              className="p-2.5 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white text-xs transition active:scale-95 cursor-pointer"
-              aria-label="Restart video"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          {/* Interactive Scrub Progress Bar at the bottom of the video */}
-          <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/20">
-            <div 
-              ref={progressBarRef}
-              className="h-full bg-gradient-to-r from-sky-400 via-white to-sky-300 transition-all duration-75"
-              style={{ width: `${videoProgress * 100}%` }}
-            />
-          </div>
         </div>
 
+        {/* Scroll Instruction Indicator */}
+        <div 
+          ref={scrollIndicatorRef}
+          className="flex items-center space-x-2 text-[11px] uppercase tracking-[0.22em] font-bold text-neutral-400 dark:text-neutral-500 mt-3 transition-opacity duration-300"
+        >
+          <span>Scroll to reveal smile</span>
+          <ChevronDown className="w-3.5 h-3.5 text-shop-red animate-bounce" />
+        </div>
       </div>
 
-      {/* Floating Reveal CTA & Trust Proof (Reveals as smile is unveiled) */}
-      <div 
-        ref={ctaRef}
-        className="relative z-20 max-w-xl mx-auto px-4 pb-10 sm:pb-12 text-center space-y-3.5 opacity-0 transition-all duration-300"
-      >
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5">
+      {/* Website Action Buttons & Social Proof */}
+      <div className="relative z-20 max-w-xl mx-auto px-4 pt-2 pb-4 text-center space-y-3">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <button
             onClick={() => onOpenWizard()}
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-neutral-950 hover:bg-neutral-200 font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-xl shadow-sky-500/20 active:scale-95 cursor-pointer flex items-center justify-center space-x-2.5"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-neutral-950 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 text-white dark:text-neutral-950 font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-lg active:scale-95 cursor-pointer flex items-center justify-center space-x-2.5"
+            aria-label="Book Smile Appointment"
           >
             <Sparkles className="w-4 h-4 text-shop-red" />
             <span>Book Your Smile Appointment</span>
@@ -225,15 +133,15 @@ export default function SmileScrollHero({ onOpenWizard }) {
 
           <a
             href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
-            className="w-full sm:w-auto px-7 py-4 rounded-full bg-neutral-900/90 hover:bg-neutral-800 text-white font-bold text-xs sm:text-sm uppercase tracking-wider border border-neutral-700 transition flex items-center justify-center space-x-2 active:scale-95"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white dark:bg-neutral-900/90 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-900 dark:text-white font-bold text-xs sm:text-sm uppercase tracking-wider border border-neutral-300 dark:border-neutral-700 transition flex items-center justify-center space-x-2 active:scale-95"
           >
             <Phone className="w-4 h-4 text-shop-red" />
             <span>{BUSINESS_INFO.phone}</span>
           </a>
         </div>
 
-        <div className="flex items-center justify-center space-x-3 text-xs text-neutral-400 font-medium">
-          <div className="flex text-amber-400 text-sm">
+        <div className="flex items-center justify-center space-x-3 text-xs text-neutral-500 dark:text-neutral-400 font-medium">
+          <div className="flex text-amber-500 text-xs">
             {'★★★★★'.split('').map((_, i) => (
               <span key={i}>★</span>
             ))}
@@ -241,7 +149,6 @@ export default function SmileScrollHero({ onOpenWizard }) {
           <span>5.0 Google Rating • Over 70 Years Trusted in Casa Grande</span>
         </div>
       </div>
-
     </section>
   );
 }
