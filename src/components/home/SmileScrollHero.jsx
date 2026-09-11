@@ -1,7 +1,7 @@
-﻿import React, { useEffect, useRef } from 'react';
+﻿import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ChevronRight, Phone, Sparkles, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { Sparkles, Phone, ChevronRight, Play, Pause, RotateCcw } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -9,348 +9,209 @@ gsap.registerPlugin(ScrollTrigger);
 export default function SmileScrollHero({ onOpenWizard }) {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
-  const mouthWrapperRef = useRef(null);
-  const upperLipRef = useRef(null);
-  const lowerLipRef = useRef(null);
-  const teethRef = useRef(null);
-  const sparkleRef = useRef(null);
-  const ctaRevealRef = useRef(null);
+  const videoFrameRef = useRef(null);
   const headlineRef = useRef(null);
-  const scrollHintRef = useRef(null);
+  const ctaRef = useRef(null);
+  const progressBarRef = useRef(null);
+  const scrubBadgeRef = useRef(null);
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [videoProgress, setVideoProgress] = useState(0);
 
   useEffect(() => {
-    // Ensure video plays smoothly
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {
-        // Autoplay may need user interaction on some mobile browsers
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Ensure video is paused at start so scroll controls it
+    video.pause();
+    video.currentTime = 0;
+
+    let scrubTrigger;
+
+    const setupScrollAnimation = () => {
+      const duration = video.duration || 10;
+
+      // GSAP ScrollTrigger to scrub video currentTime based on scroll position
+      scrubTrigger = ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: 'top top',
+        end: '+=160%',
+        pin: true,
+        scrub: 0.6,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          setVideoProgress(progress);
+
+          // Scrub video playback with scroll
+          if (video && video.duration && !video.seeking) {
+            const targetTime = Math.min(progress * video.duration, video.duration - 0.05);
+            if (Math.abs(video.currentTime - targetTime) > 0.04) {
+              video.currentTime = targetTime;
+            }
+          }
+
+          // Update progress bar
+          if (progressBarRef.current) {
+            progressBarRef.current.style.width = `${progress * 100}%`;
+          }
+
+          // Animate CTA appearance when smile is revealed (around 35%-70% scroll)
+          if (ctaRef.current) {
+            if (progress > 0.35) {
+              const ctaProgress = Math.min((progress - 0.35) / 0.25, 1);
+              ctaRef.current.style.opacity = ctaProgress;
+              ctaRef.current.style.transform = `translateY(${(1 - ctaProgress) * 20}px) scale(${0.95 + ctaProgress * 0.05})`;
+            } else {
+              ctaRef.current.style.opacity = 0;
+              ctaRef.current.style.transform = 'translateY(20px) scale(0.95)';
+            }
+          }
+
+          // Fade out slightly at the very end of pin to transition smoothly
+          if (progress > 0.85) {
+            const exitProgress = (progress - 0.85) / 0.15;
+            if (videoFrameRef.current) {
+              videoFrameRef.current.style.opacity = 1 - exitProgress * 0.4;
+              videoFrameRef.current.style.transform = `scale(${1 - exitProgress * 0.05})`;
+            }
+          } else {
+            if (videoFrameRef.current) {
+              videoFrameRef.current.style.opacity = 1;
+              videoFrameRef.current.style.transform = 'scale(1)';
+            }
+          }
+        },
       });
+    };
+
+    if (video.readyState >= 1) {
+      setupScrollAnimation();
+    } else {
+      video.addEventListener('loadedmetadata', setupScrollAnimation);
     }
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: '+=180%',
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1,
-        }
-      });
-
-      // Phase 1: Scroll starts (0 -> 45%) - Lips part, revealing teeth
-      tl.to(upperLipRef.current, {
-        yPercent: -100,
-        ease: 'power1.inOut',
-        duration: 1,
-      }, 0)
-      .to(lowerLipRef.current, {
-        yPercent: 100,
-        ease: 'power1.inOut',
-        duration: 1,
-      }, 0)
-      .to(teethRef.current, {
-        scale: 1.05,
-        ease: 'power1.out',
-        duration: 1,
-      }, 0)
-      .to(scrollHintRef.current, {
-        opacity: 0,
-        y: -15,
-        duration: 0.25,
-      }, 0);
-
-      // Phase 2: Full Reveal (45% -> 65%) - Teeth shine / sparkle flare and CTA reveal
-      tl.fromTo(sparkleRef.current,
-        { opacity: 0, scale: 0, rotation: -45 },
-        { opacity: 1, scale: 1.35, rotation: 45, duration: 0.35, ease: 'back.out(2)' },
-        0.45
-      )
-      .to(sparkleRef.current, {
-        opacity: 0,
-        scale: 0.7,
-        rotation: 90,
-        duration: 0.25,
-      }, 0.7)
-      .fromTo(ctaRevealRef.current,
-        { opacity: 0, y: 30, scale: 0.94 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: 'power2.out' },
-        0.48
-      );
-
-      // Phase 3: Scroll further (75% -> 100%) - Fade out teeth & hero elements for next section
-      tl.to([mouthWrapperRef.current, ctaRevealRef.current, headlineRef.current], {
-        opacity: 0,
-        scale: 0.95,
-        y: -35,
-        duration: 0.45,
-        ease: 'power2.in',
-      }, 0.78);
-
-    }, containerRef);
-
-    return () => ctx.revert();
+    return () => {
+      if (scrubTrigger) scrubTrigger.kill();
+      video.removeEventListener('loadedmetadata', setupScrollAnimation);
+    };
   }, []);
 
-  return (
-    <section 
-      ref={containerRef}
-      className="relative w-full h-screen min-h-[700px] overflow-hidden bg-neutral-950 text-white flex flex-col justify-between"
-      aria-label="Interactive Smile Reveal Experience"
-    >
-      {/* Background Cinematic Video with Dark Vignette */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <video
-          ref={videoRef}
-          src="/A_cinematic_second_beauty_ad.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-25 dark:opacity-20 scale-105 filter blur-[0.3px]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 via-neutral-950/60 to-neutral-950" />
-        <div className="absolute inset-0 sana-grid-bg opacity-30" />
-      </div>
+  const togglePlayPause = () => {
+    const video = videoRef.current;
+    if (!video) return;
 
-      {/* Top Headline Content */}
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const restartVideo = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.currentTime = 0;
+    video.play();
+    setIsPlaying(true);
+  };
+
+  return (
+    <section
+      ref={containerRef}
+      className="relative w-full h-screen min-h-[750px] bg-[#070707] text-white flex flex-col justify-between overflow-hidden sana-grid-bg transition-colors select-none"
+      aria-label="Cinematic Smile Transformation Showcase"
+    >
+      {/* Top Header & Headline */}
       <div 
-        ref={headlineRef} 
-        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 text-center space-y-3"
+        ref={headlineRef}
+        className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 text-center space-y-2.5"
       >
         <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[11px] font-bold tracking-[0.2em] uppercase text-sky-300">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>// ESTABLISHED 1953 • CASA GRANDE, AZ</span>
+          <span>// 01 CINEMATIC SMILE REVEAL • CASA GRANDE, AZ</span>
         </div>
 
-        <h1 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1]">
+        <h1 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
           Compassionate Family Care, <br />
           <span className="text-stroke" style={{ WebkitTextStroke: '1.5px #ffffff' }}>Modern Radiant Smiles.</span>
         </h1>
 
-        <p className="text-xs sm:text-base text-neutral-300 max-w-2xl mx-auto leading-relaxed">
-          Single-visit CEREC® crowns, 3D dental implants & gentle cleanings in historic Casa Grande.
+        <p className="text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto leading-relaxed">
+          Scroll down to watch the smile transformation unfold — single-visit CEREC® crowns & precision dental artistry.
         </p>
       </div>
 
-      {/* Interactive Centerpiece: Closed Mouth -> Parting Lips -> Teeth Reveal */}
-      <div 
-        ref={mouthWrapperRef}
-        className="relative z-10 w-full max-w-xl mx-auto px-4 flex flex-col items-center justify-center my-auto"
-      >
-        <div className="relative w-full aspect-[16/10] max-h-[340px] flex items-center justify-center">
-          
-          {/* SVG Illustration Container */}
-          <svg
-            viewBox="0 0 700 440"
-            className="w-full h-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] select-none"
-            style={{ overflow: 'visible' }}
-          >
-            <defs>
-              {/* Natural Upper Lip Gradient */}
-              <linearGradient id="upperLipGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#d94668" />
-                <stop offset="40%" stopColor="#be123c" />
-                <stop offset="100%" stopColor="#881337" />
-              </linearGradient>
-
-              {/* Natural Lower Lip Gradient */}
-              <linearGradient id="lowerLipGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#881337" />
-                <stop offset="35%" stopColor="#be123c" />
-                <stop offset="70%" stopColor="#e11d48" />
-                <stop offset="100%" stopColor="#fb7185" />
-              </linearGradient>
-
-              {/* Teeth Pearlescent Enamel Gradient */}
-              <linearGradient id="teethGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" />
-                <stop offset="75%" stopColor="#f8fafc" />
-                <stop offset="100%" stopColor="#e2e8f0" />
-              </linearGradient>
-
-              {/* Sparkle Star Gradient */}
-              <radialGradient id="sparkleGrad" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#ffffff" />
-                <stop offset="40%" stopColor="#e0f2fe" />
-                <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
-              </radialGradient>
-
-              {/* Glow Filter */}
-              <filter id="teethGlow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="8" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
-
-            {/* LAYER 1: Deep Oral Cavity & Gums Background */}
-            <rect x="180" y="160" width="340" height="120" rx="30" fill="#0d0407" />
-            <path
-              d="M 190 200 C 260 170, 440 170, 510 200 L 510 230 C 440 215, 260 215, 190 230 Z"
-              fill="#9f1239"
-              opacity="0.8"
-            />
-
-            {/* LAYER 2: Pristine Teeth Set (Revealed as lips part) */}
-            <g ref={teethRef} id="teeth-group" className="origin-center">
-              {/* Upper Teeth Arch */}
-              {/* Central Incisor Left */}
-              <path
-                d="M 315 190 C 315 185, 348 185, 348 190 L 348 248 C 348 252, 318 252, 315 248 Z"
-                fill="url(#teethGrad)"
-                stroke="#cbd5e1"
-                strokeWidth="1"
-              />
-              {/* Central Incisor Right */}
-              <path
-                d="M 352 190 C 352 185, 385 185, 385 190 L 385 248 C 382 252, 352 252, 352 248 Z"
-                fill="url(#teethGrad)"
-                stroke="#cbd5e1"
-                strokeWidth="1"
-              />
-              {/* Lateral Incisor Left */}
-              <path
-                d="M 282 192 C 282 187, 312 187, 312 192 L 312 245 C 310 249, 284 249, 282 245 Z"
-                fill="url(#teethGrad)"
-                stroke="#cbd5e1"
-                strokeWidth="1"
-              />
-              {/* Lateral Incisor Right */}
-              <path
-                d="M 388 192 C 388 187, 418 187, 418 192 L 418 245 C 416 249, 390 249, 388 245 Z"
-                fill="url(#teethGrad)"
-                stroke="#cbd5e1"
-                strokeWidth="1"
-              />
-              {/* Canine Left */}
-              <path
-                d="M 252 196 C 252 191, 280 191, 280 196 L 280 242 C 275 248, 255 246, 252 240 Z"
-                fill="url(#teethGrad)"
-                stroke="#cbd5e1"
-                strokeWidth="1"
-              />
-              {/* Canine Right */}
-              <path
-                d="M 420 196 C 420 191, 448 191, 448 196 L 448 240 C 445 246, 425 248, 420 242 Z"
-                fill="url(#teethGrad)"
-                stroke="#cbd5e1"
-                strokeWidth="1"
-              />
-              {/* Premolars Left */}
-              <path
-                d="M 224 202 C 224 198, 250 198, 250 202 L 250 236 L 224 233 Z"
-                fill="#e2e8f0"
-                stroke="#94a3b8"
-                strokeWidth="1"
-              />
-              {/* Premolars Right */}
-              <path
-                d="M 450 202 C 450 198, 476 198, 476 202 L 476 233 L 450 236 Z"
-                fill="#e2e8f0"
-                stroke="#94a3b8"
-                strokeWidth="1"
-              />
-
-              {/* Lower Teeth Subtle Arch */}
-              <path
-                d="M 270 252 C 310 255, 390 255, 430 252 L 430 270 C 390 273, 310 273, 270 270 Z"
-                fill="#f1f5f9"
-                stroke="#cbd5e1"
-                strokeWidth="0.8"
-                opacity="0.9"
-              />
-
-              {/* Sparkle / Shine Flare on Center Teeth */}
-              <g 
-                ref={sparkleRef} 
-                id="sparkle-flare" 
-                className="opacity-0 origin-center"
-                style={{ transformBox: 'fill-box' }}
-              >
-                <polygon
-                  points="368,212 372,228 388,232 372,236 368,252 364,236 348,232 364,228"
-                  fill="url(#sparkleGrad)"
-                  filter="url(#teethGlow)"
-                />
-                <circle cx="368" cy="232" r="5" fill="#ffffff" filter="url(#teethGlow)" />
-                <circle cx="368" cy="232" r="2" fill="#ffffff" />
-              </g>
-            </g>
-
-            {/* LAYER 3: Upper Lip (Animates translateY -100%) */}
-            <g ref={upperLipRef} id="upper-lip-group">
-              <path
-                d="M 160 220 
-                   C 230 185, 290 155, 335 168 
-                   C 345 171, 350 178, 350 178 
-                   C 350 178, 355 171, 365 168 
-                   C 410 155, 470 185, 540 220 
-                   C 460 225, 390 226, 350 226 
-                   C 310 226, 240 225, 160 220 Z"
-                fill="url(#upperLipGrad)"
-              />
-              {/* Upper lip specular shine highlight */}
-              <path
-                d="M 280 180 C 310 168, 330 172, 335 176"
-                stroke="#fda4af"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                opacity="0.6"
-              />
-              <path
-                d="M 365 176 C 370 172, 390 168, 420 180"
-                stroke="#fda4af"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                opacity="0.6"
-              />
-            </g>
-
-            {/* LAYER 4: Lower Lip (Animates translateY 100%) */}
-            <g ref={lowerLipRef} id="lower-lip-group">
-              <path
-                d="M 160 220 
-                   C 240 225, 310 226, 350 226 
-                   C 390 226, 460 225, 540 220 
-                   C 480 275, 420 310, 350 310 
-                   C 280 310, 220 275, 160 220 Z"
-                fill="url(#lowerLipGrad)"
-              />
-              {/* Lower lip central glossy highlight */}
-              <ellipse
-                cx="350"
-                cy="265"
-                rx="70"
-                ry="18"
-                fill="#fda4af"
-                opacity="0.35"
-                filter="url(#teethGlow)"
-              />
-            </g>
-          </svg>
-
-        </div>
-
-        {/* Scroll Instruction Hint (Fades out immediately on scroll) */}
+      {/* Main Selling Point: Crystal-Clear Cinematic Video Showcase (NO SVGs) */}
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 my-auto flex flex-col items-center">
+        
         <div 
-          ref={scrollHintRef}
-          className="flex items-center space-x-2 text-xs uppercase tracking-[0.2em] font-bold text-neutral-400 mt-2 animate-bounce cursor-pointer"
-          onClick={() => {
-            window.scrollBy({ top: 350, behavior: 'smooth' });
-          }}
+          ref={videoFrameRef}
+          className="relative w-full aspect-[16/9] sm:aspect-[16/9] rounded-3xl overflow-hidden border border-neutral-700/80 shadow-[0_25px_70px_rgba(0,0,0,0.85)] bg-black group transition-transform duration-200"
         >
-          <span>Scroll to Reveal Smile</span>
-          <ChevronDown className="w-4 h-4 text-sky-400" />
+          {/* Crystal Clear High-Definition Video */}
+          <video
+            ref={videoRef}
+            src="/A_cinematic_second_beauty_ad.mp4"
+            muted
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover object-center opacity-100 filter contrast-[1.05] brightness-[1.02]"
+            onEnded={() => setIsPlaying(false)}
+          />
+
+          {/* Floating Subtle Status Pill */}
+          <div className="absolute top-4 left-4 z-20">
+            <div 
+              ref={scrubBadgeRef}
+              className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold tracking-wider uppercase"
+            >
+              <span className={`w-2 h-2 rounded-full ${videoProgress > 0.4 ? 'bg-emerald-400' : 'bg-sky-400 animate-ping'}`} />
+              <span>
+                {videoProgress > 0.4 ? '✨ Radiant Smile Revealed' : 'Scroll to Scrub Smile'}
+              </span>
+            </div>
+          </div>
+
+          {/* Play/Pause Control overlay button */}
+          <div className="absolute top-4 right-4 z-20 flex items-center space-x-2">
+            <button
+              onClick={togglePlayPause}
+              className="p-2.5 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white text-xs transition active:scale-95 cursor-pointer flex items-center space-x-1.5"
+              aria-label={isPlaying ? "Pause video" : "Play video"}
+            >
+              {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-white" />}
+              <span className="text-[10px] font-bold uppercase tracking-wider pr-1">
+                {isPlaying ? 'Pause' : 'Play'}
+              </span>
+            </button>
+            <button
+              onClick={restartVideo}
+              className="p-2.5 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white text-xs transition active:scale-95 cursor-pointer"
+              aria-label="Restart video"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          {/* Interactive Scrub Progress Bar at the bottom of the video */}
+          <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/20">
+            <div 
+              ref={progressBarRef}
+              className="h-full bg-gradient-to-r from-sky-400 via-white to-sky-300 transition-all duration-75"
+              style={{ width: `${videoProgress * 100}%` }}
+            />
+          </div>
         </div>
+
       </div>
 
-      {/* Hero CTA & Trust Proof (Fades in when teeth are revealed) */}
+      {/* Floating Reveal CTA & Trust Proof (Reveals as smile is unveiled) */}
       <div 
-        ref={ctaRevealRef}
-        className="relative z-20 max-w-xl mx-auto px-4 pb-12 sm:pb-16 text-center space-y-4 opacity-0 pointer-events-auto"
+        ref={ctaRef}
+        className="relative z-20 max-w-xl mx-auto px-4 pb-10 sm:pb-12 text-center space-y-3.5 opacity-0 transition-all duration-300"
       >
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5">
           <button
@@ -371,7 +232,7 @@ export default function SmileScrollHero({ onOpenWizard }) {
           </a>
         </div>
 
-        <div className="flex items-center justify-center space-x-3 text-xs text-neutral-400 font-medium pt-1">
+        <div className="flex items-center justify-center space-x-3 text-xs text-neutral-400 font-medium">
           <div className="flex text-amber-400 text-sm">
             {'★★★★★'.split('').map((_, i) => (
               <span key={i}>★</span>
