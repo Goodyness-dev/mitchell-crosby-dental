@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   LayoutDashboard, ClipboardList, MessageSquare, 
   Settings, LogOut, ExternalLink, Search, 
-  Bell, Mail, Wrench, Menu, X, Plus, Calendar, ShieldCheck
+  Bell, Mail, Sparkles, Menu, X, Plus, Calendar, ShieldCheck
 } from 'lucide-react';
 import DashboardOverview from './DashboardOverview';
 import OrdersView from './OrdersView';
@@ -63,14 +63,14 @@ export default function AdminLayout({ user, onLogout, onBackToSite }) {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3 min-w-0">
               <div className="w-10 h-10 shrink-0 rounded-2xl bg-shop-red text-white flex items-center justify-center shadow-md shadow-shop-red/30">
-                <Wrench className="w-5 h-5" />
+                <Sparkles className="w-5 h-5" />
               </div>
               <div className="min-w-0 flex-1">
                 <span className="font-heading font-black text-base tracking-tight text-slate-900 block leading-tight truncate" title={BUSINESS_INFO.name}>
                   {BUSINESS_INFO.name}
                 </span>
                 <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider block">
-                  Shop Admin
+                  Practice Staff Admin
                 </span>
               </div>
             </div>

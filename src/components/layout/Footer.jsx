@@ -173,7 +173,12 @@ export default function Footer({ onOpenWizard, onNavigate }) {
       <div className="border-t border-neutral-900 py-6 px-4 sm:px-6 lg:px-8 text-center text-xs text-neutral-500 flex flex-col sm:flex-row items-center justify-between gap-3 max-w-7xl mx-auto">
         <p>© {new Date().getFullYear()} Mitchell & Crosby Family Dentistry LLC. All rights reserved. Casa Grande, AZ.</p>
         <p>
-          <a href="/#/admin" className="text-neutral-500 hover:text-white transition">Staff Admin Login</a>
+          <button 
+            onClick={() => onNavigate('admin')} 
+            className="text-neutral-500 hover:text-white transition cursor-pointer"
+          >
+            Staff Admin Login
+          </button>
         </p>
       </div>
     </footer>
