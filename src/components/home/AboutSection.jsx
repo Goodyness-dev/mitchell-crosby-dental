@@ -47,7 +47,7 @@ export default function AboutSection({ onOpenWizard, onNavigateToAbout }) {
           {doctors.map((doc, idx) => (
             <div 
               key={idx}
-              className="rounded-3xl p-7 sm:p-9 bg-neutral-950 border border-neutral-800 hover:border-neutral-600 transition-all duration-300 flex flex-col sm:flex-row gap-6 items-start shadow-xl"
+              className="rounded-3xl p-8 sm:p-11 bg-neutral-950 border-2 border-neutral-800/90 hover:border-neutral-700 card-thick-hover flex flex-col sm:flex-row gap-6 items-start"
             >
               <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden shrink-0 border border-neutral-700">
                 <img 
@@ -91,7 +91,7 @@ export default function AboutSection({ onOpenWizard, onNavigateToAbout }) {
         </div>
 
         {/* Practice Heritage & Founder Tribute */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-3xl p-8 sm:p-10 bg-neutral-950 border border-neutral-800">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-3xl p-9 sm:p-12 bg-neutral-950 border-2 border-neutral-800/90 card-thick">
           
           <div className="lg:col-span-5 space-y-4">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-[11px] font-bold text-sky-400 uppercase tracking-wider font-mono">

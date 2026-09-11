@@ -89,7 +89,7 @@ export default function DashboardOverview({ onNavigateTab, onSelectQuote, onOpen
         {/* Card 1: Solid Shop Red Fill */}
         <div 
           onClick={() => onNavigateTab('orders')}
-          className="bg-gradient-to-br from-shop-red to-shop-redHover text-white rounded-3xl p-5 sm:p-6 shadow-lg shadow-shop-red/20 cursor-pointer transition hover:scale-[1.01] flex flex-col justify-between"
+          className="bg-gradient-to-br from-shop-red to-shop-redHover text-white rounded-3xl p-7 sm:p-8 card-thick-hover cursor-pointer flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
             <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-red-100">// TOTAL REQUESTS</span>
@@ -107,7 +107,7 @@ export default function DashboardOverview({ onNavigateTab, onSelectQuote, onOpen
         {/* Card 2: Completed Treatments */}
         <div 
           onClick={() => onNavigateTab('orders')}
-          className="bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-6 shadow-xs hover:shadow-md transition cursor-pointer flex flex-col justify-between"
+          className="bg-white border-2 border-slate-200/90 rounded-3xl p-7 sm:p-8 card-thick-hover cursor-pointer flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
             <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-slate-500">// COMPLETED CARE</span>
@@ -125,7 +125,7 @@ export default function DashboardOverview({ onNavigateTab, onSelectQuote, onOpen
         {/* Card 3: Quotes Sent */}
         <div 
           onClick={() => onNavigateTab('inbox')}
-          className="bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-6 shadow-xs hover:shadow-md transition cursor-pointer flex flex-col justify-between"
+          className="bg-white border-2 border-slate-200/90 rounded-3xl p-7 sm:p-8 card-thick-hover cursor-pointer flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
             <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-slate-500">// ESTIMATES SENT</span>
@@ -143,7 +143,7 @@ export default function DashboardOverview({ onNavigateTab, onSelectQuote, onOpen
         {/* Card 4: Pending Needs Review */}
         <div 
           onClick={() => onNavigateTab('inbox')}
-          className="bg-white border border-shop-border rounded-3xl p-5 sm:p-6 shadow-xs hover:shadow-md transition cursor-pointer flex flex-col justify-between"
+          className="bg-white border-2 border-shop-border/90 rounded-3xl p-7 sm:p-8 card-thick-hover cursor-pointer flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
             <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-shop-red">// AWAITING REVIEW</span>
@@ -164,7 +164,7 @@ export default function DashboardOverview({ onNavigateTab, onSelectQuote, onOpen
       {/* ------------------------------------------------------------- */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Weekly Consultation Volume (5 Cols) */}
-        <div className="lg:col-span-5 bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-5 bg-white border-2 border-slate-200/90 rounded-3xl p-7 sm:p-8 card-thick flex flex-col justify-between">
           <div className="flex items-center justify-between mb-4">
             <div>
               <span className="text-[10px] font-mono font-bold text-slate-400 block">// ANALYTICS</span>
@@ -218,7 +218,7 @@ export default function DashboardOverview({ onNavigateTab, onSelectQuote, onOpen
         </div>
 
         {/* Middle: Priority Consultation Reminder (3 Cols) */}
-        <div className="lg:col-span-3 bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-3 bg-white border-2 border-slate-200/90 rounded-3xl p-7 sm:p-8 card-thick flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-3">
               <span>// PRIORITY CASE</span>
@@ -254,7 +254,7 @@ export default function DashboardOverview({ onNavigateTab, onSelectQuote, onOpen
         </div>
 
         {/* Right: Quick Recent Orders List (4 Cols) */}
-        <div className="lg:col-span-4 bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-4 bg-white border-2 border-slate-200/90 rounded-3xl p-7 sm:p-8 card-thick flex flex-col justify-between">
           <div className="flex items-center justify-between mb-3">
             <div>
               <span className="text-[10px] font-mono font-bold text-slate-400 block">// INCOMING</span>
@@ -311,7 +311,7 @@ export default function DashboardOverview({ onNavigateTab, onSelectQuote, onOpen
       {/* ------------------------------------------------------------- */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         {/* Left: Customer Inquiries (5 Cols) */}
-        <div className="lg:col-span-5 bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-6 shadow-xs">
+        <div className="lg:col-span-5 bg-white border-2 border-slate-200/90 rounded-3xl p-7 sm:p-8 card-thick">
           <div className="flex items-center justify-between mb-4">
             <div>
               <span className="text-[10px] font-mono font-bold text-slate-400 block">// MESSAGES</span>
@@ -362,7 +362,7 @@ export default function DashboardOverview({ onNavigateTab, onSelectQuote, onOpen
         </div>
 
         {/* Middle: Turnaround Rate (3 Cols) */}
-        <div className="lg:col-span-3 bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-3 bg-white border-2 border-slate-200/90 rounded-3xl p-7 sm:p-8 card-thick flex flex-col justify-between">
           <div>
             <span className="text-[10px] font-mono font-bold text-slate-400 block">// METRICS</span>
             <h3 className="font-heading font-black text-sm uppercase tracking-wider text-slate-900 mb-2">
@@ -406,7 +406,7 @@ export default function DashboardOverview({ onNavigateTab, onSelectQuote, onOpen
         </div>
 
         {/* Right: Operatory Consultation Timer (4 Cols) */}
-        <div className="lg:col-span-4 bg-gradient-to-br from-slate-900 to-black text-white border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-lg flex flex-col justify-between">
+        <div className="lg:col-span-4 bg-gradient-to-br from-slate-900 to-black text-white border-2 border-slate-800 rounded-3xl p-7 sm:p-8 card-thick flex flex-col justify-between">
           <div className="flex items-center justify-between text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">
             <span>Operatory Timer</span>
             <span className="text-emerald-400 font-mono text-[11px]">● ACTIVE</span>

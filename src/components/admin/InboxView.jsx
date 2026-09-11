@@ -124,7 +124,7 @@ export default function InboxView({ onOpenFullQuote }) {
   });
 
   return (
-    <div className="bg-white border border-slate-200/80 rounded-3xl overflow-hidden shadow-xs flex flex-col md:flex-row h-[calc(100dvh-130px)] sm:h-[80vh] min-h-[500px]">
+    <div className="bg-white border-2 border-slate-200/90 rounded-3xl overflow-hidden card-thick flex flex-col md:flex-row h-[calc(100dvh-130px)] sm:h-[80vh] min-h-[500px]">
       {/* ------------------------------------------------------------- */}
       {/* LEFT PANE: CONVERSATION LIST                                  */}
       {/* ------------------------------------------------------------- */}
@@ -198,7 +198,7 @@ export default function InboxView({ onOpenFullQuote }) {
                 <div
                   key={thread.id}
                   onClick={() => selectThread(thread)}
-                  className={`p-3.5 cursor-pointer transition flex items-start space-x-3 ${
+                  className={`p-4 sm:p-5 cursor-pointer transition flex items-start space-x-3 ${
                     isSelected
                       ? 'bg-red-50/70 border-l-4 border-l-red-600'
                       : 'hover:bg-slate-50'
@@ -318,7 +318,7 @@ export default function InboxView({ onOpenFullQuote }) {
           {/* Messages Scroll Area */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
             {/* Customer Inquiry Summary Banner Card */}
-            <div className="p-4 rounded-2xl bg-white border border-slate-200/80 text-xs text-slate-700 space-y-2.5 shadow-xs">
+            <div className="p-5 sm:p-6 rounded-2xl bg-white border-2 border-slate-200/90 text-xs text-slate-700 space-y-3 card-thick">
               <div className="flex items-center justify-between font-bold text-slate-900 border-b border-slate-100 pb-2">
                 <div className="flex items-center space-x-2">
                   <span className="font-mono text-[10px] text-shop-red bg-red-50 border border-red-200 px-2 py-0.5 rounded font-bold uppercase tracking-wider">// PATIENT INTAKE</span>

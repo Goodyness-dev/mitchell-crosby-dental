@@ -83,7 +83,7 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
           <div className="lg:col-span-7 space-y-8 text-neutral-700 dark:text-neutral-300 leading-relaxed text-base sm:text-lg">
             
             {/* Story Card 1: Rich Community History */}
-            <div className="p-8 sm:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800/80 space-y-4 shadow-xs">
+            <div className="p-9 sm:p-12 rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border-2 border-neutral-200/90 dark:border-neutral-800 card-thick space-y-4">
               <div className="inline-flex items-center space-x-2 text-xs font-mono font-bold uppercase tracking-wider text-shop-red">
                 <span>// 01 HERITAGE</span>
               </div>
@@ -99,7 +99,7 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
             </div>
 
             {/* Story Card 2: Advanced Technology */}
-            <div className="p-8 sm:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800/80 space-y-4 shadow-xs">
+            <div className="p-9 sm:p-12 rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border-2 border-neutral-200/90 dark:border-neutral-800 card-thick space-y-4">
               <div className="inline-flex items-center space-x-2 text-xs font-mono font-bold uppercase tracking-wider text-shop-red">
                 <span>// 02 INNOVATION</span>
               </div>
@@ -115,7 +115,7 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
             </div>
 
             {/* Story Card 3: Patient-First Values */}
-            <div className="p-8 sm:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800/80 space-y-4 shadow-xs">
+            <div className="p-9 sm:p-12 rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border-2 border-neutral-200/90 dark:border-neutral-800 card-thick space-y-4">
               <div className="inline-flex items-center space-x-2 text-xs font-mono font-bold uppercase tracking-wider text-shop-red">
                 <span>// 03 VALUES</span>
               </div>
@@ -144,13 +144,13 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
           <div className="lg:col-span-5 space-y-8">
             
             {/* Storefront Image Card */}
-            <div className="rounded-3xl overflow-hidden border border-neutral-200/80 dark:border-neutral-800 shadow-md">
+            <div className="rounded-3xl overflow-hidden border-2 border-neutral-200/90 dark:border-neutral-800 card-thick">
               <img 
                 src="/images/storefront.jpg" 
                 alt="Mitchell & Crosby Family Dentistry Casa Grande AZ"
                 className="w-full h-72 object-cover"
               />
-              <div className="p-6 bg-neutral-50 dark:bg-neutral-900">
+              <div className="p-7 bg-neutral-50 dark:bg-neutral-900">
                 <h3 className="font-editorial font-bold text-lg text-neutral-900 dark:text-white">
                   721 N Olive Ave, Casa Grande, AZ 85122
                 </h3>
@@ -161,7 +161,7 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
             </div>
 
             {/* Doctors Cards */}
-            <div className="p-7 sm:p-8 rounded-3xl bg-neutral-950 text-white border border-neutral-800 space-y-6">
+            <div className="p-8 sm:p-10 rounded-3xl bg-neutral-950 text-white border-2 border-neutral-800/90 card-thick space-y-6">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-400">
                 // YOUR DENTAL PROVIDERS
               </span>
@@ -208,7 +208,7 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
             </div>
 
             {/* Office Hours & Schedule */}
-            <div className="p-7 rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
+            <div className="p-8 sm:p-9 rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border-2 border-neutral-200/90 dark:border-neutral-800 card-thick space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="font-editorial font-bold text-base sm:text-lg text-neutral-900 dark:text-white">
                   Regular Schedule
@@ -260,7 +260,7 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
 
       {/* Patient Forms Section (Exact Downloads requested by User) */}
       <section id="patient-forms" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="rounded-3xl p-8 sm:p-12 bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800">
+        <div className="rounded-3xl p-9 sm:p-14 bg-neutral-100 dark:bg-neutral-900 border-2 border-neutral-200/90 dark:border-neutral-800 card-thick">
           
           <div className="max-w-2xl mb-10 space-y-2">
             <span className="sana-tag">// DOWNLOADABLE FORMS</span>
@@ -279,7 +279,7 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
                 href={form.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group p-6 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-200/80 dark:border-neutral-800 hover:border-shop-red transition-all flex flex-col justify-between shadow-xs hover:shadow-md"
+                className="group p-7 sm:p-8 rounded-2xl bg-white dark:bg-neutral-950 border-2 border-neutral-200/90 dark:border-neutral-800 hover:border-shop-red transition-all flex flex-col justify-between card-thick-hover"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -312,7 +312,7 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
 
       {/* Bottom CTA Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div className="rounded-3xl p-8 sm:p-12 bg-neutral-950 text-white border border-neutral-800 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="rounded-3xl p-9 sm:p-14 bg-neutral-950 text-white border-2 border-neutral-800/90 card-thick flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
             <h3 className="font-editorial text-2xl sm:text-3xl font-bold">
               Ready to visit your hometown dental team?

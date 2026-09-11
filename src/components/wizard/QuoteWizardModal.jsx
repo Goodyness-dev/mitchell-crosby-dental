@@ -175,7 +175,7 @@ export default function QuoteWizardModal({ isOpen, onClose, initialCategory = nu
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
       <div 
-        className="relative w-full max-w-2xl bg-white border border-neutral-200 rounded-3xl shadow-2xl overflow-hidden my-auto transition-all"
+        className="relative w-full max-w-2xl bg-white border-2 border-neutral-300 dark:border-neutral-700 rounded-3xl card-thick shadow-2xl overflow-hidden my-auto transition-all"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -261,10 +261,10 @@ export default function QuoteWizardModal({ isOpen, onClose, initialCategory = nu
                           }));
                           setCurrentStep(2);
                         }}
-                        className={`p-4 rounded-2xl border text-left transition flex flex-col justify-between cursor-pointer ${
+                        className={`p-5 sm:p-6 rounded-2xl border-2 text-left transition flex flex-col justify-between cursor-pointer ${
                           isSelected
-                            ? 'border-shop-red bg-shop-light/50 ring-2 ring-shop-red/20'
-                            : 'border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50'
+                            ? 'border-shop-red bg-shop-light/50 ring-2 ring-shop-red/20 card-thick'
+                            : 'border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50 card-thick-hover'
                         }`}
                       >
                         <div className="flex items-center justify-between mb-2">
@@ -334,10 +334,10 @@ export default function QuoteWizardModal({ isOpen, onClose, initialCategory = nu
                         key={lvl.id}
                         type="button"
                         onClick={() => setFormData(prev => ({ ...prev, urgency: lvl.val }))}
-                        className={`w-full p-4 rounded-2xl border text-left transition cursor-pointer ${
+                        className={`w-full p-5 rounded-2xl border-2 text-left transition cursor-pointer ${
                           isSelected
-                            ? 'border-shop-red bg-shop-light/50 ring-2 ring-shop-red/20'
-                            : 'border-neutral-200 hover:bg-neutral-50'
+                            ? 'border-shop-red bg-shop-light/50 ring-2 ring-shop-red/20 card-thick'
+                            : 'border-neutral-200 hover:bg-neutral-50 card-thick-hover'
                         }`}
                       >
                         <div className="flex items-center justify-between mb-1">

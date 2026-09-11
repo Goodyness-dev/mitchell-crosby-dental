@@ -53,7 +53,7 @@ export default function ShowcaseSection({ onOpenWizard }) {
             <div 
               key={idx}
               onClick={() => onOpenWizard()}
-              className="group cursor-pointer rounded-3xl overflow-hidden bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800/80 shadow-xs hover:shadow-xl transition-all duration-300"
+              className="group cursor-pointer rounded-3xl overflow-hidden bg-white dark:bg-neutral-900 border-2 border-neutral-200/90 dark:border-neutral-800 card-thick-hover"
             >
               {/* Image Container with SANA rounded corners */}
               <div className="relative aspect-[16/10] overflow-hidden bg-neutral-100 dark:bg-neutral-800">
@@ -89,7 +89,7 @@ export default function ShowcaseSection({ onOpenWizard }) {
               </div>
 
               {/* Card Meta Footer */}
-              <div className="p-5 flex items-center justify-between text-xs font-semibold text-neutral-600 dark:text-neutral-400">
+              <div className="p-6 sm:p-7 flex items-center justify-between text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-400">
                 <span className="flex items-center space-x-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500" />
                   <span>Mitchell & Crosby Dentistry</span>

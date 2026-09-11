@@ -47,7 +47,7 @@ export default function NewOrderModal({ isOpen, onClose, onCreated }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
       <div 
-        className="relative w-full max-w-lg bg-white border border-slate-200 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-5 my-auto"
+        className="relative w-full max-w-lg bg-white border-2 border-slate-300 rounded-3xl p-6 sm:p-8 card-thick shadow-2xl space-y-5 my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between border-b border-slate-200 pb-4">

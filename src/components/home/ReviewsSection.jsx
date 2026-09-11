@@ -38,7 +38,7 @@ export default function ReviewsSection({ onOpenWizard }) {
         </div>
 
         {/* Signature SANA Editorial Hero Quote Block */}
-        <div className="relative rounded-3xl p-8 sm:p-14 bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 mb-12 shadow-sm">
+        <div className="relative rounded-3xl p-9 sm:p-16 bg-neutral-100 dark:bg-neutral-900 border-2 border-neutral-200/90 dark:border-neutral-800 card-thick mb-12">
           {/* Giant decorative quotation mark */}
           <div className="font-serif text-6xl sm:text-8xl text-neutral-300 dark:text-neutral-700 leading-none select-none mb-2" aria-hidden="true">
             “
@@ -75,7 +75,7 @@ export default function ReviewsSection({ onOpenWizard }) {
           {otherReviews.map((rev, idx) => (
             <div
               key={idx}
-              className="rounded-3xl p-7 bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800/80 flex flex-col justify-between"
+              className="rounded-3xl p-8 sm:p-9 bg-neutral-50 dark:bg-neutral-900/50 border-2 border-neutral-200/90 dark:border-neutral-800 card-thick-hover flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">

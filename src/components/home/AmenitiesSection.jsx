@@ -29,12 +29,12 @@ export default function AmenitiesSection({ onOpenWizard }) {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-stone-50 dark:bg-[#0c0c0c] border border-gray-200 dark:border-neutral-800">
-              <span className="font-mono text-xs font-bold text-shop-red block mb-1">// PATIENT COMFORT</span>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+            <div className="p-8 sm:p-10 rounded-3xl bg-white dark:bg-[#0c0c0c] border-2 border-slate-200/90 dark:border-neutral-800 card-thick-hover">
+              <span className="font-mono text-xs font-bold text-shop-red block mb-1.5">// PATIENT COMFORT</span>
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
                 Relaxed, Anxiety-Free Dental Experience
               </h3>
-              <p className="text-gray-600 dark:text-neutral-300 text-sm sm:text-base mt-2 leading-relaxed">
+              <p className="text-gray-600 dark:text-neutral-300 text-sm sm:text-base mt-3 leading-relaxed">
                 We believe dental visits should be calm and stress-free. Enjoy comfortable treatment bays, gentle techniques, low-dose digital imaging, and transparent explanations every step of the way.
               </p>
             </div>
@@ -53,18 +53,18 @@ export default function AmenitiesSection({ onOpenWizard }) {
               Generations of trusted family dentistry elevated with modern digital technology.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               {AMENITIES.map((feature, idx) => {
                 return (
                   <div 
                     key={idx} 
-                    className="p-5 rounded-2xl border border-gray-200 dark:border-neutral-800 hover:border-shop-border hover:shadow-md transition-all bg-stone-50/60 dark:bg-[#0c0c0c]"
+                    className="p-6 sm:p-7 rounded-3xl border-2 border-slate-200/80 dark:border-neutral-800/90 hover:border-shop-red bg-white dark:bg-[#101010] card-thick-hover"
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-[11px] font-bold text-shop-red">// 0{idx + 1}</span>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-mono text-xs font-bold text-shop-red">// 0{idx + 1}</span>
                       <span className="text-neutral-400 font-mono text-xs">→</span>
                     </div>
-                    <h3 className="font-bold text-gray-900 dark:text-white text-sm sm:text-base mb-1">{feature.title}</h3>
+                    <h3 className="font-bold text-gray-900 dark:text-white text-base mb-1.5">{feature.title}</h3>
                     <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">{feature.description}</p>
                   </div>
                 );

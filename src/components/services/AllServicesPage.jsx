@@ -57,7 +57,7 @@ export default function AllServicesPage({ onOpenWizard, onBackToHome }) {
         </div>
 
         {/* Filter Bar & Search */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-5 mb-12 bg-white dark:bg-[#0c0c0c] p-5 rounded-3xl border border-gray-200 dark:border-neutral-800 shadow-sm transition-colors">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-5 mb-12 bg-white dark:bg-[#0c0c0c] p-6 sm:p-8 rounded-3xl border-2 border-gray-200/90 dark:border-neutral-800 card-thick transition-colors">
           {/* Category Tabs */}
           <div className="flex flex-wrap gap-2.5 w-full md:w-auto justify-center md:justify-start">
             {SERVICE_CATEGORIES.map((category) => (
@@ -77,7 +77,9 @@ export default function AllServicesPage({ onOpenWizard, onBackToHome }) {
 
           {/* Search Input */}
           <div className="relative w-full md:w-80">
-            <Search className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+            <svg className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
             <input
               type="text"
               placeholder="Search treatments..."
@@ -110,7 +112,7 @@ export default function AllServicesPage({ onOpenWizard, onBackToHome }) {
             return (
               <article
                 key={service.id}
-                className="group bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-neutral-800 hover:border-shop-border rounded-3xl p-6 sm:p-7 transition-all hover:shadow-xl flex flex-col justify-between"
+                className="group bg-white dark:bg-[#0c0c0c] border-2 border-gray-200/90 dark:border-neutral-800 hover:border-shop-border rounded-3xl p-8 sm:p-9 transition-all card-thick-hover flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
@@ -156,7 +158,7 @@ export default function AllServicesPage({ onOpenWizard, onBackToHome }) {
         )}
 
         {/* Bottom Banner */}
-        <div className="mt-16 bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-neutral-800 rounded-3xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm transition-colors">
+        <div className="mt-16 bg-white dark:bg-[#0c0c0c] border-2 border-gray-200/90 dark:border-neutral-800 rounded-3xl p-9 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8 card-thick transition-colors">
           <div className="space-y-2 text-center md:text-left">
             <h4 className="text-xl sm:text-3xl font-black font-heading text-gray-900 dark:text-white">
               Have a specialized dental question?

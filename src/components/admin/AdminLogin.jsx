@@ -72,7 +72,7 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }) {
       </div>
 
       {/* Login Card */}
-      <div className="w-full max-w-md bg-white border border-slate-200/80 rounded-3xl p-7 sm:p-10 shadow-xl relative z-10">
+      <div className="w-full max-w-md bg-white border-2 border-slate-200/90 rounded-3xl p-8 sm:p-12 card-thick relative z-10">
         {/* Brand Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-shop-red text-white mb-4 shadow-lg shadow-shop-red/30 font-mono font-black text-lg">

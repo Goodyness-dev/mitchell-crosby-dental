@@ -60,6 +60,28 @@
     @apply text-[11px] sm:text-xs tracking-[0.2em] uppercase font-bold text-neutral-500 dark:text-neutral-400;
   }
 
+  /* Deep, alive 3D card elevation utilities */
+  .card-thick {
+    box-shadow: 0 16px 45px -8px rgba(0, 0, 0, 0.1), 0 6px 16px -4px rgba(0, 0, 0, 0.06);
+  }
+  .card-thick-hover {
+    box-shadow: 0 16px 45px -8px rgba(0, 0, 0, 0.1), 0 6px 16px -4px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card-thick-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 28px 65px -12px rgba(0, 0, 0, 0.18), 0 12px 28px -6px rgba(0, 0, 0, 0.08);
+  }
+  html.dark .card-thick {
+    box-shadow: 0 22px 60px -10px rgba(0, 0, 0, 0.85), 0 8px 20px -4px rgba(0, 0, 0, 0.6);
+  }
+  html.dark .card-thick-hover {
+    box-shadow: 0 22px 60px -10px rgba(0, 0, 0, 0.85), 0 8px 20px -4px rgba(0, 0, 0, 0.6);
+  }
+  html.dark .card-thick-hover:hover {
+    box-shadow: 0 32px 80px -10px rgba(0, 0, 0, 0.95), 0 10px 30px -4px rgba(2, 132, 199, 0.18);
+  }
+
   /* Clean scrollbar */
   ::-webkit-scrollbar {
     width: 7px;

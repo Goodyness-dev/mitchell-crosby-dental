@@ -83,7 +83,7 @@ export default function QuoteDetailModal({ quote, onClose, onUpdate }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
       <div 
-        className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-3xl shadow-2xl overflow-hidden my-auto flex flex-col max-h-[92vh]"
+        className="relative w-full max-w-4xl bg-white border-2 border-slate-300 rounded-3xl card-thick shadow-2xl overflow-hidden my-auto flex flex-col max-h-[92vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}

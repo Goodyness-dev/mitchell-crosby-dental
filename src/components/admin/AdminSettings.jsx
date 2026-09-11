@@ -162,7 +162,7 @@ export default function AdminSettings() {
       )}
 
       {/* SECTION 1: Telegram Order Alerts */}
-      <div className="bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-8 shadow-xs space-y-6">
+      <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-7 sm:p-10 card-thick space-y-6">
         <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 pb-5">
           <div>
             <div className="flex items-center space-x-2">
@@ -265,7 +265,7 @@ export default function AdminSettings() {
       </div>
 
       {/* SECTION 2: Email Automation Settings */}
-      <div className="bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-8 shadow-xs space-y-6">
+      <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-7 sm:p-10 card-thick space-y-6">
         <div className="border-b border-slate-100 pb-5">
           <div className="flex items-center space-x-2">
             <span className="font-mono text-xs font-bold text-shop-red bg-red-50 px-2 py-0.5 rounded border border-red-200 uppercase">// 02 EMAIL DISPATCH</span>
@@ -374,7 +374,7 @@ export default function AdminSettings() {
       </div>
 
       {/* SECTION 3: Practice Profile & Defaults */}
-      <div className="bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-8 shadow-xs space-y-6">
+      <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-7 sm:p-10 card-thick space-y-6">
         <div className="border-b border-slate-100 pb-5">
           <div className="flex items-center space-x-2">
             <span className="font-mono text-xs font-bold text-shop-red bg-red-50 px-2 py-0.5 rounded border border-red-200 uppercase">// 03 OFFICE DEFAULTS</span>
@@ -457,7 +457,7 @@ export default function AdminSettings() {
       </div>
 
       {/* SECTION 4: Change Admin Password */}
-      <div className="bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-8 shadow-xs space-y-6">
+      <div className="bg-white border-2 border-slate-200/90 rounded-3xl p-7 sm:p-10 card-thick space-y-6">
         <div className="border-b border-slate-100 pb-5">
           <div className="flex items-center space-x-2">
             <span className="font-mono text-xs font-bold text-shop-red bg-red-50 px-2 py-0.5 rounded border border-red-200 uppercase">// 04 SECURITY</span>

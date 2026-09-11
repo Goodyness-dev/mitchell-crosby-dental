@@ -67,20 +67,20 @@ export default function ServicesSection({ onOpenWizard, onViewAllServices }) {
             <article
               key={service.num}
               onClick={() => onOpenWizard(service.category, service.title)}
-              className="group relative rounded-3xl p-7 sm:p-9 bg-neutral-50/70 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800/80 hover:border-neutral-900 dark:hover:border-white transition-all duration-300 cursor-pointer flex flex-col justify-between shadow-xs hover:shadow-xl"
+              className="group relative rounded-3xl p-8 sm:p-11 bg-white dark:bg-[#0e0e0e] border-2 border-neutral-200/90 dark:border-neutral-800/90 hover:border-shop-red dark:hover:border-shop-red cursor-pointer flex flex-col justify-between card-thick-hover"
             >
               <div>
                 {/* Number & Tag Bar */}
                 <div className="flex items-center justify-between mb-6">
-                  <span className="font-mono text-3xl sm:text-4xl font-extrabold text-neutral-300 dark:text-neutral-700 group-hover:text-shop-red transition-colors">
+                  <span className="font-mono text-3xl sm:text-5xl font-extrabold text-neutral-300 dark:text-neutral-700 group-hover:text-shop-red transition-colors">
                     {service.num}
                   </span>
                   <div className="flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full text-[11px] uppercase tracking-wider font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300">
+                    <span className="px-3.5 py-1.5 rounded-full text-xs uppercase tracking-wider font-bold bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 shadow-2xs">
                       {service.tag}
                     </span>
                     {service.popular && (
-                      <span className="px-2.5 py-1 rounded-full text-[10px] uppercase tracking-widest font-extrabold bg-shop-red text-white">
+                      <span className="px-3 py-1.5 rounded-full text-[11px] uppercase tracking-widest font-extrabold bg-shop-red text-white shadow-sm shadow-shop-red/30">
                         Popular
                       </span>
                     )}
@@ -88,7 +88,7 @@ export default function ServicesSection({ onOpenWizard, onViewAllServices }) {
                 </div>
 
                 {/* Service Title */}
-                <h3 className="font-editorial text-xl sm:text-2xl font-bold text-neutral-950 dark:text-white mb-3 group-hover:text-shop-red transition-colors">
+                <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-neutral-950 dark:text-white mb-3 group-hover:text-shop-red transition-colors">
                   {service.title}
                 </h3>
 
@@ -98,10 +98,10 @@ export default function ServicesSection({ onOpenWizard, onViewAllServices }) {
                 </p>
 
                 {/* Feature checklist */}
-                <ul className="space-y-2 mb-8 border-t border-neutral-200/60 dark:border-neutral-800/60 pt-4">
+                <ul className="space-y-2.5 mb-8 border-t border-neutral-200/60 dark:border-neutral-800/60 pt-5">
                   {service.features.map((feat, idx) => (
                     <li key={idx} className="flex items-center text-xs sm:text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                      <span className="w-1.5 h-1.5 rounded-full bg-shop-red mr-2.5 shrink-0" />
+                      <span className="w-2 h-2 rounded-full bg-shop-red mr-3 shrink-0" />
                       <span>{feat}</span>
                     </li>
                   ))}
@@ -109,13 +109,13 @@ export default function ServicesSection({ onOpenWizard, onViewAllServices }) {
               </div>
 
               {/* Card Action Button */}
-              <div className="flex items-center justify-between pt-4 border-t border-neutral-200/60 dark:border-neutral-800/60">
+              <div className="flex items-center justify-between pt-5 border-t border-neutral-200/60 dark:border-neutral-800/60">
                 <span className="text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
                   {service.category}
                 </span>
                 <span className="inline-flex items-center space-x-1.5 text-xs font-bold uppercase tracking-wider text-neutral-950 dark:text-white group-hover:text-shop-red transition-colors">
                   <span>Schedule Consultation</span>
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  <span className="group-hover:translate-x-1.5 transition-transform">→</span>
                 </span>
               </div>
             </article>
@@ -123,7 +123,7 @@ export default function ServicesSection({ onOpenWizard, onViewAllServices }) {
         </div>
 
         {/* SANA Clinical Metrics & Performance Progress Bars */}
-        <div className="rounded-3xl p-8 sm:p-10 bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 mb-14">
+        <div className="rounded-3xl p-8 sm:p-12 bg-white dark:bg-[#0c0c0c] border-2 border-neutral-200/90 dark:border-neutral-800 mb-14 card-thick">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-5 space-y-2">

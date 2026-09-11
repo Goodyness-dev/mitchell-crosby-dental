@@ -28,7 +28,7 @@ export default function LocationHoursSection({ onOpenWizard }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Hours & Contact Card */}
-          <div className="lg:col-span-5 bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800/80 rounded-3xl p-7 sm:p-9 space-y-6 shadow-xs flex flex-col justify-between transition-colors">
+          <div className="lg:col-span-5 bg-white dark:bg-neutral-900 border-2 border-neutral-200/90 dark:border-neutral-800 rounded-3xl p-8 sm:p-11 space-y-6 card-thick flex flex-col justify-between transition-colors">
             <div>
               {/* Open/Closed Status Badge */}
               <div className="flex items-center justify-between p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200/60 dark:border-neutral-700/60 mb-6">
@@ -111,7 +111,7 @@ export default function LocationHoursSection({ onOpenWizard }) {
           </div>
 
           {/* Google Map & Exterior Card */}
-          <div className="lg:col-span-7 rounded-3xl overflow-hidden border border-neutral-200/80 dark:border-neutral-800/80 shadow-xs relative min-h-[420px] bg-neutral-100 dark:bg-neutral-900 flex flex-col">
+          <div className="lg:col-span-7 rounded-3xl overflow-hidden border-2 border-neutral-200/90 dark:border-neutral-800 card-thick relative min-h-[420px] bg-neutral-100 dark:bg-neutral-900 flex flex-col">
             <iframe
               title="Mitchell & Crosby Family Dentistry Casa Grande Google Map"
               src="https://maps.google.com/maps?q=721+N+Olive+Ave,+Casa+Grande,+AZ+85122&t=&z=16&ie=UTF8&iwloc=&output=embed"

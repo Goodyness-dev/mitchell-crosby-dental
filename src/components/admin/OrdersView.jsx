@@ -83,7 +83,7 @@ export default function OrdersView() {
       {/* 4 Metric Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Total Quotes */}
-        <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition">
+        <div className="bg-white border-2 border-slate-200/90 rounded-2xl p-6 sm:p-7 card-thick-hover transition">
           <div className="flex items-center justify-between text-slate-500 mb-2">
             <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider">// TOTAL REQUESTS</span>
             <span className="text-xs font-mono font-bold text-slate-400">[ALL]</span>
@@ -93,7 +93,7 @@ export default function OrdersView() {
         </div>
 
         {/* Pending Awaiting Quote */}
-        <div className="bg-white border border-amber-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition">
+        <div className="bg-white border-2 border-amber-300/90 rounded-2xl p-6 sm:p-7 card-thick-hover transition">
           <div className="flex items-center justify-between text-amber-700 mb-2">
             <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider">// AWAITING REVIEW</span>
             <span className="text-xs font-mono font-bold text-amber-600">[PENDING]</span>
@@ -103,7 +103,7 @@ export default function OrdersView() {
         </div>
 
         {/* Quoted */}
-        <div className="bg-white border border-blue-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition">
+        <div className="bg-white border-2 border-blue-300/90 rounded-2xl p-6 sm:p-7 card-thick-hover transition">
           <div className="flex items-center justify-between text-blue-700 mb-2">
             <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider">// ESTIMATES SENT</span>
             <span className="text-xs font-mono font-bold text-blue-600">[QUOTED]</span>
@@ -113,7 +113,7 @@ export default function OrdersView() {
         </div>
 
         {/* Completed */}
-        <div className="bg-white border border-emerald-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition">
+        <div className="bg-white border-2 border-emerald-300/90 rounded-2xl p-6 sm:p-7 card-thick-hover transition">
           <div className="flex items-center justify-between text-emerald-700 mb-2">
             <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider">// COMPLETED</span>
             <span className="text-xs font-mono font-bold text-emerald-600">[CLOSED]</span>
@@ -124,7 +124,7 @@ export default function OrdersView() {
       </div>
 
       {/* Control Bar: Search, Filter Tabs, Action CTAs */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 space-y-4 shadow-xs">
+      <div className="bg-white border-2 border-slate-200/90 rounded-2xl p-6 sm:p-7 space-y-4 card-thick">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           {/* Search Box */}
           <form onSubmit={handleSearch} className="relative flex-1 max-w-md">
@@ -211,7 +211,7 @@ export default function OrdersView() {
           </button>
         </div>
       ) : (
-        <div className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-xs">
+        <div className="bg-white border-2 border-slate-200/90 rounded-2xl overflow-hidden card-thick">
           {/* Desktop Table (Visible on md and larger) */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left text-xs text-slate-700">
@@ -302,7 +302,7 @@ export default function OrdersView() {
                 <div 
                   key={q.id}
                   onClick={() => setSelectedQuote(q)}
-                  className="p-4 active:bg-slate-50 transition cursor-pointer space-y-2.5"
+                  className="p-5 sm:p-6 active:bg-slate-50 transition cursor-pointer space-y-2.5"
                 >
                   <div className="flex items-start justify-between">
                     <div>
