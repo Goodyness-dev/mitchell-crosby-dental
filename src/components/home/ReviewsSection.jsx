@@ -1,83 +1,120 @@
-import React from 'react';
-import { Star } from 'lucide-react';
+﻿import React from 'react';
+import { Star, Quote, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
 export default function ReviewsSection({ onOpenWizard }) {
+  // Primary highlighted editorial quote
+  const spotlightReview = BUSINESS_INFO.reviews[0] || {
+    author: 'Maria R.',
+    location: 'Casa Grande Resident',
+    comment: 'Dr. Mitchell and Dr. Crosby are incredible. I needed a crown and had it completely done in one 90-minute visit with their CEREC milling lab. No temporary crown, no second visit, and completely painless!',
+    date: 'Verified Patient'
+  };
+
+  const otherReviews = BUSINESS_INFO.reviews.slice(1, 4);
+
   return (
-    <section id="reviews" className="py-20 sm:py-24 bg-stone-50 dark:bg-black transition-colors" aria-labelledby="reviews-heading">
+    <section id="reviews" className="py-20 sm:py-28 bg-white dark:bg-black sana-grid-bg transition-colors" aria-labelledby="reviews-heading">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <h2 id="reviews-heading" className="text-3xl sm:text-5xl font-black font-heading text-gray-900 dark:text-white tracking-tight">
-            What Our Patients Say
-          </h2>
-          <div className="flex items-center justify-center space-x-2.5 mt-3 sm:mt-4">
-            <div className="flex text-amber-500" aria-label="5 out of 5 stars">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-5 h-5 sm:w-6 sm:h-6 fill-amber-500" aria-hidden="true" />
+        
+        {/* SANA Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 sm:mb-18 border-b border-neutral-200/70 dark:border-neutral-800/70 pb-8">
+          <div className="space-y-3 max-w-2xl">
+            <span className="sana-tag">// 06 PATIENT EXPERIENCES & TRUST</span>
+            <h2 id="reviews-heading" className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-[1.1]">
+              Real Smiles, <br />
+              <span className="text-stroke text-stroke-black">Real Stories.</span>
+            </h2>
+          </div>
+          <div className="flex items-center space-x-3">
+            <div className="flex text-amber-500 text-lg">
+              {'★★★★★'.split('').map((_, i) => (
+                <span key={i}>★</span>
               ))}
             </div>
-            <span className="text-gray-700 dark:text-neutral-200 text-base sm:text-lg font-bold">
-              5.0 Star Rating on Google Reviews
-            </span>
+            <div className="text-xs sm:text-sm font-bold text-neutral-900 dark:text-white">
+              5.0 Star Rated on Google (140+ Reviews)
+            </div>
           </div>
         </div>
 
-        {/* Review Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {BUSINESS_INFO.reviews.map((rev, idx) => {
-            const ratingCount = rev.rating || rev.stars || 5;
-            const commentText = rev.comment || rev.text;
-            const locationText = rev.location || rev.city || 'Casa Grande, AZ';
-            const sourceText = rev.source || 'Google Review';
+        {/* Signature SANA Editorial Hero Quote Block */}
+        <div className="relative rounded-3xl p-8 sm:p-14 bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 mb-12 shadow-sm">
+          {/* Giant decorative quotation mark */}
+          <div className="font-serif text-6xl sm:text-8xl text-neutral-300 dark:text-neutral-700 leading-none select-none mb-2" aria-hidden="true">
+            “
+          </div>
 
-            return (
-              <article
-                key={idx}
-                className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 hover:shadow-xl transition-all flex flex-col justify-between"
-              >
-                <div>
-                  {/* Stars + Source */}
-                  <div className="flex justify-between items-center mb-4">
-                    <div className="flex text-amber-500" aria-label={`${ratingCount} out of 5 stars`}>
-                      {[...Array(ratingCount)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-amber-500" aria-hidden="true" />
-                      ))}
-                    </div>
-                    <span className="text-xs sm:text-sm font-semibold text-gray-600 dark:text-neutral-300 bg-gray-100 dark:bg-[#161616] border border-gray-200 dark:border-neutral-800 px-2.5 py-1 rounded-lg">
-                      {sourceText}
-                    </span>
-                  </div>
+          <p className="font-editorial text-xl sm:text-3xl lg:text-4xl font-semibold text-neutral-900 dark:text-white leading-relaxed tracking-tight mb-8">
+            {spotlightReview.comment || spotlightReview.text}
+          </p>
 
-                  {/* Review Text */}
-                  <p className="text-gray-700 dark:text-neutral-300 text-sm sm:text-base leading-relaxed mb-6 italic font-normal">
-                    "{commentText}"
-                  </p>
-                </div>
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-neutral-200/60 dark:border-neutral-800/80">
+            <div className="flex items-center space-x-3.5">
+              <div className="w-12 h-12 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 flex items-center justify-center font-bold text-sm font-editorial">
+                {spotlightReview.author.charAt(0)}
+              </div>
+              <div>
+                <h4 className="font-editorial font-bold text-sm sm:text-base text-neutral-950 dark:text-white">
+                  {spotlightReview.author}
+                </h4>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  {spotlightReview.location || 'Casa Grande, AZ'} • Verified Google Review
+                </p>
+              </div>
+            </div>
 
-                {/* Author */}
-                <div className="pt-4 border-t border-gray-100 dark:border-neutral-800 flex justify-between items-center">
-                  <div>
-                    <h3 className="font-bold text-gray-900 dark:text-white text-sm sm:text-base">{rev.author}</h3>
-                    <span className="text-gray-500 dark:text-neutral-400 text-xs">{locationText}</span>
-                  </div>
-                  <span className="text-gray-400 dark:text-neutral-500 text-xs">{rev.date}</span>
-                </div>
-              </article>
-            );
-          })}
+            <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-xs font-semibold border border-emerald-200 dark:border-emerald-800">
+              <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+              <span>Verified Dental Patient</span>
+            </div>
+          </div>
         </div>
 
-        {/* CTA */}
-        <div className="mt-12 sm:mt-16 text-center">
+        {/* 3 Secondary Review Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {otherReviews.map((rev, idx) => (
+            <div
+              key={idx}
+              className="rounded-3xl p-7 bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800/80 flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex text-amber-500 text-sm">
+                    {'★★★★★'.split('').map((_, i) => (
+                      <span key={i}>★</span>
+                    ))}
+                  </div>
+                  <span className="text-[10px] uppercase font-mono tracking-wider text-neutral-400">
+                    Google Review
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed italic mb-6">
+                  "{rev.comment || rev.text}"
+                </p>
+              </div>
+
+              <div className="pt-4 border-t border-neutral-200/60 dark:border-neutral-800/60 flex items-center justify-between text-xs">
+                <div>
+                  <span className="font-bold text-neutral-950 dark:text-white block">{rev.author}</span>
+                  <span className="text-neutral-400 text-[11px]">{rev.location || 'Casa Grande, AZ'}</span>
+                </div>
+                <span className="text-neutral-400 text-[11px]">{rev.date}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA Button */}
+        <div className="text-center">
           <button
             onClick={() => onOpenWizard()}
-            className="px-8 py-4 rounded-xl bg-shop-red hover:bg-shop-redHover text-white font-bold text-base sm:text-lg transition-all shadow-md active:scale-95 cursor-pointer"
-            aria-label="Schedule your dental visit today"
+            className="px-8 py-4 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-100 font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer"
           >
-            Schedule Your Dental Visit Today
+            Experience The Difference — Schedule Your Visit
           </button>
         </div>
+
       </div>
     </section>
   );

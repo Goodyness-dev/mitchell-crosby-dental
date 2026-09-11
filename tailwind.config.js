@@ -17,10 +17,10 @@ export default {
           subtle: '#2a2a2a',
         },
         shop: {
-          red: '#0369a1',        // Dental Sapphire Blue
-          redHover: '#075985',   // Deep Dental Ocean Blue
-          dark: '#000000',
-          charcoal: '#0a0a0a',
+          red: '#0284c7',        // Refined Dental Sapphire Blue
+          redHover: '#0369a1',   // Deep Sapphire Hover
+          dark: '#0a0a0a',
+          charcoal: '#121212',
           body: '#4a4a4a',
           muted: '#717171',
           light: '#f0f9ff',
@@ -28,7 +28,8 @@ export default {
         }
       },
       fontFamily: {
-        heading: ['"Montserrat"', '"Inter"', 'system-ui', 'sans-serif'],
+        editorial: ['"Plus Jakarta Sans"', '"Outfit"', 'system-ui', 'sans-serif'],
+        heading: ['"Plus Jakarta Sans"', '"Outfit"', 'system-ui', 'sans-serif'],
         sans: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
       }
     },

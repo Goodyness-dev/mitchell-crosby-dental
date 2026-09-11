@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './components/layout/Navbar';
 import Hero from './components/home/Hero';
 import ServicesSection from './components/home/ServicesSection';
+import ShowcaseSection from './components/home/ShowcaseSection';
+import PricingSection from './components/home/PricingSection';
 import AboutSection from './components/home/AboutSection';
-import AmenitiesSection from './components/home/AmenitiesSection';
 import LocationHoursSection from './components/home/LocationHoursSection';
 import ReviewsSection from './components/home/ReviewsSection';
 import Footer from './components/layout/Footer';
@@ -174,8 +175,9 @@ export default function App() {
               onOpenWizard={handleOpenWizard}
               onViewAllServices={() => handleNavigate('services')}
             />
+            <ShowcaseSection onOpenWizard={() => handleOpenWizard()} />
+            <PricingSection onOpenWizard={handleOpenWizard} />
             <AboutSection onOpenWizard={() => handleOpenWizard()} />
-            <AmenitiesSection onOpenWizard={() => handleOpenWizard()} />
             <ReviewsSection onOpenWizard={() => handleOpenWizard()} />
             <LocationHoursSection onOpenWizard={() => handleOpenWizard()} />
           </>

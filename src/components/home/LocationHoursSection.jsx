@@ -1,5 +1,5 @@
-import React from 'react';
-import { MapPin, Clock, Navigation, Phone, ExternalLink } from 'lucide-react';
+﻿import React from 'react';
+import { MapPin, Clock, Navigation, Phone, ExternalLink, Mail, CheckCircle2 } from 'lucide-react';
 import { BUSINESS_INFO, isOpenNow } from '../../data/businessData';
 
 export default function LocationHoursSection({ onOpenWizard }) {
@@ -9,42 +9,48 @@ export default function LocationHoursSection({ onOpenWizard }) {
   const currentDayName = dayNames[currentDayIndex];
 
   return (
-    <section id="location" className="py-20 sm:py-24 bg-white dark:bg-black transition-colors" aria-labelledby="location-heading">
+    <section id="location" className="py-20 sm:py-28 bg-neutral-50/50 dark:bg-black sana-grid-bg transition-colors" aria-labelledby="location-heading">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <h2 id="location-heading" className="text-3xl sm:text-5xl font-black font-heading text-gray-900 dark:text-white tracking-tight">
-            Location & Clinic Hours
-          </h2>
-          <p className="text-gray-600 dark:text-neutral-400 mt-3 sm:mt-4 text-base sm:text-xl leading-relaxed">
-            Conveniently located on North Olive Avenue in Casa Grande, AZ. Call ahead or request your consultation online.
+        
+        {/* SANA Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 sm:mb-18 border-b border-neutral-200/70 dark:border-neutral-800/70 pb-8">
+          <div className="space-y-3 max-w-2xl">
+            <span className="sana-tag">// 07 VISIT OUR CLINIC & HOURS</span>
+            <h2 id="location-heading" className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-[1.1]">
+              Historic Olive Ave, <br />
+              <span className="text-stroke text-stroke-black">Casa Grande, AZ.</span>
+            </h2>
+          </div>
+          <p className="text-neutral-600 dark:text-neutral-400 text-sm sm:text-base max-w-md leading-relaxed">
+            Conveniently situated in central Casa Grande with dedicated on-site parking and handicap accessibility.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          
           {/* Hours & Contact Card */}
-          <div className="lg:col-span-5 bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm flex flex-col justify-between transition-colors">
+          <div className="lg:col-span-5 bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800/80 rounded-3xl p-7 sm:p-9 space-y-6 shadow-xs flex flex-col justify-between transition-colors">
             <div>
-              {/* Open/Closed Status */}
-              <div className="flex items-center justify-between p-4 rounded-2xl bg-gray-50 dark:bg-[#141414] border border-gray-100 dark:border-neutral-800 mb-6">
+              {/* Open/Closed Status Badge */}
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200/60 dark:border-neutral-700/60 mb-6">
                 <div className="flex items-center space-x-3.5">
-                  <span className={`w-3.5 h-3.5 rounded-full ${shopOpen ? 'bg-green-500 animate-pulse' : 'bg-amber-500'}`} aria-hidden="true" />
+                  <span className={`w-3 h-3 rounded-full ${shopOpen ? 'bg-emerald-500 animate-pulse' : 'bg-neutral-400'}`} aria-hidden="true" />
                   <div>
-                    <span className={`font-bold text-base sm:text-lg block ${shopOpen ? 'text-green-700 dark:text-green-400' : 'text-amber-700 dark:text-amber-400'}`}>
-                      {shopOpen ? 'Clinic Open' : 'Clinic Closed'}
+                    <span className={`font-bold text-sm sm:text-base block ${shopOpen ? 'text-emerald-600 dark:text-emerald-400' : 'text-neutral-600 dark:text-neutral-400'}`}>
+                      {shopOpen ? 'Practice Open Now' : 'Practice Currently Closed'}
                     </span>
-                    <span className="text-xs sm:text-sm text-gray-500 dark:text-neutral-400">Today is {currentDayName}</span>
+                    <span className="text-xs text-neutral-500 dark:text-neutral-400">Today is {currentDayName}</span>
                   </div>
                 </div>
-                <Clock className="w-6 h-6 text-gray-400" aria-hidden="true" />
+                <Clock className="w-5 h-5 text-neutral-400" aria-hidden="true" />
               </div>
 
               {/* Hours Table */}
               <div>
-                <h3 className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-3">
-                  Weekly Practice Hours
+                <h3 className="text-xs font-bold text-neutral-900 dark:text-white uppercase tracking-wider mb-3">
+                  Practice Schedule
                 </h3>
-                <div className="divide-y divide-gray-100 dark:divide-gray-800 text-sm sm:text-base">
+                <div className="divide-y divide-neutral-100 dark:divide-neutral-800 text-xs sm:text-sm">
                   {BUSINESS_INFO.hours.map((h) => {
                     const isToday = h.day.toLowerCase() === currentDayName.toLowerCase();
                     return (
@@ -52,26 +58,16 @@ export default function LocationHoursSection({ onOpenWizard }) {
                         key={h.day}
                         className={`py-2.5 px-3 flex justify-between items-center rounded-xl ${
                           isToday 
-                            ? 'bg-shop-light font-semibold' 
-                            : 'text-gray-700 dark:text-gray-300'
+                            ? 'bg-neutral-100 dark:bg-neutral-800 font-bold text-neutral-950 dark:text-white' 
+                            : 'text-neutral-600 dark:text-neutral-300'
                         }`}
                       >
-                        <span className={isToday ? 'text-shop-red font-bold' : ''}>
+                        <span className={isToday ? 'text-shop-red' : ''}>
                           {h.day}
-                          {isToday && (
-                            <span className="ml-2 text-[10px] uppercase px-2 py-0.5 rounded-md bg-shop-red text-white font-bold">
-                              Today
-                            </span>
-                          )}
                         </span>
-                        <div className="text-right">
-                          <span className={h.open === 'Closed' ? 'text-slate-500 font-medium' : 'text-gray-900 dark:text-white'}>
-                            {h.open === 'Closed' ? 'Closed (On-Call)' : `${h.open} – ${h.close}`}
-                          </span>
-                          {h.note && (
-                            <span className="text-xs text-shop-red block font-normal">({h.note})</span>
-                          )}
-                        </div>
+                        <span className={`font-mono ${h.hours.toLowerCase().includes('closed') ? 'text-neutral-400' : ''}`}>
+                          {h.hours}
+                        </span>
                       </div>
                     );
                   })}
@@ -79,81 +75,68 @@ export default function LocationHoursSection({ onOpenWizard }) {
               </div>
             </div>
 
-            {/* Address & Contact */}
-            <address className="not-italic pt-5 border-t border-gray-100 dark:border-gray-800 space-y-3.5 text-sm sm:text-base">
-              <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-shop-red shrink-0 mt-1" aria-hidden="true" />
-                <div>
-                  <span className="font-bold text-gray-900 dark:text-white block text-base">{BUSINESS_INFO.legalName}</span>
-                  <span className="text-gray-600 dark:text-gray-400">{BUSINESS_INFO.address.formatted}</span>
-                </div>
+            {/* Address & Quick Actions */}
+            <div className="space-y-4 pt-4 border-t border-neutral-200/60 dark:border-neutral-800">
+              <div>
+                <span className="text-[11px] uppercase tracking-wider font-bold text-neutral-400 block mb-1">
+                  Location Address
+                </span>
+                <p className="font-bold text-sm sm:text-base text-neutral-900 dark:text-white">
+                  721 N Olive Ave, Casa Grande, AZ 85122
+                </p>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+                  Near E 8th St & N Florence St • Pinal County
+                </p>
               </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-shop-red shrink-0" aria-hidden="true" />
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <a 
-                    href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`} 
-                    className="font-bold text-gray-900 dark:text-white hover:text-shop-red transition text-base"
-                    aria-label={`Call main phone: ${BUSINESS_INFO.phone}`}
-                  >
-                    {BUSINESS_INFO.phone}
-                  </a>
-                  <span className="text-gray-300 dark:text-gray-600">|</span>
-                  <a 
-                    href={`tel:${BUSINESS_INFO.secondaryPhone.replace(/[^0-9]/g, '')}`} 
-                    className="text-gray-500 dark:text-gray-400 hover:text-shop-red transition text-sm"
-                    aria-label={`Call secondary line: ${BUSINESS_INFO.secondaryPhone}`}
-                  >
-                    Fax: {BUSINESS_INFO.secondaryPhone}
-                  </a>
-                </div>
-              </div>
-            </address>
 
-            {/* Get Directions Button */}
-            <a
-              href={BUSINESS_INFO.googleMapsLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full py-3.5 px-5 rounded-xl bg-gray-900 dark:bg-[#141414] hover:bg-gray-800 dark:hover:bg-[#1f1f1f] text-white font-bold text-base transition flex items-center justify-center space-x-2.5 active:scale-95 shadow-md border border-transparent dark:border-neutral-700 cursor-pointer"
-              aria-label={`Get Google Maps GPS driving directions to ${BUSINESS_INFO.name} in Casa Grande`}
-            >
-              <Navigation className="w-5 h-5" />
-              <span>Get Driving Directions</span>
-              <ExternalLink className="w-4 h-4 text-gray-400" />
-            </a>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
+                  href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
+                  className="flex-1 py-3 px-4 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 font-bold text-xs uppercase tracking-wider flex items-center justify-center space-x-2 transition"
+                >
+                  <Phone className="w-3.5 h-3.5 text-shop-red" />
+                  <span>Call {BUSINESS_INFO.phone}</span>
+                </a>
+                <a
+                  href="https://maps.google.com/?q=721+N+Olive+Ave+Casa+Grande+AZ+85122"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3 px-5 rounded-full border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 font-bold text-xs uppercase tracking-wider flex items-center justify-center space-x-2 transition"
+                >
+                  <Navigation className="w-3.5 h-3.5 text-shop-red" />
+                  <span>Directions</span>
+                </a>
+              </div>
+            </div>
           </div>
 
-          {/* Interactive Google Map */}
-          <div className="lg:col-span-7 bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-neutral-800 rounded-3xl overflow-hidden shadow-sm flex flex-col transition-colors">
-            <div className="px-5 py-4 border-b border-gray-100 dark:border-neutral-800 flex items-center justify-between bg-stone-50/50 dark:bg-[#141414]">
-              <span className="font-bold text-gray-900 dark:text-white text-sm sm:text-base">📍 {BUSINESS_INFO.address.formatted}</span>
+          {/* Google Map & Exterior Card */}
+          <div className="lg:col-span-7 rounded-3xl overflow-hidden border border-neutral-200/80 dark:border-neutral-800/80 shadow-xs relative min-h-[420px] bg-neutral-100 dark:bg-neutral-900 flex flex-col">
+            <iframe
+              title="Mitchell & Crosby Family Dentistry Casa Grande Google Map"
+              src="https://maps.google.com/maps?q=721+N+Olive+Ave,+Casa+Grande,+AZ+85122&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              className="w-full h-full min-h-[360px] lg:min-h-[420px] border-0 grayscale dark:invert dark:hue-rotate-180"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+            <div className="p-4 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between text-xs">
+              <span className="text-neutral-600 dark:text-neutral-400 font-medium">
+                Serving Casa Grande, Coolidge, Eloy, Arizona City & Pinal County
+              </span>
               <a
-                href={BUSINESS_INFO.googleMapsLink}
+                href="https://maps.google.com/?q=721+N+Olive+Ave+Casa+Grande+AZ+85122"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-shop-red hover:underline font-bold text-xs sm:text-sm flex items-center space-x-1"
-                aria-label="Open location in Google Maps"
+                className="font-bold text-shop-red hover:underline inline-flex items-center space-x-1"
               >
                 <span>Open in Maps</span>
-                <ExternalLink className="w-3.5 h-3.5" />
+                <ExternalLink className="w-3 h-3" />
               </a>
             </div>
-            <div className="w-full flex-1 min-h-[320px] sm:min-h-[400px] lg:min-h-[460px]">
-              <iframe
-                title={`${BUSINESS_INFO.name} Dental Office Location Map in Casa Grande, AZ`}
-                src={BUSINESS_INFO.googleMapsEmbedUrl}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="w-full h-full min-h-[320px] sm:min-h-[400px]"
-              />
-            </div>
           </div>
+
         </div>
+
       </div>
     </section>
   );

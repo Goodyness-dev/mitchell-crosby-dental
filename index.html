@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
@@ -34,8 +34,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- Fonts: Plus Jakarta Sans (Editorial/Headings), Outfit & Inter (Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet" />
 
     <!-- Schema.org Structured Data (JSON-LD) for Local Dental Practice -->
     <script type="application/ld+json">
@@ -43,12 +43,19 @@
       "@context": "https://schema.org",
       "@type": "Dentist",
       "name": "Mitchell & Crosby Family Dentistry",
-      "image": "https://mitchellandcrosbydental.com/logo.png",
+      "image": [
+        "https://mitchellandcrosbydental.com/images/storefront.jpg",
+        "https://mitchellandcrosbydental.com/images/waiting-room.jpg",
+        "https://mitchellandcrosbydental.com/logo.png"
+      ],
       "@id": "https://mitchellandcrosbydental.com/#dentist",
       "url": "https://mitchellandcrosbydental.com",
       "telephone": "(520) 836-7111",
+      "faxNumber": "(520) 836-4613",
       "email": "toothdoc2009@hotmail.com",
       "priceRange": "$$",
+      "currenciesAccepted": "USD",
+      "paymentAccepted": "Cash, Credit Card, CareCredit, PPO Insurance",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "721 N Olive Ave",
@@ -62,6 +69,48 @@
         "latitude": 32.8804,
         "longitude": -111.7512
       },
+      "hasMap": "https://maps.google.com/?q=721+N+Olive+Ave+Casa+Grande+AZ+85122",
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Casa Grande",
+          "sameAs": "https://en.wikipedia.org/wiki/Casa_Grande,_Arizona"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Pinal County"
+        },
+        {
+          "@type": "City",
+          "name": "Coolidge"
+        },
+        {
+          "@type": "City",
+          "name": "Eloy"
+        },
+        {
+          "@type": "City",
+          "name": "Arizona City"
+        }
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Dr. Franklin Mitchell, DDS"
+      },
+      "employee": [
+        {
+          "@type": "Person",
+          "name": "Dr. Jeffrey Mitchell",
+          "jobTitle": "Dentist & CEREC Specialist",
+          "honorificSuffix": "DDS"
+        },
+        {
+          "@type": "Person",
+          "name": "Dr. David Crosby",
+          "jobTitle": "Dentist & Restorative Specialist",
+          "honorificSuffix": "DMD"
+        }
+      ],
       "openingHoursSpecification": [
         {
           "@type": "OpeningHoursSpecification",
@@ -75,11 +124,17 @@
           "opens": "08:00",
           "closes": "13:00"
         }
-      ]
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "reviewCount": "142",
+        "bestRating": "5"
+      }
     }
     </script>
   </head>
-  <body class="bg-white text-gray-900 antialiased selection:bg-sky-700 selection:text-white">
+  <body class="bg-white text-gray-900 antialiased selection:bg-neutral-900 selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

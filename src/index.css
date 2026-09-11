@@ -22,6 +22,44 @@
     color: #ffffff !important;
   }
 
+  /* SANA Architectural Vertical Gridlines */
+  .sana-grid-bg {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: calc(100% / 4) 100%;
+  }
+  @media (min-width: 768px) {
+    .sana-grid-bg {
+      background-size: calc(100% / 6) 100%;
+    }
+  }
+  html.dark .sana-grid-bg {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  }
+
+  /* Outlined / Stroke Typography (Signature SANA aesthetic) */
+  .text-stroke {
+    -webkit-text-stroke: 1.5px currentColor;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .text-stroke-black {
+    -webkit-text-stroke: 1.5px #111827;
+    -webkit-text-fill-color: transparent;
+  }
+  html.dark .text-stroke-black {
+    -webkit-text-stroke: 1.5px #f3f4f6;
+    -webkit-text-fill-color: transparent;
+  }
+  .text-stroke-blue {
+    -webkit-text-stroke: 1.5px #0284c7;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* SANA Category badge */
+  .sana-tag {
+    @apply text-[11px] sm:text-xs tracking-[0.2em] uppercase font-bold text-neutral-500 dark:text-neutral-400;
+  }
+
   /* Clean scrollbar */
   ::-webkit-scrollbar {
     width: 7px;

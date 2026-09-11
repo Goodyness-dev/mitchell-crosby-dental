@@ -1,116 +1,143 @@
-import React from 'react';
-import { Quote, Sparkles, CheckCircle2 } from 'lucide-react';
+﻿import React from 'react';
+import { Quote, Sparkles, CheckCircle2, Award, HeartHandshake, ArrowRight } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
 export default function AboutSection({ onOpenWizard }) {
+  const doctors = [
+    {
+      name: 'Dr. Jeffrey Mitchell',
+      title: 'DDS • Lead Dentist & CEREC Specialist',
+      education: 'Univ. of Colorado / Arthur A. Dugoni School of Dentistry',
+      badge: 'Casa Grande Native',
+      image: '/images/dr-mitchell.jpg',
+      bio: 'Carrying on his family’s multi-generational commitment to Casa Grande dental health. Specializes in single-visit CEREC® CAD/CAM crowns, implant restorations, and cosmetic smile designs.'
+    },
+    {
+      name: 'Dr. David Crosby',
+      title: 'DMD • Restorative & Cosmetic Dentist',
+      education: 'Midwestern University College of Dental Medicine',
+      badge: 'Se Habla Español',
+      image: '/images/dr-crosby.jpg',
+      bio: 'Known for his remarkably gentle bedside manner and clear patient communication. Passionate about painless dentistry, composite artistry, and preventive family care.'
+    }
+  ];
+
   return (
-    <section id="about" className="py-20 sm:py-24 bg-slate-50 dark:bg-black transition-colors" aria-labelledby="about-heading">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: About Details */}
-          <div className="space-y-6">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-shop-light border border-shop-border text-xs font-bold text-shop-red uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Hometown Dental Heritage Since 1953</span>
-            </div>
+    <section id="about" className="py-20 sm:py-28 bg-[#0a0a0a] text-white transition-colors relative overflow-hidden" aria-labelledby="about-heading">
+      {/* Background SANA vertical lines in subtle dark mode */}
+      <div className="absolute inset-0 sana-grid-bg opacity-30 pointer-events-none" />
 
-            <h2 id="about-heading" className="text-3xl sm:text-4xl lg:text-5xl font-black font-heading text-slate-900 dark:text-white tracking-tight leading-tight">
-              A Generational Tradition of Gentle Hometown Dental Care
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* SANA Dark Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 sm:mb-18 border-b border-neutral-800 pb-8">
+          <div className="space-y-3 max-w-2xl">
+            <span className="text-[11px] sm:text-xs tracking-[0.2em] uppercase font-bold text-neutral-400">// 05 MEET OUR DOCTORS & HERITAGE</span>
+            <h2 id="about-heading" className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1]">
+              Dedicated To <br />
+              <span className="text-stroke text-stroke-light" style={{ WebkitTextStroke: '1.5px #ffffff' }}>Your Family's Care.</span>
             </h2>
+          </div>
+          <p className="text-neutral-400 text-sm sm:text-base max-w-md leading-relaxed">
+            Since 1953, the Mitchell & Crosby family has provided honest, gentle dental care to three generations of Casa Grande residents.
+          </p>
+        </div>
 
-            {/* Provider Quote */}
-            <div className="border-l-4 border-shop-red pl-5 sm:pl-6 py-2">
-              <Quote className="w-6 h-6 text-shop-red mb-2" aria-hidden="true" />
-              <p className="text-slate-700 dark:text-neutral-300 text-sm sm:text-lg italic leading-relaxed">
-                "{BUSINESS_INFO.owner.quote}"
-              </p>
-              <div className="mt-3 text-sm sm:text-base font-bold text-shop-red">
-                — {BUSINESS_INFO.owner.name}
+        {/* Doctor Profiles Grid - SANA Editorial Card Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          {doctors.map((doc, idx) => (
+            <div 
+              key={idx}
+              className="rounded-3xl p-7 sm:p-9 bg-neutral-950 border border-neutral-800 hover:border-neutral-600 transition-all duration-300 flex flex-col sm:flex-row gap-6 items-start shadow-xl"
+            >
+              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden shrink-0 border border-neutral-700">
+                <img 
+                  src={doc.image} 
+                  alt={doc.name} 
+                  className="w-full h-full object-cover object-top"
+                />
+                <span className="absolute bottom-1.5 left-1.5 right-1.5 px-2 py-0.5 rounded text-[9px] font-extrabold uppercase tracking-wider text-center bg-black/80 backdrop-blur-xs text-white">
+                  {doc.badge}
+                </span>
+              </div>
+
+              <div className="space-y-3 flex-1">
+                <div>
+                  <h3 className="font-editorial text-xl sm:text-2xl font-bold text-white">
+                    {doc.name}
+                  </h3>
+                  <p className="text-xs text-shop-red font-bold uppercase tracking-wider mt-0.5">
+                    {doc.title}
+                  </p>
+                  <p className="text-[11px] text-neutral-400 mt-1">
+                    {doc.education}
+                  </p>
+                </div>
+
+                <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+                  {doc.bio}
+                </p>
+
+                <div className="pt-2">
+                  <button
+                    onClick={onOpenWizard}
+                    className="inline-flex items-center space-x-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-shop-red transition-colors cursor-pointer"
+                  >
+                    <span>Consult With {doc.name.split(' ')[1]}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
+          ))}
+        </div>
 
-            <p className="text-slate-700 dark:text-neutral-300 text-sm sm:text-base leading-relaxed">
-              At Mitchell & Crosby Family Dentistry, you're not just another appointment on a calendar. Our dentists and staff grew up right here in Casa Grande, coach youth sports, participate in local community events, and treat generations of local families.
+        {/* Practice Heritage & Founder Tribute */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-3xl p-8 sm:p-10 bg-neutral-950 border border-neutral-800">
+          
+          <div className="lg:col-span-5 space-y-4">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-[11px] font-bold text-sky-400 uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-shop-red" />
+              <span>Founded In 1953</span>
+            </div>
+            
+            <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white">
+              70+ Years of Casa Grande Pride
+            </h3>
+
+            <blockquote className="border-l-2 border-shop-red pl-4 py-1 text-sm italic text-neutral-300">
+              "{BUSINESS_INFO.owner.quote}"
+              <footer className="text-xs font-bold text-shop-red mt-2 not-italic">
+                — {BUSINESS_INFO.owner.name}
+              </footer>
+            </blockquote>
+
+            <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+              Our roots run deep in Pinal County. When Dr. Franklin Mitchell opened our doors over seven decades ago, he pledged to treat every patient with the dignity and honesty of a neighbor. Today, that legacy continues with the latest digital dental breakthroughs.
             </p>
+          </div>
 
-            {/* Feature List */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              {[
-                "CEREC® 1-Visit Same Day Crowns",
-                "Omnichroma Invisible Shade Fillings",
-                "Gentle Diode Laser Soft-Tissue Therapy",
-                "Bilingual Care: Se Habla Español",
-                "Low-Dose Digital 3D Diagnostics",
-                "Most Major PPO Insurances Accepted"
-              ].map((item, idx) => (
-                <div key={idx} className="flex items-center space-x-2 text-xs sm:text-sm font-semibold text-slate-800 dark:text-neutral-200">
-                  <CheckCircle2 className="w-4 h-4 text-shop-red shrink-0" />
-                  <span>{item}</span>
+          <div className="lg:col-span-7 space-y-4 border-t lg:border-t-0 lg:border-l border-neutral-800 pt-6 lg:pt-0 lg:pl-8">
+            <h4 className="text-xs uppercase tracking-[0.2em] font-bold text-neutral-400 mb-4">
+              Historical Timeline
+            </h4>
+            <div className="space-y-4">
+              {BUSINESS_INFO.history.map((h, i) => (
+                <div key={i} className="flex items-start space-x-4">
+                  <span className="px-2.5 py-1 rounded-lg bg-neutral-900 border border-neutral-800 font-mono text-xs font-bold text-shop-red shrink-0">
+                    {h.year}
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-xs sm:text-sm text-white">{h.title}</h5>
+                    <p className="text-[11px] sm:text-xs text-neutral-400 mt-0.5 leading-relaxed">{h.description}</p>
+                  </div>
                 </div>
               ))}
             </div>
-
-            <div className="pt-4">
-              <button
-                onClick={onOpenWizard}
-                className="px-6 py-3 rounded-xl bg-shop-red hover:bg-shop-redHover text-white font-bold text-sm shadow-md transition active:scale-95 cursor-pointer"
-              >
-                Schedule a Friendly Visit
-              </button>
-            </div>
           </div>
 
-          {/* Right: Doctors & History Cards */}
-          <div className="space-y-5">
-            {/* Meet the Doctors */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 shadow-md flex items-center space-x-3.5">
-                <img
-                  src="/images/dr-mitchell.jpg"
-                  alt="Dr. Jeffrey Mitchell, DDS"
-                  className="w-16 h-16 rounded-2xl object-cover shrink-0 border-2 border-shop-border"
-                />
-                <div>
-                  <h4 className="font-bold text-sm text-slate-900 dark:text-white">Dr. Jeffrey Mitchell</h4>
-                  <p className="text-xs text-shop-red font-bold">DDS • Univ. of Colorado</p>
-                  <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5">Casa Grande Native</p>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 shadow-md flex items-center space-x-3.5">
-                <img
-                  src="/images/dr-crosby.jpg"
-                  alt="Dr. David Crosby, DMD"
-                  className="w-16 h-16 rounded-2xl object-cover shrink-0 border-2 border-shop-border"
-                />
-                <div>
-                  <h4 className="font-bold text-sm text-slate-900 dark:text-white">Dr. David Crosby</h4>
-                  <p className="text-xs text-shop-red font-bold">DMD • Midwestern Univ.</p>
-                  <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5">Se Habla Español</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-7 sm:p-8 rounded-3xl bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 shadow-xl space-y-5">
-              <h3 className="text-xl font-bold font-heading text-slate-900 dark:text-white">
-                Our Timeline & Community Story
-              </h3>
-              <div className="space-y-5">
-                {BUSINESS_INFO.history.map((h, i) => (
-                  <div key={i} className="flex items-start space-x-4">
-                    <div className="px-3 py-1 rounded-xl bg-shop-light border border-shop-border font-mono font-bold text-shop-red text-xs shrink-0">
-                      {h.year}
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-sm text-slate-900 dark:text-white">{h.title}</h4>
-                      <p className="text-xs text-slate-500 dark:text-neutral-400 mt-0.5 leading-relaxed">{h.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
+
       </div>
     </section>
   );

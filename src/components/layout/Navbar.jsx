@@ -51,45 +51,45 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
     <header 
       className={`sticky top-0 z-40 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-neutral-900' 
-          : 'bg-white dark:bg-black border-b border-gray-100 dark:border-neutral-900'
+          ? 'bg-white/90 dark:bg-black/90 backdrop-blur-md shadow-xs border-b border-neutral-200/80 dark:border-neutral-800/80' 
+          : 'bg-white/80 dark:bg-black/80 backdrop-blur-sm border-b border-neutral-100 dark:border-neutral-900'
       }`}
       role="banner"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Logo & Brand */}
         <button 
           onClick={(e) => handleNavClick(e, '#')} 
-          className="flex items-center space-x-3 group text-left cursor-pointer"
+          className="flex items-center space-x-3.5 group text-left cursor-pointer"
           aria-label="Mitchell & Crosby Family Dentistry Home"
         >
           <img 
             src="/logo.png" 
             alt="Mitchell & Crosby Family Dentistry Logo" 
-            className="h-9 sm:h-11 w-auto object-contain shrink-0 dark:brightness-125" 
+            className="h-10 sm:h-12 w-auto object-contain shrink-0 dark:brightness-125" 
           />
           <div className="flex flex-col">
-            <span className="font-heading text-base sm:text-xl font-black tracking-tight text-gray-900 dark:text-white leading-tight">
-              Mitchell & <span className="text-shop-red">Crosby</span>
+            <span className="font-editorial text-lg sm:text-xl font-extrabold tracking-tight text-neutral-900 dark:text-white leading-none">
+              MITCHELL & <span className="text-shop-red">CROSBY</span>
             </span>
-            <span className="text-[11px] sm:text-xs tracking-wider uppercase text-gray-500 dark:text-neutral-400 font-bold">
+            <span className="text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-neutral-500 dark:text-neutral-400 font-semibold mt-1">
               Family & Cosmetic Dentistry
             </span>
           </div>
         </button>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center space-x-7" aria-label="Main Navigation">
+        {/* Desktop Nav Links - SANA Pill Style */}
+        <nav className="hidden lg:flex items-center px-4 py-1.5 rounded-full bg-neutral-100/80 dark:bg-neutral-900/80 border border-neutral-200/60 dark:border-neutral-800/80 backdrop-blur-xs space-x-1" aria-label="Main Navigation">
           {navLinks.map((link) => {
             const isActive = link.target === 'services' && currentPage === 'services';
             return (
               <button
                 key={link.name}
                 onClick={(e) => handleNavClick(e, link.target)}
-                className={`text-sm sm:text-base font-semibold transition-colors cursor-pointer ${
+                className={`px-4 py-1.5 rounded-full text-xs uppercase tracking-wider font-semibold transition-all cursor-pointer ${
                   isActive 
-                    ? 'text-shop-red font-bold' 
-                    : 'text-gray-700 dark:text-neutral-300 hover:text-shop-red dark:hover:text-white'
+                    ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-bold shadow-xs' 
+                    : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-neutral-800/60'
                 }`}
               >
                 {link.name}
@@ -99,12 +99,12 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
         </nav>
 
         {/* Desktop CTAs & Dark Mode Toggle */}
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden md:flex items-center space-x-3.5">
           {/* Dark Mode Toggle Pill */}
           <button
             type="button"
             onClick={onToggleDarkMode}
-            className="flex items-center space-x-2 px-3 py-2 rounded-full border border-gray-200 dark:border-neutral-800 bg-gray-100 dark:bg-[#111111] text-gray-800 dark:text-neutral-200 hover:border-shop-red transition cursor-pointer shadow-xs active:scale-95"
+            className="w-10 h-10 rounded-full border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center text-neutral-700 dark:text-neutral-300 hover:border-shop-red transition cursor-pointer active:scale-95"
             aria-label="Toggle dark mode"
           >
             {darkMode ? (
@@ -117,19 +117,19 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
           {/* Direct Phone Call */}
           <a
             href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
-            className="flex items-center space-x-2 text-gray-700 dark:text-neutral-200 hover:text-shop-red text-sm font-bold transition"
+            className="hidden xl:flex items-center space-x-2 text-neutral-700 dark:text-neutral-200 hover:text-shop-red text-xs uppercase tracking-wider font-bold transition px-3 py-2"
             aria-label={`Call ${BUSINESS_INFO.name} at ${BUSINESS_INFO.phone}`}
           >
-            <Phone className="w-4 h-4 text-shop-red" />
-            <span className="hidden xl:inline">{BUSINESS_INFO.phone}</span>
+            <Phone className="w-3.5 h-3.5 text-shop-red" />
+            <span>{BUSINESS_INFO.phone}</span>
           </a>
 
-          {/* Appointment Request Button */}
+          {/* Appointment Request Pill Button (SANA signature rounded-full) */}
           <button
             onClick={() => onOpenWizard()}
-            className="px-5 py-2.5 rounded-xl bg-shop-red hover:bg-shop-redHover text-white font-bold text-sm transition shadow-md shadow-sky-900/25 active:scale-95 cursor-pointer"
+            className="px-6 py-2.5 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 font-bold text-xs uppercase tracking-wider transition-all shadow-xs active:scale-95 cursor-pointer"
           >
-            Request Appointment
+            Book Appointment
           </button>
         </div>
 
