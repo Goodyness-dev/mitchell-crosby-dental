@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sparkles, Phone, ChevronRight, ChevronDown } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -120,7 +119,7 @@ export default function SmileScrollHero({ onOpenWizard }) {
           ref={headlineRef}
           className="max-w-4xl mx-auto text-center space-y-3 transition-opacity duration-300 pt-4"
         >
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-[11px] font-bold tracking-[0.2em] uppercase text-sky-300">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-[11px] font-bold tracking-[0.2em] uppercase text-sky-300 font-mono">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span>// 01 ESTABLISHED 1953 • CASA GRANDE, AZ</span>
           </div>
@@ -143,29 +142,22 @@ export default function SmileScrollHero({ onOpenWizard }) {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pointer-events-auto">
             <button
               onClick={() => onOpenWizard()}
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-2xl border border-white/25 active:scale-95 cursor-pointer flex items-center justify-center space-x-2.5"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-2xl border border-white/25 active:scale-95 cursor-pointer"
               aria-label="Book Smile Appointment"
             >
-              <Sparkles className="w-4 h-4 text-shop-red" />
-              <span>Book Your Smile Appointment</span>
-              <ChevronRight className="w-4 h-4" />
+              <span>Book Your Smile Appointment →</span>
             </button>
 
             <a
               href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
-              className="w-full sm:w-auto px-7 py-4 rounded-full bg-white/95 hover:bg-white text-neutral-950 font-bold text-xs sm:text-sm uppercase tracking-wider shadow-2xl transition flex items-center justify-center space-x-2 active:scale-95"
+              className="w-full sm:w-auto px-7 py-4 rounded-full bg-white/95 hover:bg-white text-neutral-950 font-bold text-xs sm:text-sm uppercase tracking-wider shadow-2xl transition active:scale-95"
             >
-              <Phone className="w-4 h-4 text-shop-red" />
-              <span>{BUSINESS_INFO.phone}</span>
+              <span>Call {BUSINESS_INFO.phone}</span>
             </a>
           </div>
 
           <div className="inline-flex items-center justify-center space-x-2 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-xs text-neutral-200 font-medium">
-            <div className="flex text-amber-400 text-xs">
-              {'★★★★★'.split('').map((_, i) => (
-                <span key={i}>★</span>
-              ))}
-            </div>
+            <span className="text-amber-400 tracking-wider">★★★★★</span>
             <span>5.0 Google Rating • Over 70 Years Trusted in Casa Grande</span>
           </div>
         </div>
@@ -173,10 +165,9 @@ export default function SmileScrollHero({ onOpenWizard }) {
         {/* Bottom Scroll Prompt */}
         <div 
           ref={scrollIndicatorRef}
-          className="flex flex-col items-center space-y-1 text-[11px] uppercase tracking-[0.25em] font-bold text-neutral-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] pb-2 transition-opacity duration-300"
+          className="flex flex-col items-center space-y-1 text-[11px] uppercase tracking-[0.25em] font-bold text-neutral-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] pb-2 transition-opacity duration-300 font-mono"
         >
-          <span>Scroll to reveal smile</span>
-          <ChevronDown className="w-4 h-4 text-white animate-bounce" />
+          <span>Scroll to reveal smile ↓</span>
         </div>
 
       </div>

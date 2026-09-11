@@ -1,5 +1,4 @@
-﻿import React from 'react';
-import { Sparkles, Camera, ShieldCheck, MapPin, ArrowUpRight } from 'lucide-react';
+import React from 'react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
 const SHOWCASE_ITEMS = [
@@ -74,8 +73,8 @@ export default function ShowcaseSection({ onOpenWizard }) {
                 </div>
 
                 {/* Arrow indicator */}
-                <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-white group-hover:text-neutral-900 transition-all">
-                  <ArrowUpRight className="w-4 h-4" />
+                <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-white group-hover:text-neutral-900 transition-all font-mono font-bold text-sm">
+                  <span>↗</span>
                 </div>
 
                 {/* Bottom Overlay Info */}
@@ -91,8 +90,8 @@ export default function ShowcaseSection({ onOpenWizard }) {
 
               {/* Card Meta Footer */}
               <div className="p-5 flex items-center justify-between text-xs font-semibold text-neutral-600 dark:text-neutral-400">
-                <span className="flex items-center space-x-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-shop-red" />
+                <span className="flex items-center space-x-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
                   <span>Mitchell & Crosby Dentistry</span>
                 </span>
                 <span className="group-hover:text-shop-red font-bold uppercase tracking-wider transition-colors">

@@ -1,6 +1,5 @@
 import React from 'react';
 import SmileScrollHero from './SmileScrollHero';
-import { Sparkles, ShieldCheck, HeartHandshake, CheckCircle2 } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
 export default function Hero({ onOpenWizard }) {

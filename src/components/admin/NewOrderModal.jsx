@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { X, Plus, Sparkles, Loader2, Check } from 'lucide-react';
 import { quotesApi } from '../../services/api';
 
 export default function NewOrderModal({ isOpen, onClose, onCreated }) {
@@ -12,9 +11,7 @@ export default function NewOrderModal({ isOpen, onClose, onCreated }) {
     serviceCategory: 'Restorative & Implants',
     detailedService: 'CEREC® Same Day Crowns',
     details: '',
-    timeline: 'As soon as possible',
-    needsTowing: false,
-    needsShuttle: false
+    timeline: 'As soon as possible'
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,13 +32,13 @@ export default function NewOrderModal({ isOpen, onClose, onCreated }) {
     try {
       const payload = {
         ...formData,
-        id: `QUOTE-MANUAL-${Date.now().toString().slice(-4)}`
+        id: `APPT-MANUAL-${Date.now().toString().slice(-4)}`
       };
       const res = await quotesApi.submitPublicQuote(payload);
       if (onCreated) onCreated(res.quote || payload);
       onClose();
     } catch (err) {
-      setError(err.data?.error || err.message || 'Failed to create quote');
+      setError(err.data?.error || err.message || 'Failed to create record');
     } finally {
       setIsSubmitting(false);
     }
@@ -50,31 +47,31 @@ export default function NewOrderModal({ isOpen, onClose, onCreated }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
       <div 
-        className="relative w-full max-w-lg bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 my-auto"
+        className="relative w-full max-w-lg bg-white border border-slate-200 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-5 my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between border-b border-slate-200 pb-4">
           <div className="flex items-center space-x-2.5">
-            <div className="w-9 h-9 rounded-xl bg-shop-light border border-shop-border flex items-center justify-center text-shop-red">
-              <Plus className="w-4 h-4" />
+            <div className="w-8 h-8 rounded-xl bg-red-50 border border-red-200 flex items-center justify-center text-shop-red font-mono font-bold text-xs">
+              MC
             </div>
-            <h2 className="text-xl font-black font-heading text-slate-900">Record Manual / Walk-In Appointment</h2>
+            <h2 className="text-lg sm:text-xl font-black font-heading text-slate-900">Record Walk-In Appointment</h2>
           </div>
-          <button onClick={onClose} className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg cursor-pointer">
-            <X className="w-5 h-5" />
+          <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-700 rounded-lg cursor-pointer text-sm font-bold">
+            ✕
           </button>
         </div>
 
         {error && (
-          <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs">
-            {error}
+          <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-mono">
+            [!] {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Patient Name *</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1 font-mono uppercase tracking-wider">Patient Name *</label>
               <input
                 type="text"
                 value={formData.name}
@@ -85,55 +82,32 @@ export default function NewOrderModal({ isOpen, onClose, onCreated }) {
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Phone</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1 font-mono uppercase tracking-wider">Phone</label>
               <input
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 placeholder="(520) 000-0000"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none focus:border-shop-red focus:bg-white"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none focus:border-shop-red focus:bg-white font-mono"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">Patient Email *</label>
+            <label className="block text-xs font-bold text-slate-700 mb-1 font-mono uppercase tracking-wider">Patient Email *</label>
             <input
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               placeholder="patient@email.com"
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none focus:border-shop-red focus:bg-white"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none focus:border-shop-red focus:bg-white font-mono"
               required
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Patient / Case Type</label>
-              <input
-                type="text"
-                value={formData.make}
-                onChange={(e) => setFormData({ ...formData, make: e.target.value })}
-                placeholder="e.g. New Patient / Emergency"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none focus:border-shop-red focus:bg-white"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Treatment / Area Details</label>
-              <input
-                type="text"
-                value={formData.modelAndYear}
-                onChange={(e) => setFormData({ ...formData, modelAndYear: e.target.value })}
-                placeholder="e.g. Upper Left Molar, Full Cleaning"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none focus:border-shop-red focus:bg-white"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Category</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1 font-mono uppercase tracking-wider">Category</label>
               <select
                 value={formData.serviceCategory}
                 onChange={(e) => setFormData({ ...formData, serviceCategory: e.target.value })}
@@ -147,7 +121,7 @@ export default function NewOrderModal({ isOpen, onClose, onCreated }) {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Service / Procedure</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1 font-mono uppercase tracking-wider">Service / Procedure</label>
               <input
                 type="text"
                 value={formData.detailedService}
@@ -159,12 +133,12 @@ export default function NewOrderModal({ isOpen, onClose, onCreated }) {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">Notes / Symptoms</label>
+            <label className="block text-xs font-bold text-slate-700 mb-1 font-mono uppercase tracking-wider">Notes / Clinical Observations</label>
             <textarea
               rows={2}
               value={formData.details}
               onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-              placeholder="Walk-in notes, customer phone notes..."
+              placeholder="Walk-in intake notes, symptoms or requested timeline..."
               className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-900 outline-none focus:border-shop-red focus:bg-white"
             />
           </div>
@@ -173,17 +147,16 @@ export default function NewOrderModal({ isOpen, onClose, onCreated }) {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-slate-500 hover:text-slate-800 text-xs font-bold cursor-pointer"
+              className="px-4 py-2 rounded-xl text-slate-500 hover:text-slate-800 text-xs font-bold cursor-pointer font-mono"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2.5 rounded-xl bg-shop-red hover:bg-shop-redHover text-white text-xs font-bold transition flex items-center space-x-1.5 shadow-md shadow-shop-red/20 active:scale-95 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-shop-red hover:bg-shop-redHover text-white text-xs font-bold transition flex items-center space-x-1.5 shadow-md shadow-shop-red/20 active:scale-95 cursor-pointer font-mono"
             >
-              {isSubmitting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
-              <span>Save to Orders</span>
+              {isSubmitting ? <span>↻ Saving...</span> : <span>Save Appointment →</span>}
             </button>
           </div>
         </form>

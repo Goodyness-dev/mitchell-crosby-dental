@@ -1,5 +1,4 @@
-﻿import React from 'react';
-import { Star, Quote, ArrowRight, CheckCircle2 } from 'lucide-react';
+import React from 'react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
 export default function ReviewsSection({ onOpenWizard }) {
@@ -64,8 +63,8 @@ export default function ReviewsSection({ onOpenWizard }) {
               </div>
             </div>
 
-            <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-xs font-semibold border border-emerald-200 dark:border-emerald-800">
-              <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-xs font-semibold border border-emerald-200 dark:border-emerald-800">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
               <span>Verified Dental Patient</span>
             </div>
           </div>

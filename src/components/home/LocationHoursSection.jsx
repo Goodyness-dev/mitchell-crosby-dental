@@ -1,5 +1,4 @@
 import React from 'react';
-import { MapPin, Clock, Navigation, Phone, ExternalLink, Mail, CheckCircle2 } from 'lucide-react';
 import { BUSINESS_INFO, isOpenNow } from '../../data/businessData';
 
 export default function LocationHoursSection({ onOpenWizard }) {
@@ -39,10 +38,10 @@ export default function LocationHoursSection({ onOpenWizard }) {
                     <span className={`font-bold text-sm sm:text-base block ${shopOpen ? 'text-emerald-600 dark:text-emerald-400' : 'text-neutral-600 dark:text-neutral-400'}`}>
                       {shopOpen ? 'Practice Open Now' : 'Practice Currently Closed'}
                     </span>
-                    <span className="text-xs text-neutral-500 dark:text-neutral-400">Today is {currentDayName}</span>
+                    <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono">Today is {currentDayName}</span>
                   </div>
                 </div>
-                <Clock className="w-5 h-5 text-neutral-400" aria-hidden="true" />
+                <span className="text-xs font-mono font-bold text-neutral-400 uppercase tracking-wider">// MON-THU</span>
               </div>
 
               {/* Hours Table */}
@@ -95,19 +94,17 @@ export default function LocationHoursSection({ onOpenWizard }) {
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
                   href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
-                  className="flex-1 py-3 px-4 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 font-bold text-xs uppercase tracking-wider flex items-center justify-center space-x-2 transition"
+                  className="flex-1 py-3 px-4 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 font-bold text-xs uppercase tracking-wider flex items-center justify-center transition"
                 >
-                  <Phone className="w-3.5 h-3.5 text-shop-red" />
                   <span>Call {BUSINESS_INFO.phone}</span>
                 </a>
                 <a
                   href="https://maps.google.com/?q=721+N+Olive+Ave+Casa+Grande+AZ+85122"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="py-3 px-5 rounded-full border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 font-bold text-xs uppercase tracking-wider flex items-center justify-center space-x-2 transition"
+                  className="py-3 px-5 rounded-full border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 font-bold text-xs uppercase tracking-wider flex items-center justify-center transition"
                 >
-                  <Navigation className="w-3.5 h-3.5 text-shop-red" />
-                  <span>Directions</span>
+                  <span>Get Directions ↗</span>
                 </a>
               </div>
             </div>
@@ -132,8 +129,7 @@ export default function LocationHoursSection({ onOpenWizard }) {
                 rel="noopener noreferrer"
                 className="font-bold text-shop-red hover:underline inline-flex items-center space-x-1"
               >
-                <span>Open in Maps</span>
-                <ExternalLink className="w-3 h-3" />
+                <span>Open in Maps ↗</span>
               </a>
             </div>
           </div>

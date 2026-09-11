@@ -1,19 +1,4 @@
-﻿import React from 'react';
-import { 
-  Phone, 
-  MapPin, 
-  Clock, 
-  ChevronRight, 
-  ArrowLeft, 
-  FileText, 
-  Download, 
-  Sparkles, 
-  ShieldCheck, 
-  Heart, 
-  Users, 
-  Calendar,
-  ExternalLink
-} from 'lucide-react';
+import React from 'react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
 const PATIENT_FORMS = [
@@ -61,18 +46,16 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
               onClick={onBackToHome}
               className="hover:text-shop-red transition font-semibold flex items-center space-x-1 cursor-pointer"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to Home</span>
+              <span>← Back to Home</span>
             </button>
-            <ChevronRight className="w-3.5 h-3.5 text-neutral-400" />
+            <span className="text-neutral-400">/</span>
             <span className="font-bold text-neutral-900 dark:text-white">About the Practice</span>
           </div>
 
           <a 
             href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
-            className="flex items-center space-x-1.5 font-bold text-shop-red hover:underline"
+            className="flex items-center space-x-1.5 font-bold text-shop-red hover:underline font-mono"
           >
-            <Phone className="w-3.5 h-3.5" />
             <span>{BUSINESS_INFO.phone}</span>
           </a>
         </div>
@@ -101,9 +84,8 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
             
             {/* Story Card 1: Rich Community History */}
             <div className="p-8 sm:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800/80 space-y-4 shadow-xs">
-              <div className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-shop-red">
-                <Users className="w-4 h-4" />
-                <span>Deep Community Roots</span>
+              <div className="inline-flex items-center space-x-2 text-xs font-mono font-bold uppercase tracking-wider text-shop-red">
+                <span>// 01 HERITAGE</span>
               </div>
               <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-neutral-950 dark:text-white">
                 A Practice with a Rich Community History
@@ -118,9 +100,8 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
 
             {/* Story Card 2: Advanced Technology */}
             <div className="p-8 sm:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800/80 space-y-4 shadow-xs">
-              <div className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-shop-red">
-                <Sparkles className="w-4 h-4" />
-                <span>Clinical Excellence</span>
+              <div className="inline-flex items-center space-x-2 text-xs font-mono font-bold uppercase tracking-wider text-shop-red">
+                <span>// 02 INNOVATION</span>
               </div>
               <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-neutral-950 dark:text-white">
                 Cutting-Edge Technology & Top Materials
@@ -135,9 +116,8 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
 
             {/* Story Card 3: Patient-First Values */}
             <div className="p-8 sm:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800/80 space-y-4 shadow-xs">
-              <div className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-shop-red">
-                <Heart className="w-4 h-4" />
-                <span>Patients First</span>
+              <div className="inline-flex items-center space-x-2 text-xs font-mono font-bold uppercase tracking-wider text-shop-red">
+                <span>// 03 VALUES</span>
               </div>
               <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-neutral-950 dark:text-white">
                 Putting Our Patients' Needs First
@@ -233,7 +213,7 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
                 <h3 className="font-editorial font-bold text-base sm:text-lg text-neutral-900 dark:text-white">
                   Regular Schedule
                 </h3>
-                <Clock className="w-4 h-4 text-shop-red" />
+                <span className="text-xs font-mono text-neutral-400 font-bold">// HOURS</span>
               </div>
 
               <div className="divide-y divide-neutral-200/60 dark:divide-neutral-800 text-xs sm:text-sm">
@@ -266,9 +246,8 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
               <div className="pt-2 border-t border-neutral-200/60 dark:border-neutral-800">
                 <a
                   href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
-                  className="w-full py-3 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-bold text-xs uppercase tracking-wider flex items-center justify-center space-x-2 transition"
+                  className="w-full py-3 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-bold text-xs uppercase tracking-wider flex items-center justify-center transition font-mono"
                 >
-                  <Phone className="w-3.5 h-3.5 text-shop-red" />
                   <span>Call {BUSINESS_INFO.phone}</span>
                 </a>
               </div>
@@ -304,9 +283,9 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center text-shop-red group-hover:bg-shop-red group-hover:text-white transition-colors">
-                      <FileText className="w-5 h-5" />
-                    </div>
+                    <span className="font-mono text-xs font-bold px-2.5 py-1 rounded bg-shop-red/10 text-shop-red border border-shop-red/20">
+                      PDF
+                    </span>
                     <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400">
                       {form.type}
                     </span>
@@ -322,7 +301,7 @@ export default function AboutPracticePage({ onOpenWizard, onBackToHome }) {
 
                 <div className="pt-4 mt-4 border-t border-neutral-100 dark:border-neutral-900 flex items-center justify-between text-xs font-bold text-shop-red">
                   <span>Download Document</span>
-                  <Download className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
+                  <span className="transform group-hover:translate-y-0.5 transition-transform font-mono">↓</span>
                 </div>
               </a>
             ))}

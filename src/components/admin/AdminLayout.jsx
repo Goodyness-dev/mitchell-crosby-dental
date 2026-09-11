@@ -1,9 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  LayoutDashboard, ClipboardList, MessageSquare, 
-  Settings, LogOut, ExternalLink, Search, 
-  Bell, Mail, Sparkles, Menu, X, Plus, Calendar, ShieldCheck
-} from 'lucide-react';
 import DashboardOverview from './DashboardOverview';
 import OrdersView from './OrdersView';
 import InboxView from './InboxView';
@@ -14,7 +9,7 @@ import { authApi, quotesApi } from '../../services/api';
 import { BUSINESS_INFO } from '../../data/businessData';
 
 function getInitials(name) {
-  if (!name) return 'AD';
+  if (!name) return 'MC';
   const parts = name.trim().split(/\s+/);
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
@@ -37,20 +32,20 @@ export default function AdminLayout({ user, onLogout, onBackToSite }) {
   };
 
   const navItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'orders', label: 'Orders & Quotes', icon: ClipboardList, badge: stats.total > 0 ? stats.total : null },
-    { id: 'inbox', label: 'Customer Inbox', icon: MessageSquare, badge: stats.pending > 0 ? stats.pending : null },
+    { id: 'dashboard', label: 'Clinical Overview', tag: '// 01' },
+    { id: 'orders', label: 'Appointments & Quotes', tag: '// 02', badge: stats.total > 0 ? stats.total : null },
+    { id: 'inbox', label: 'Patient Inbox', tag: '// 03', badge: stats.pending > 0 ? stats.pending : null },
   ];
 
   return (
-    <div className="min-h-screen bg-[#f4f6f8] text-slate-900 font-sans flex antialiased">
+    <div className="min-h-screen bg-[#f4f6f8] text-slate-900 font-sans flex antialiased overflow-x-hidden">
       {/* ------------------------------------------------------------- */}
       {/* LEFT SIDEBAR (Desktop & Mobile Drawer)                        */}
       {/* ------------------------------------------------------------- */}
       {/* Backdrop for mobile */}
       {isMobileSidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black/40 z-40 lg:hidden backdrop-blur-xs"
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-xs transition-opacity"
           onClick={() => setIsMobileSidebarOpen(false)}
         />
       )}
@@ -58,38 +53,37 @@ export default function AdminLayout({ user, onLogout, onBackToSite }) {
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-200/80 flex flex-col justify-between transition-transform duration-300 ease-in-out ${
         isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
       }`}>
-        <div className="p-6 space-y-8 flex-1 overflow-y-auto">
+        <div className="p-5 sm:p-6 space-y-6 flex-1 overflow-y-auto">
           {/* Logo Brand */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3 min-w-0">
-              <div className="w-10 h-10 shrink-0 rounded-2xl bg-shop-red text-white flex items-center justify-center shadow-md shadow-shop-red/30">
-                <Sparkles className="w-5 h-5" />
+              <div className="w-10 h-10 shrink-0 rounded-2xl bg-shop-red text-white flex items-center justify-center shadow-md shadow-shop-red/30 font-bold font-mono text-sm">
+                MC
               </div>
               <div className="min-w-0 flex-1">
-                <span className="font-heading font-black text-base tracking-tight text-slate-900 block leading-tight truncate" title={BUSINESS_INFO.name}>
+                <span className="font-heading font-black text-sm sm:text-base tracking-tight text-slate-900 block leading-tight truncate" title={BUSINESS_INFO.name}>
                   {BUSINESS_INFO.name}
                 </span>
-                <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider block">
-                  Practice Staff Admin
+                <span className="text-[10px] sm:text-[11px] text-slate-400 font-mono font-semibold uppercase tracking-wider block">
+                  Staff Management
                 </span>
               </div>
             </div>
             <button 
               onClick={() => setIsMobileSidebarOpen(false)}
-              className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-600 shrink-0"
+              className="lg:hidden w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 flex items-center justify-center font-bold text-sm shrink-0 cursor-pointer"
             >
-              <X className="w-5 h-5" />
+              ✕
             </button>
           </div>
 
           {/* MENU Section */}
           <div className="space-y-2">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-3 block">
-              Menu
+            <span className="text-[10px] font-mono font-black text-slate-400 uppercase tracking-widest px-3 block">
+              // NAVIGATION
             </span>
             <nav className="space-y-1">
               {navItems.map((item) => {
-                const Icon = item.icon;
                 const isActive = activeTab === item.id;
                 return (
                   <button
@@ -98,18 +92,20 @@ export default function AdminLayout({ user, onLogout, onBackToSite }) {
                       setActiveTab(item.id);
                       setIsMobileSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-xs sm:text-sm font-bold transition ${
+                    className={`w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-xs sm:text-sm font-bold transition cursor-pointer ${
                       isActive
                         ? 'bg-shop-red text-white shadow-md shadow-shop-red/25'
                         : 'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900'
                     }`}
                   >
-                    <div className="flex items-center space-x-3">
-                      <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                    <div className="flex items-center space-x-2.5">
+                      <span className={`font-mono text-[10px] ${isActive ? 'text-white/80' : 'text-slate-400'}`}>
+                        {item.tag}
+                      </span>
                       <span>{item.label}</span>
                     </div>
                     {item.badge && (
-                      <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
+                      <span className={`text-[10px] font-mono font-black px-2 py-0.5 rounded-full ${
                         isActive
                           ? 'bg-white/25 text-white'
                           : 'bg-shop-light text-shop-red border border-shop-border'
@@ -125,8 +121,8 @@ export default function AdminLayout({ user, onLogout, onBackToSite }) {
 
           {/* GENERAL Section */}
           <div className="space-y-2">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-3 block">
-              General
+            <span className="text-[10px] font-mono font-black text-slate-400 uppercase tracking-widest px-3 block">
+              // MANAGEMENT
             </span>
             <nav className="space-y-1">
               <button
@@ -134,32 +130,35 @@ export default function AdminLayout({ user, onLogout, onBackToSite }) {
                   setActiveTab('settings');
                   setIsMobileSidebarOpen(false);
                 }}
-                className={`w-full flex items-center space-x-3 px-3.5 py-3 rounded-2xl text-xs sm:text-sm font-bold transition ${
+                className={`w-full flex items-center space-x-2.5 px-3.5 py-3 rounded-2xl text-xs sm:text-sm font-bold transition cursor-pointer ${
                   activeTab === 'settings'
                     ? 'bg-shop-red text-white shadow-md shadow-shop-red/25'
                     : 'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900'
                 }`}
               >
-                <Settings className={`w-4 h-4 ${activeTab === 'settings' ? 'text-white' : 'text-slate-400'}`} />
-                <span>Settings & Alerts</span>
+                <span className={`font-mono text-[10px] ${activeTab === 'settings' ? 'text-white/80' : 'text-slate-400'}`}>
+                  // 04
+                </span>
+                <span>Practice Settings</span>
               </button>
 
               <button
                 onClick={onBackToSite}
-                className="w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 transition"
+                className="w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 transition cursor-pointer"
               >
-                <div className="flex items-center space-x-3">
-                  <ExternalLink className="w-4 h-4 text-slate-400" />
-                  <span>View Customer Site</span>
+                <div className="flex items-center space-x-2.5">
+                  <span className="font-mono text-[10px] text-slate-400">// 05</span>
+                  <span>View Patient Site</span>
                 </div>
+                <span className="text-slate-400 text-xs">↗</span>
               </button>
 
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center space-x-3 px-3.5 py-3 rounded-2xl text-xs sm:text-sm font-bold text-red-600 hover:bg-red-50 transition"
+                className="w-full flex items-center space-x-2.5 px-3.5 py-3 rounded-2xl text-xs sm:text-sm font-bold text-red-600 hover:bg-red-50 transition cursor-pointer font-mono"
               >
-                <LogOut className="w-4 h-4 text-red-500" />
-                <span>Logout</span>
+                <span>[LOGOUT]</span>
+                <span>Sign Out</span>
               </button>
             </nav>
           </div>
@@ -168,17 +167,16 @@ export default function AdminLayout({ user, onLogout, onBackToSite }) {
         {/* Bottom Banner Card */}
         <div className="p-4 m-4 rounded-2xl bg-gradient-to-br from-shop-red to-shop-redHover text-white space-y-2 shadow-lg shadow-shop-red/20">
           <div className="flex items-center space-x-2">
-            <span className="text-base">📱</span>
-            <h5 className="font-heading font-black text-xs truncate">{BUSINESS_INFO.name}</h5>
+            <span className="font-mono text-[10px] font-bold bg-white/20 px-2 py-0.5 rounded">MOBILE READY</span>
           </div>
           <p className="text-[11px] text-white/90 leading-snug">
-            Manage customer quotes and communications directly on your phone from any browser.
+            Manage patient consultations, treatment plans, and schedule visits on mobile or desktop.
           </p>
           <button
             onClick={onBackToSite}
-            className="w-full py-2 bg-white hover:bg-slate-50 text-slate-900 font-bold text-xs rounded-xl transition shadow-xs cursor-pointer"
+            className="w-full py-2 bg-white hover:bg-slate-50 text-slate-900 font-bold text-xs rounded-xl transition shadow-xs cursor-pointer font-mono"
           >
-            Visit Customer Site
+            Visit Public Website →
           </button>
         </div>
       </aside>
@@ -188,66 +186,58 @@ export default function AdminLayout({ user, onLogout, onBackToSite }) {
       {/* ------------------------------------------------------------- */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* TOP BAR */}
-        <header className="h-20 bg-white border-b border-slate-200/80 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+        <header className="h-16 sm:h-20 bg-white border-b border-slate-200/80 px-3.5 sm:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
           {/* Left: Mobile hamburger & Search */}
-          <div className="flex items-center space-x-3 flex-1 max-w-md">
+          <div className="flex items-center space-x-2 sm:space-x-3 flex-1 min-w-0 max-w-md">
             <button
               onClick={() => setIsMobileSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100"
+              className="lg:hidden w-9 h-9 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 flex items-center justify-center font-bold text-base shrink-0 cursor-pointer"
+              aria-label="Open navigation menu"
             >
-              <Menu className="w-5 h-5" />
+              ☰
             </button>
 
-            <div className="relative flex-1">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <div className="relative flex-1 hidden sm:block">
               <input
                 type="text"
-                placeholder="Search orders, customers, or services..."
-                className="w-full bg-[#f8fafc] border border-slate-200 focus:border-shop-red focus:bg-white rounded-2xl pl-10 pr-12 py-2 text-xs text-slate-800 placeholder-slate-400 outline-none transition"
+                placeholder="Search consultations, patients, procedures..."
+                className="w-full bg-[#f8fafc] border border-slate-200 focus:border-shop-red focus:bg-white rounded-2xl px-4 py-2 text-xs text-slate-800 placeholder-slate-400 outline-none transition"
               />
-              <span className="hidden sm:inline-block absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 bg-white border border-slate-200 px-1.5 py-0.5 rounded shadow-2xs">
-                ⌘F
-              </span>
             </div>
+
+            <span className="sm:hidden font-heading font-black text-sm text-slate-900 truncate">
+              {activeTab === 'dashboard' ? 'Overview' : activeTab === 'orders' ? 'Appointments' : activeTab === 'inbox' ? 'Inbox' : 'Settings'}
+            </span>
           </div>
 
           {/* Right: Notifications & Profile */}
-          <div className="flex items-center space-x-3 sm:space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
             {/* Quick Inbox Shortcut */}
             <button
               onClick={() => setActiveTab('inbox')}
-              className="w-10 h-10 rounded-2xl border border-slate-200/80 hover:bg-slate-50 flex items-center justify-center text-slate-600 relative transition"
-              title="Customer Inbox"
+              className="h-9 sm:h-10 px-3 rounded-2xl border border-slate-200/80 hover:bg-slate-50 flex items-center space-x-1.5 text-slate-700 text-xs font-mono font-bold transition cursor-pointer"
+              title="Patient Inbox"
             >
-              <Mail className="w-4 h-4" />
+              <span>✉</span>
+              <span className="hidden sm:inline">INBOX</span>
               {stats.pending > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-shop-red text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
+                <span className="w-4 h-4 rounded-full bg-shop-red text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
                   {stats.pending}
                 </span>
               )}
             </button>
 
-            {/* Notification Bell */}
-            <button
-              onClick={() => setActiveTab('orders')}
-              className="w-10 h-10 rounded-2xl border border-slate-200/80 hover:bg-slate-50 flex items-center justify-center text-slate-600 relative transition"
-              title="Notifications"
-            >
-              <Bell className="w-4 h-4" />
-              <span className="absolute 2.5 2.5 w-2 h-2 rounded-full bg-shop-red" />
-            </button>
-
             {/* Admin Profile Card */}
-            <div className="flex items-center space-x-3 pl-2 border-l border-slate-200">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-shop-red to-shop-redHover text-white font-black text-sm flex items-center justify-center shadow-sm">
+            <div className="flex items-center space-x-2.5 pl-2 border-l border-slate-200">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-shop-red to-shop-redHover text-white font-black text-xs sm:text-sm flex items-center justify-center shadow-sm shrink-0 font-mono">
                 {getInitials(BUSINESS_INFO.owner?.name || BUSINESS_INFO.name)}
               </div>
-              <div className="hidden sm:block text-left">
+              <div className="hidden md:block text-left">
                 <h4 className="text-xs font-black text-slate-900 leading-tight truncate max-w-[130px]">
-                  {BUSINESS_INFO.owner?.name || 'Shop Admin'}
+                  {BUSINESS_INFO.owner?.name || 'Dr. Mitchell'}
                 </h4>
-                <span className="text-[11px] text-slate-400 block leading-tight truncate max-w-[130px]">
-                  {BUSINESS_INFO.address?.city ? `${BUSINESS_INFO.address.city}, ${BUSINESS_INFO.address.state || ''}` : 'Executive'}
+                <span className="text-[10px] text-slate-400 block leading-tight truncate max-w-[130px] font-mono">
+                  {BUSINESS_INFO.address?.city || 'Casa Grande'}
                 </span>
               </div>
             </div>
@@ -255,7 +245,7 @@ export default function AdminLayout({ user, onLogout, onBackToSite }) {
         </header>
 
         {/* BODY CANVAS */}
-        <main className="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto overflow-x-hidden">
           {activeTab === 'dashboard' && (
             <DashboardOverview 
               onNavigateTab={(tab) => setActiveTab(tab)}

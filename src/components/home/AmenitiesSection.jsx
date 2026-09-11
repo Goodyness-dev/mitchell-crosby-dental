@@ -1,27 +1,6 @@
 import React from 'react';
-import { 
-  Sparkles, 
-  ShieldCheck, 
-  Smile, 
-  Zap, 
-  HeartHandshake, 
-  Clock, 
-  FileCheck, 
-  CreditCard 
-} from 'lucide-react';
 import { AMENITIES } from '../../data/amenitiesData';
 import { BUSINESS_INFO } from '../../data/businessData';
-
-const ICON_MAP = {
-  Sparkles,
-  ShieldCheck,
-  Smile,
-  Zap,
-  HeartHandshake,
-  Clock,
-  FileCheck,
-  CreditCard
-};
 
 export default function AmenitiesSection({ onOpenWizard }) {
   return (
@@ -51,9 +30,9 @@ export default function AmenitiesSection({ onOpenWizard }) {
             </div>
 
             <div className="p-6 rounded-2xl bg-stone-50 dark:bg-[#0c0c0c] border border-gray-200 dark:border-neutral-800">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center space-x-3">
-                <Sparkles className="w-5 h-5 text-shop-red shrink-0" aria-hidden="true" />
-                <span>Relaxed, Anxiety-Free Dental Experience</span>
+              <span className="font-mono text-xs font-bold text-shop-red block mb-1">// PATIENT COMFORT</span>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                Relaxed, Anxiety-Free Dental Experience
               </h3>
               <p className="text-gray-600 dark:text-neutral-300 text-sm sm:text-base mt-2 leading-relaxed">
                 We believe dental visits should be calm and stress-free. Enjoy comfortable treatment bays, gentle techniques, low-dose digital imaging, and transparent explanations every step of the way.
@@ -64,8 +43,7 @@ export default function AmenitiesSection({ onOpenWizard }) {
           {/* Right: Numbered Dental Features Grid */}
           <div>
             <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-shop-light border border-shop-border text-xs font-bold text-shop-red uppercase tracking-wider mb-3">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Modern Clinical Excellence</span>
+              <span className="font-mono font-bold text-shop-red">// CLINICAL EXCELLENCE</span>
             </div>
 
             <h2 id="amenities-heading" className="text-3xl sm:text-4xl lg:text-5xl font-black font-heading text-gray-900 dark:text-white tracking-tight mb-3">
@@ -77,18 +55,16 @@ export default function AmenitiesSection({ onOpenWizard }) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {AMENITIES.map((feature, idx) => {
-                const Icon = ICON_MAP[feature.icon] || Sparkles;
                 return (
                   <div 
                     key={idx} 
                     className="p-5 rounded-2xl border border-gray-200 dark:border-neutral-800 hover:border-shop-border hover:shadow-md transition-all bg-stone-50/60 dark:bg-[#0c0c0c]"
                   >
-                    <div className="flex items-center space-x-3 mb-2.5">
-                      <div className="w-9 h-9 rounded-xl bg-shop-light text-shop-red flex items-center justify-center shrink-0">
-                        <Icon className="w-5 h-5" aria-hidden="true" />
-                      </div>
-                      <h3 className="font-bold text-gray-900 dark:text-white text-sm sm:text-base">{feature.title}</h3>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-mono text-[11px] font-bold text-shop-red">// 0{idx + 1}</span>
+                      <span className="text-neutral-400 font-mono text-xs">→</span>
                     </div>
+                    <h3 className="font-bold text-gray-900 dark:text-white text-sm sm:text-base mb-1">{feature.title}</h3>
                     <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">{feature.description}</p>
                   </div>
                 );

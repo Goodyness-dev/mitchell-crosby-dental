@@ -15,7 +15,6 @@ import AboutPracticePage from './components/about/AboutPracticePage';
 import QuoteWizardModal from './components/wizard/QuoteWizardModal';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminLogin from './components/admin/AdminLogin';
-import { Phone, Calendar } from 'lucide-react';
 import { BUSINESS_INFO } from './data/businessData';
 import { authApi, getStoredToken } from './services/api';
 
@@ -268,17 +267,16 @@ export default function App() {
       <div className={`fixed bottom-0 left-0 right-0 z-30 sm:hidden ${darkMode ? 'bg-black/95 border-neutral-800' : 'bg-white/95 border-gray-200'} backdrop-blur-md border-t p-2.5 flex items-center gap-2.5 shadow-lg`}>
         <a
           href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
-          className={`flex-1 py-3 px-3.5 rounded-xl ${darkMode ? 'bg-[#111111] text-white border-neutral-800' : 'bg-gray-100 text-gray-900 border-gray-200'} font-bold text-sm flex items-center justify-center space-x-2 border active:scale-95 transition`}
+          className={`flex-1 py-3 px-3.5 rounded-xl ${darkMode ? 'bg-[#111111] text-white border-neutral-800' : 'bg-gray-100 text-gray-900 border-gray-200'} font-bold text-xs uppercase tracking-wider flex items-center justify-center font-mono border active:scale-95 transition`}
         >
-          <Phone className="w-4 h-4 text-shop-red" />
-          <span>Call Office</span>
+          <span>Call (520) 836-7111</span>
         </a>
         <button
           onClick={() => handleOpenWizard()}
-          className="flex-1 py-3 px-3.5 rounded-xl bg-shop-red hover:bg-shop-redHover text-white font-bold text-sm flex items-center justify-center space-x-2 shadow-sm active:scale-95 transition cursor-pointer"
+          className="flex-1 py-3 px-3.5 rounded-xl bg-shop-red hover:bg-shop-redHover text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center space-x-1.5 shadow-sm active:scale-95 transition cursor-pointer"
         >
-          <Calendar className="w-4 h-4" />
           <span>Book Visit</span>
+          <span>→</span>
         </button>
       </div>
     </div>

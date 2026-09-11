@@ -3,34 +3,7 @@ import {
   SERVICES, 
   SERVICE_CATEGORIES 
 } from '../../data/servicesData';
-import { 
-  Sparkles, 
-  ShieldCheck, 
-  Smile, 
-  Activity, 
-  Award, 
-  Zap, 
-  HeartHandshake, 
-  AlertCircle, 
-  CalendarCheck, 
-  ArrowRight, 
-  ArrowLeft,
-  Search,
-  Phone
-} from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
-
-const ICON_MAP = {
-  Sparkles,
-  ShieldCheck,
-  Smile,
-  Activity,
-  Award,
-  Zap,
-  HeartHandshake,
-  AlertCircle,
-  CalendarCheck
-};
 
 export default function AllServicesPage({ onOpenWizard, onBackToHome }) {
   const [selectedCategory, setSelectedCategory] = useState('All Services');
@@ -56,21 +29,18 @@ export default function AllServicesPage({ onOpenWizard, onBackToHome }) {
         <div className="flex items-center justify-between pb-6 border-b border-gray-200 dark:border-neutral-800 mb-12">
           <button
             onClick={onBackToHome}
-            className="inline-flex items-center space-x-2 text-gray-700 dark:text-neutral-300 hover:text-gray-900 dark:hover:text-white bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-neutral-800 hover:border-gray-300 px-5 py-2.5 rounded-xl text-sm sm:text-base font-bold transition shadow-sm cursor-pointer"
-            aria-label="Back to Homepage"
+            className="inline-flex items-center space-x-2 text-sm sm:text-base font-bold text-gray-700 dark:text-neutral-300 hover:text-shop-red transition cursor-pointer"
           >
-            <ArrowLeft className="w-5 h-5 text-shop-red" />
-            <span>Back to Home</span>
+            <span>← Back to Home</span>
           </button>
 
           <div className="flex items-center space-x-3 text-sm sm:text-base">
             <span className="text-gray-500 dark:text-neutral-400 hidden sm:inline">Have questions?</span>
             <a
               href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
-              className="text-gray-900 dark:text-white font-bold hover:text-shop-red flex items-center space-x-1.5 transition"
+              className="text-gray-900 dark:text-white font-bold hover:text-shop-red flex items-center space-x-1.5 transition font-mono"
               aria-label={`Call ${BUSINESS_INFO.name}: ${BUSINESS_INFO.phone}`}
             >
-              <Phone className="w-4 h-4 text-shop-red" />
               <span>{BUSINESS_INFO.phone}</span>
             </a>
           </div>
@@ -134,8 +104,8 @@ export default function AllServicesPage({ onOpenWizard, onBackToHome }) {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredServices.map((service) => {
-            const IconComponent = ICON_MAP[service.icon] || Sparkles;
+          {filteredServices.map((service, index) => {
+            const numStr = (index + 1).toString().padStart(2, '0');
 
             return (
               <article
@@ -144,9 +114,9 @@ export default function AllServicesPage({ onOpenWizard, onBackToHome }) {
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-shop-light text-shop-red flex items-center justify-center group-hover:bg-shop-red group-hover:text-white transition-colors">
-                      <IconComponent className="w-7 h-7" />
-                    </div>
+                    <span className="font-mono text-2xl font-extrabold text-neutral-400 dark:text-neutral-600 group-hover:text-shop-red transition-colors">
+                      // {numStr}
+                    </span>
                     <span className="text-xs sm:text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-md bg-gray-100 dark:bg-[#161616] text-gray-600 dark:text-neutral-300">
                       {service.category}
                     </span>
@@ -165,7 +135,7 @@ export default function AllServicesPage({ onOpenWizard, onBackToHome }) {
                   className="w-full py-3.5 px-5 rounded-xl bg-gray-50 dark:bg-[#141414] hover:bg-shop-red hover:text-white text-gray-800 dark:text-neutral-200 border border-gray-200 dark:border-neutral-800 hover:border-shop-red text-sm sm:text-base font-bold transition-all flex items-center justify-between shadow-sm active:scale-95 cursor-pointer"
                 >
                   <span>Book Consultation</span>
-                  <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1.5 transition-transform" />
+                  <span className="transform group-hover:translate-x-1.5 transition-transform">→</span>
                 </button>
               </article>
             );

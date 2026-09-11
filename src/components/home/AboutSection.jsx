@@ -1,5 +1,4 @@
 import React from 'react';
-import { Quote, Sparkles, CheckCircle2, Award, HeartHandshake, ArrowRight } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
 export default function AboutSection({ onOpenWizard, onNavigateToAbout }) {
@@ -83,8 +82,7 @@ export default function AboutSection({ onOpenWizard, onNavigateToAbout }) {
                     onClick={onOpenWizard}
                     className="inline-flex items-center space-x-1.5 text-xs font-bold uppercase tracking-wider text-white hover:text-shop-red transition-colors cursor-pointer"
                   >
-                    <span>Consult With {doc.name.split(' ')[1]}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <span>Consult With {doc.name.split(' ')[1]} →</span>
                   </button>
                 </div>
               </div>
@@ -96,8 +94,8 @@ export default function AboutSection({ onOpenWizard, onNavigateToAbout }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-3xl p-8 sm:p-10 bg-neutral-950 border border-neutral-800">
           
           <div className="lg:col-span-5 space-y-4">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-[11px] font-bold text-sky-400 uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-shop-red" />
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-[11px] font-bold text-sky-400 uppercase tracking-wider font-mono">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>Founded In 1953</span>
             </div>
             
@@ -141,8 +139,7 @@ export default function AboutSection({ onOpenWizard, onNavigateToAbout }) {
                   onClick={onNavigateToAbout}
                   className="px-6 py-3 rounded-full bg-white text-neutral-950 hover:bg-neutral-200 text-xs font-bold uppercase tracking-wider transition flex items-center space-x-2 cursor-pointer"
                 >
-                  <span>Learn More About Our Practice & History</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span>Learn More About Our Practice & History →</span>
                 </button>
               </div>
             )}

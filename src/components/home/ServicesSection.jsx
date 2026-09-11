@@ -1,5 +1,4 @@
 import React from 'react';
-import { ArrowRight, LayoutGrid, Sparkles, Activity, ShieldCheck, Clock } from 'lucide-react';
 import { SERVICES } from '../../data/servicesData';
 import { BUSINESS_INFO } from '../../data/businessData';
 
@@ -114,9 +113,9 @@ export default function ServicesSection({ onOpenWizard, onViewAllServices }) {
                 <span className="text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
                   {service.category}
                 </span>
-                <span className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-neutral-950 dark:text-white group-hover:text-shop-red transition-colors">
+                <span className="inline-flex items-center space-x-1.5 text-xs font-bold uppercase tracking-wider text-neutral-950 dark:text-white group-hover:text-shop-red transition-colors">
                   <span>Schedule Consultation</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </span>
               </div>
             </article>
@@ -177,12 +176,10 @@ export default function ServicesSection({ onOpenWizard, onViewAllServices }) {
         <div className="text-center">
           <button
             onClick={onViewAllServices}
-            className="inline-flex items-center space-x-3 px-8 py-4 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-100 font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer"
+            className="inline-flex items-center space-x-2 px-8 py-4 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-100 font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer"
             aria-label={`Explore all ${SERVICES.length} dental procedures at Mitchell & Crosby`}
           >
-            <LayoutGrid className="w-4 h-4" />
-            <span>Explore All {SERVICES.length} Clinical Dental Services</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>Explore All {SERVICES.length} Clinical Dental Services →</span>
           </button>
         </div>
 

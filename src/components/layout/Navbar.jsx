@@ -1,6 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Menu, X, ChevronRight, Sun, Moon, Sparkles } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
+
+function SunIcon({ className = "w-4 h-4" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+      <circle cx="12" cy="12" r="4" />
+      <path strokeLinecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+    </svg>
+  );
+}
+
+function MoonIcon({ className = "w-4 h-4" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  );
+}
+
+function MenuIcon({ className = "w-6 h-6" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+      <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  );
+}
+
+function CloseIcon({ className = "w-6 h-6" }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+      <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  );
+}
 
 export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate, darkMode, onToggleDarkMode }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -34,77 +66,71 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
       return;
     }
 
-    if (target === 'about#patient-forms') {
-      if (onNavigate) onNavigate('about');
-      setTimeout(() => {
-        const el = document.getElementById('patient-forms');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 150);
+    if (target === 'location') {
+      if (currentPage !== 'home') {
+        if (onNavigate) onNavigate('home');
+        setTimeout(() => {
+          document.getElementById('location')?.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
+      } else {
+        document.getElementById('location')?.scrollIntoView({ behavior: 'smooth' });
+      }
       return;
     }
 
-    if (currentPage !== 'home' && onNavigate) {
-      onNavigate('home');
-      setTimeout(() => {
-        const el = document.querySelector(target);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 150);
+    if (target === 'contact') {
+      if (currentPage !== 'home') {
+        if (onNavigate) onNavigate('home');
+        setTimeout(() => {
+          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
+      } else {
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      }
       return;
-    }
-
-    const el = document.querySelector(target);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const navLinks = [
-    { name: 'About Practice', target: 'about' },
-    { name: 'Services', target: 'services' },
-    { name: 'Patient Forms', target: 'about#patient-forms' },
-    { name: 'Hours & Map', target: '#location' },
-    { name: 'Reviews', target: '#reviews' },
+    { name: 'Services', target: 'services', active: currentPage === 'services' },
+    { name: 'About Practice', target: 'about', active: currentPage === 'about' },
+    { name: 'Location & Hours', target: 'location', active: false },
+    { name: 'Contact', target: 'contact', active: false },
   ];
 
   return (
     <header 
-      className={`sticky top-0 z-40 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/90 dark:bg-black/90 backdrop-blur-md shadow-xs border-b border-neutral-200/80 dark:border-neutral-800/80' 
-          : 'bg-white/80 dark:bg-black/80 backdrop-blur-sm border-b border-neutral-100 dark:border-neutral-900'
+          ? 'bg-white/95 dark:bg-neutral-950/95 backdrop-blur-md shadow-xs py-3 border-b border-neutral-200/80 dark:border-neutral-800/80' 
+          : 'bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xs py-4 border-b border-transparent'
       }`}
-      role="banner"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Logo & Brand */}
-        <button 
-          onClick={(e) => handleNavClick(e, '#')} 
-          className="flex items-center space-x-3.5 group text-left cursor-pointer"
-          aria-label="Mitchell & Crosby Family Dentistry Home"
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        {/* Brand Logo */}
+        <a 
+          href="#"
+          onClick={(e) => handleNavClick(e, 'home')}
+          className="flex items-center space-x-3 group"
+          aria-label="Mitchell and Crosby Dental Home"
         >
-          <img 
-            src="/logo.png" 
-            alt="Mitchell & Crosby Family Dentistry Logo" 
-            className="h-10 sm:h-12 w-auto object-contain shrink-0 dark:brightness-125" 
-          />
-          <div className="flex flex-col">
-            <span className="font-editorial text-lg sm:text-xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-none">
-              MITCHELL & <span className="text-shop-red">CROSBY</span>
+          <div className="w-9 h-9 rounded-full bg-shop-red flex items-center justify-center text-white font-mono font-black text-xs tracking-wider shadow-sm group-hover:scale-105 transition">
+            MC
+          </div>
+          <div>
+            <span className="font-heading font-black text-base sm:text-lg tracking-tight text-neutral-900 dark:text-white leading-none block">
+              {BUSINESS_INFO.name}
             </span>
-            <span className="text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-neutral-500 dark:text-neutral-400 font-semibold mt-1">
+            <span className="text-[10px] text-neutral-500 dark:text-neutral-400 uppercase tracking-widest font-mono font-medium block mt-0.5">
               Family & Cosmetic Dentistry
             </span>
           </div>
-        </button>
+        </a>
 
-        {/* Desktop Nav Links - SANA Pill Style */}
-        <nav className="hidden lg:flex items-center px-4 py-1.5 rounded-full bg-neutral-100/80 dark:bg-neutral-900/80 border border-neutral-200/60 dark:border-neutral-800/80 backdrop-blur-xs space-x-1" aria-label="Main Navigation">
+        {/* Desktop Navigation Links (SANA minimalist pill) */}
+        <nav className="hidden md:flex items-center space-x-1 border border-neutral-200 dark:border-neutral-800 bg-neutral-100/60 dark:bg-neutral-900/60 p-1 rounded-full backdrop-blur-xs">
           {navLinks.map((link) => {
-            const isActive = 
-              (link.target === 'services' && currentPage === 'services') ||
-              (link.target === 'about' && currentPage === 'about');
+            const isActive = link.active;
             return (
               <button
                 key={link.name}
@@ -131,19 +157,18 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
             aria-label="Toggle dark mode"
           >
             {darkMode ? (
-              <Sun className="w-4 h-4 text-amber-400" />
+              <SunIcon className="w-4 h-4 text-amber-400" />
             ) : (
-              <Moon className="w-4 h-4 text-shop-red" />
+              <MoonIcon className="w-4 h-4 text-shop-red" />
             )}
           </button>
 
           {/* Direct Phone Call */}
           <a
             href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
-            className="hidden xl:flex items-center space-x-2 text-neutral-700 dark:text-neutral-200 hover:text-shop-red text-xs uppercase tracking-wider font-bold transition px-3 py-2"
+            className="hidden xl:flex items-center space-x-1.5 text-neutral-700 dark:text-neutral-200 hover:text-shop-red text-xs uppercase tracking-wider font-bold transition px-3 py-2 font-mono"
             aria-label={`Call ${BUSINESS_INFO.name} at ${BUSINESS_INFO.phone}`}
           >
-            <Phone className="w-3.5 h-3.5 text-shop-red" />
             <span>{BUSINESS_INFO.phone}</span>
           </a>
 
@@ -164,7 +189,7 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
             className="p-2 rounded-xl border border-gray-200 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-900 text-gray-700 dark:text-neutral-300"
             aria-label="Toggle theme"
           >
-            {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-shop-red" />}
+            {darkMode ? <SunIcon className="w-4 h-4 text-amber-400" /> : <MoonIcon className="w-4 h-4 text-shop-red" />}
           </button>
 
           <button
@@ -172,7 +197,7 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
             className="p-2 rounded-xl border border-gray-200 dark:border-neutral-800 text-gray-700 dark:text-neutral-300"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <CloseIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
           </button>
         </div>
       </div>
@@ -192,9 +217,8 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
           <div className="pt-3 border-t border-gray-100 dark:border-neutral-800 space-y-3">
             <a
               href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
-              className="flex items-center justify-center space-x-2 w-full py-3 rounded-xl border border-gray-200 dark:border-neutral-800 text-gray-900 dark:text-white font-bold text-sm"
+              className="flex items-center justify-center space-x-2 w-full py-3 rounded-xl border border-gray-200 dark:border-neutral-800 text-gray-900 dark:text-white font-bold text-sm font-mono"
             >
-              <Phone className="w-4 h-4 text-shop-red" />
               <span>Call: {BUSINESS_INFO.phone}</span>
             </a>
             <button

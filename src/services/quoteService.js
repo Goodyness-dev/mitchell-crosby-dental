@@ -34,27 +34,31 @@ export const INTEGRATION_CONFIG = {
 export const formatQuoteSummary = (data) => {
   return {
     submittedAt: new Date().toLocaleString(),
-    id: `QUOTE-${Date.now().toString().slice(-6)}`,
+    id: `APPT-${Date.now().toString().slice(-6)}`,
     customer: {
       name: data.name,
       email: data.email,
       phone: data.phone || 'Not provided',
-      preferredLocation: data.location || 'Casa Grande, AZ',
+      preferredLocation: data.location || 'Casa Grande, AZ Clinic',
+    },
+    treatment: {
+      category: data.serviceCategory || 'General & Cosmetic Dentistry',
+      detailedService: data.detailedService || 'Dental Consultation',
+      specificArea: data.modelAndYear || data.specificArea || '',
+      customIssue: data.customIssue || 'N/A',
+      details: data.details || 'None provided',
     },
     vehicle: {
       make: data.make || 'Dental Consultation',
-      modelAndYear: data.modelAndYear || data.urgency || '',
+      modelAndYear: data.modelAndYear || '',
     },
     service: {
-      category: data.serviceCategory,
+      category: data.serviceCategory || 'General Dentistry',
       detailedService: data.detailedService || 'Dental Care',
-      engineType: data.engineType || 'N/A',
       customIssue: data.customIssue || 'N/A',
       details: data.details || 'None provided',
     },
     logistics: {
-      needsTowing: data.needsTowing ? 'Yes' : 'No',
-      needsShuttle: data.needsShuttle ? 'Yes' : 'No',
       timeline: data.timeline || data.urgency || 'Next available',
       specificDate: data.specificDate || 'N/A',
     }
@@ -70,21 +74,20 @@ export const sendTelegramNotification = async (quote) => {
   }
 
   const message = `
-🦷 *NEW APPOINTMENT / ESTIMATE REQUEST — ${BUSINESS_INFO.name.toUpperCase()}*
+🦷 *NEW PATIENT INTAKE — ${BUSINESS_INFO.name.toUpperCase()}*
 ━━━━━━━━━━━━━━━━━━━━
 👤 *Patient:* ${quote.customer.name}
 📞 *Phone:* ${quote.customer.phone}
 ✉️ *Email:* ${quote.customer.email}
-📍 *Location:* ${quote.customer.preferredLocation}
+📍 *Practice:* ${quote.customer.preferredLocation}
 
-🛠 *Category:* ${quote.service.category}
-🔧 *Service:* ${quote.service.detailedService}
-${quote.service.customIssue !== 'N/A' ? `📝 *Notes:* ${quote.service.customIssue}\n` : ''}
-💬 *Details:* ${quote.service.details}
+📋 *Procedure Focus:* ${quote.treatment.detailedService} (${quote.treatment.category})
+${quote.treatment.customIssue !== 'N/A' ? `📝 *Specific Concern:* ${quote.treatment.customIssue}\n` : ''}
+💬 *Symptoms/Notes:* ${quote.treatment.details}
 
-⏰ *Urgency / Timeline:* ${quote.logistics.timeline}
+⏰ *Preferred Timeline:* ${quote.logistics.timeline}
 ━━━━━━━━━━━━━━━━━━━━
-Request ID: #${quote.id}
+Record ID: #${quote.id}
   `.trim();
 
   try {

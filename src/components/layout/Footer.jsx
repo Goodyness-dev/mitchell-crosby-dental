@@ -1,5 +1,4 @@
 import React from 'react';
-import { Phone, MapPin, ChevronRight, Sparkles, Mail, Printer, ArrowRight } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
 export default function Footer({ onOpenWizard, onNavigate }) {
@@ -46,16 +45,14 @@ export default function Footer({ onOpenWizard, onNavigate }) {
               className="px-8 py-4 rounded-full bg-white text-neutral-950 hover:bg-neutral-200 font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-95 text-center cursor-pointer flex items-center justify-center space-x-2"
               aria-label="Request Appointment Online"
             >
-              <span>Book Appointment & Visit</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>Book Appointment & Visit →</span>
             </button>
             <a
               href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
               className="px-7 py-4 rounded-full bg-transparent hover:bg-neutral-900 text-white font-bold text-xs uppercase tracking-wider transition border border-neutral-800 flex items-center justify-center space-x-2 active:scale-95 text-center"
               aria-label={`Call Mitchell & Crosby Family Dentistry at ${BUSINESS_INFO.phone}`}
             >
-              <Phone className="w-4 h-4 text-shop-red" aria-hidden="true" />
-              <span>{BUSINESS_INFO.phone}</span>
+              <span>Call {BUSINESS_INFO.phone}</span>
             </a>
           </div>
         </div>
@@ -91,8 +88,7 @@ export default function Footer({ onOpenWizard, onNavigate }) {
                 onClick={(e) => handleLinkClick(e, 'about')}
                 className="hover:text-white transition flex items-center space-x-1.5 cursor-pointer font-bold text-neutral-300"
               >
-                <ChevronRight className="w-3 h-3 text-shop-red" />
-                <span>About the Practice</span>
+                <span>About the Practice →</span>
               </button>
             </li>
             <li>
@@ -100,8 +96,7 @@ export default function Footer({ onOpenWizard, onNavigate }) {
                 onClick={(e) => handleLinkClick(e, 'about')}
                 className="hover:text-white transition flex items-center space-x-1.5 cursor-pointer text-neutral-400"
               >
-                <ChevronRight className="w-3 h-3 text-shop-red" />
-                <span>Patient Forms & Registration</span>
+                <span>Patient Forms & Registration →</span>
               </button>
             </li>
             {['CEREC Same-Day Crowns', 'Dental Implants', 'Cosmetic Veneers', 'Teeth Whitening', 'Family Cleanings'].map((s) => (
@@ -110,7 +105,6 @@ export default function Footer({ onOpenWizard, onNavigate }) {
                   onClick={(e) => handleLinkClick(e, 'services')}
                   className="hover:text-white transition flex items-center space-x-1.5 cursor-pointer"
                 >
-                  <ChevronRight className="w-3 h-3 text-shop-red" />
                   <span>{s}</span>
                 </button>
               </li>
@@ -126,15 +120,15 @@ export default function Footer({ onOpenWizard, onNavigate }) {
           <div className="space-y-2 text-xs">
             <div className="flex justify-between">
               <span>Monday – Thursday:</span>
-              <span className="text-white font-medium">8:00 AM – 5:00 PM</span>
+              <span className="text-white font-medium font-mono">8:00 AM – 5:00 PM</span>
             </div>
             <div className="flex justify-between">
               <span>Friday:</span>
-              <span className="text-white font-medium">Every Other Friday</span>
+              <span className="text-white font-medium font-mono">Every Other Friday</span>
             </div>
             <div className="flex justify-between">
               <span>Sat – Sun:</span>
-              <span className="text-neutral-500 font-medium">Closed (Emergency)</span>
+              <span className="text-neutral-500 font-medium font-mono">Closed (Emergency)</span>
             </div>
           </div>
         </div>
@@ -145,23 +139,23 @@ export default function Footer({ onOpenWizard, onNavigate }) {
             Practice Location
           </h4>
           <div className="space-y-3 text-xs">
-            <div className="flex items-start space-x-2.5">
-              <MapPin className="w-4 h-4 text-shop-red shrink-0 mt-0.5" />
+            <div>
+              <span className="text-neutral-500 block text-[10px] uppercase tracking-wider font-mono">Address</span>
               <span>{BUSINESS_INFO.address.formatted}</span>
             </div>
-            <div className="flex items-center space-x-2.5">
-              <Phone className="w-4 h-4 text-shop-red shrink-0" />
+            <div>
+              <span className="text-neutral-500 block text-[10px] uppercase tracking-wider font-mono">Telephone</span>
               <a href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`} className="hover:text-white text-neutral-300 font-bold">
                 {BUSINESS_INFO.phone}
               </a>
             </div>
-            <div className="flex items-center space-x-2.5">
-              <Printer className="w-4 h-4 text-neutral-500 shrink-0" />
-              <span>Fax: (520) 836-4613</span>
+            <div>
+              <span className="text-neutral-500 block text-[10px] uppercase tracking-wider font-mono">Fax</span>
+              <span>(520) 836-4613</span>
             </div>
-            <div className="flex items-center space-x-2.5">
-              <Mail className="w-4 h-4 text-shop-red shrink-0" />
-              <a href={`mailto:${BUSINESS_INFO.email}`} className="hover:text-white truncate">
+            <div>
+              <span className="text-neutral-500 block text-[10px] uppercase tracking-wider font-mono">Email</span>
+              <a href={`mailto:${BUSINESS_INFO.email}`} className="hover:text-white truncate block">
                 {BUSINESS_INFO.email}
               </a>
             </div>
