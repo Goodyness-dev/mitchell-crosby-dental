@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import Lenis from 'lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from './components/layout/Navbar';
 import Hero from './components/home/Hero';
 import ServicesSection from './components/home/ServicesSection';
@@ -15,6 +18,8 @@ import AdminLogin from './components/admin/AdminLogin';
 import { Phone, Calendar } from 'lucide-react';
 import { BUSINESS_INFO } from './data/businessData';
 import { authApi, getStoredToken } from './services/api';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'services' | 'about' | 'admin'
@@ -36,6 +41,35 @@ export default function App() {
       return false;
     }
   });
+
+  // Initialize Lenis smooth scroll for buttery interactive feeling
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+    });
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    const updateTicker = (time) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(updateTicker);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      gsap.ticker.remove(updateTicker);
+      lenis.destroy();
+    };
+  }, []);
 
   // Check stored auth token on mount
   useEffect(() => {
