@@ -55,6 +55,8 @@ export default function App() {
       touchMultiplier: 2,
     });
 
+    window.__lenis = lenis;
+
     lenis.on('scroll', ScrollTrigger.update);
 
     const updateTicker = (time) => {
@@ -65,6 +67,7 @@ export default function App() {
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      window.__lenis = null;
       gsap.ticker.remove(updateTicker);
       lenis.destroy();
     };
@@ -130,6 +133,47 @@ export default function App() {
     });
   };
 
+  // Reset scroll position and refresh ScrollTrigger when page changes
+  useEffect(() => {
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+  }, [currentPage]);
+
+  const handleScrollToSection = (sectionId) => {
+    const performScroll = () => {
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          if (window.__lenis) {
+            window.__lenis.scrollTo(el, { offset: -75, duration: 1.2 });
+          } else {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }, 100);
+    };
+
+    if (currentPage !== 'home') {
+      setCurrentPage('home');
+      if (
+        window.location.hash.startsWith('#/services') || 
+        window.location.hash.startsWith('#/admin') || 
+        window.location.hash.startsWith('#/about')
+      ) {
+        window.history.pushState(null, '', window.location.pathname);
+      }
+      setTimeout(performScroll, 180);
+    } else {
+      performScroll();
+    }
+  };
+
   // Sync with browser URL hash and pathname for routing
   useEffect(() => {
     const handleRouteChange = () => {
@@ -142,6 +186,8 @@ export default function App() {
         setCurrentPage('services');
       } else if (hash === '#/about' || hash === '#about' || hash === '#/dental-practice' || hash.startsWith('#/about') || path === '/about' || path === '/dental-practice') {
         setCurrentPage('about');
+      } else if (hash === '#services' || hash === '#location' || hash === '#contact') {
+        handleScrollToSection(hash.replace('#', ''));
       }
     };
 
@@ -171,7 +217,11 @@ export default function App() {
         window.history.pushState(null, '', window.location.pathname);
       }
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
   };
 
   const handleOpenWizard = (category = null, service = null) => {
@@ -215,6 +265,7 @@ export default function App() {
         onOpenWizard={() => handleOpenWizard()} 
         currentPage={currentPage}
         onNavigate={handleNavigate}
+        onScrollToSection={handleScrollToSection}
         darkMode={darkMode}
         onToggleDarkMode={toggleDarkMode}
       />
@@ -253,6 +304,7 @@ export default function App() {
       <Footer 
         onOpenWizard={() => handleOpenWizard()} 
         onNavigate={handleNavigate}
+        onScrollToSection={handleScrollToSection}
       />
 
       {/* Quote Request Wizard Modal */}

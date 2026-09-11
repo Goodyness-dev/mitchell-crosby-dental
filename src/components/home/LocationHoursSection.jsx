@@ -8,13 +8,14 @@ export default function LocationHoursSection({ onOpenWizard }) {
   const currentDayName = dayNames[currentDayIndex];
 
   return (
-    <section id="location" className="py-20 sm:py-28 bg-neutral-50/50 dark:bg-black sana-grid-bg transition-colors" aria-labelledby="location-heading">
+    <section id="location" className="scroll-mt-20 py-20 sm:py-28 bg-neutral-50/50 dark:bg-black sana-grid-bg transition-colors relative" aria-labelledby="location-heading">
+      <div id="contact" className="absolute -top-24 left-0 pointer-events-none" aria-hidden="true" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* SANA Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 sm:mb-18 border-b border-neutral-200/70 dark:border-neutral-800/70 pb-8">
           <div className="space-y-3 max-w-2xl">
-            <span className="sana-tag">// 07 VISIT OUR CLINIC & HOURS</span>
+            <span className="sana-tag">// 07 VISIT OUR CLINIC, HOURS & CONTACT</span>
             <h2 id="location-heading" className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-[1.1]">
               Historic Olive Ave, <br />
               <span className="text-stroke text-stroke-black">Casa Grande, AZ.</span>

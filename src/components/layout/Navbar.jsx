@@ -34,7 +34,7 @@ function CloseIcon({ className = "w-6 h-6" }) {
   );
 }
 
-export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate, darkMode, onToggleDarkMode }) {
+export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate, onScrollToSection, darkMode, onToggleDarkMode }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -49,43 +49,71 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
     setMobileMenuOpen(false);
 
     if (target === '#' || target === 'home') {
-      if (onNavigate) onNavigate('home');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (currentPage !== 'home') {
+        if (onNavigate) onNavigate('home');
+      } else {
+        if (window.__lenis) {
+          window.__lenis.scrollTo(0, { duration: 1.2 });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
       return;
     }
 
     if (target === 'services') {
+      if (currentPage === 'services') {
+        if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.2 });
+        else window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      if (onScrollToSection) {
+        onScrollToSection('services');
+      } else {
+        const el = document.getElementById('services');
+        if (window.__lenis && el) {
+          window.__lenis.scrollTo(el, { offset: -75, duration: 1.2 });
+        } else if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+      return;
+    }
+
+    if (target === 'services-all') {
       if (onNavigate) onNavigate('services');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
     if (target === 'about') {
       if (onNavigate) onNavigate('about');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
     if (target === 'location') {
-      if (currentPage !== 'home') {
-        if (onNavigate) onNavigate('home');
-        setTimeout(() => {
-          document.getElementById('location')?.scrollIntoView({ behavior: 'smooth' });
-        }, 150);
+      if (onScrollToSection) {
+        onScrollToSection('location');
       } else {
-        document.getElementById('location')?.scrollIntoView({ behavior: 'smooth' });
+        const el = document.getElementById('location');
+        if (window.__lenis && el) {
+          window.__lenis.scrollTo(el, { offset: -75, duration: 1.2 });
+        } else if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
       }
       return;
     }
 
     if (target === 'contact') {
-      if (currentPage !== 'home') {
-        if (onNavigate) onNavigate('home');
-        setTimeout(() => {
-          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-        }, 150);
+      if (onScrollToSection) {
+        onScrollToSection('contact');
       } else {
-        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+        const el = document.getElementById('contact') || document.getElementById('location');
+        if (window.__lenis && el) {
+          window.__lenis.scrollTo(el, { offset: -75, duration: 1.2 });
+        } else if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
       }
       return;
     }
@@ -209,11 +237,17 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
             <button
               key={link.name}
               onClick={(e) => handleNavClick(e, link.target)}
-              className="block w-full text-left py-2 text-base font-bold text-gray-800 dark:text-neutral-200 hover:text-shop-red"
+              className="block w-full text-left py-2 text-base font-bold text-gray-800 dark:text-neutral-200 hover:text-shop-red cursor-pointer"
             >
               {link.name}
             </button>
           ))}
+          <button
+            onClick={(e) => handleNavClick(e, 'services-all')}
+            className="block w-full text-left py-1 text-sm font-semibold text-neutral-500 dark:text-neutral-400 hover:text-shop-red pl-3 cursor-pointer"
+          >
+            ↳ All 16 Treatments Catalog
+          </button>
           <div className="pt-3 border-t border-gray-100 dark:border-neutral-800 space-y-3">
             <a
               href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}

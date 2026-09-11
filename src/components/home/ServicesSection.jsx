@@ -44,7 +44,7 @@ export default function ServicesSection({ onOpenWizard, onViewAllServices }) {
   ];
 
   return (
-    <section id="services" className="py-20 sm:py-28 bg-white dark:bg-black sana-grid-bg transition-colors" aria-labelledby="services-heading">
+    <section id="services" className="scroll-mt-20 py-20 sm:py-28 bg-white dark:bg-black sana-grid-bg transition-colors" aria-labelledby="services-heading">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* SANA Section Header */}

@@ -1,26 +1,39 @@
 import React from 'react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
-export default function Footer({ onOpenWizard, onNavigate }) {
+export default function Footer({ onOpenWizard, onNavigate, onScrollToSection }) {
   const handleLinkClick = (e, target) => {
     e.preventDefault();
     if (target === 'services') {
+      if (onScrollToSection) onScrollToSection('services');
+      else if (onNavigate) onNavigate('services');
+      return;
+    }
+
+    if (target === 'services-all') {
       if (onNavigate) onNavigate('services');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
     if (target === 'about') {
       if (onNavigate) onNavigate('about');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
-    if (onNavigate) onNavigate('home');
-    setTimeout(() => {
-      const el = document.querySelector(target);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    if (target === 'location' || target === 'contact') {
+      if (onScrollToSection) onScrollToSection(target);
+      return;
+    }
+
+    if (onScrollToSection) {
+      onScrollToSection(target.replace('#', ''));
+    } else if (onNavigate) {
+      onNavigate('home');
+      setTimeout(() => {
+        const el = document.querySelector(target);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
   };
 
   return (
