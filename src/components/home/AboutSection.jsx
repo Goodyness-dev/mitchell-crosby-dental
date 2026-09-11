@@ -1,8 +1,8 @@
-﻿import React from 'react';
+import React from 'react';
 import { Quote, Sparkles, CheckCircle2, Award, HeartHandshake, ArrowRight } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
-export default function AboutSection({ onOpenWizard }) {
+export default function AboutSection({ onOpenWizard, onNavigateToAbout }) {
   const doctors = [
     {
       name: 'Dr. Jeffrey Mitchell',
@@ -121,7 +121,7 @@ export default function AboutSection({ onOpenWizard }) {
             <h4 className="text-xs uppercase tracking-[0.2em] font-bold text-neutral-400 mb-4">
               Historical Timeline
             </h4>
-            <div className="space-y-4">
+            <div className="space-y-4 mb-6">
               {BUSINESS_INFO.history.map((h, i) => (
                 <div key={i} className="flex items-start space-x-4">
                   <span className="px-2.5 py-1 rounded-lg bg-neutral-900 border border-neutral-800 font-mono text-xs font-bold text-shop-red shrink-0">
@@ -134,6 +134,18 @@ export default function AboutSection({ onOpenWizard }) {
                 </div>
               ))}
             </div>
+
+            {onNavigateToAbout && (
+              <div className="pt-2">
+                <button
+                  onClick={onNavigateToAbout}
+                  className="px-6 py-3 rounded-full bg-white text-neutral-950 hover:bg-neutral-200 text-xs font-bold uppercase tracking-wider transition flex items-center space-x-2 cursor-pointer"
+                >
+                  <span>Learn More About Our Practice & History</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
           </div>
 
         </div>

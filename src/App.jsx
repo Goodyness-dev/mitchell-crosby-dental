@@ -3,12 +3,12 @@ import Navbar from './components/layout/Navbar';
 import Hero from './components/home/Hero';
 import ServicesSection from './components/home/ServicesSection';
 import ShowcaseSection from './components/home/ShowcaseSection';
-import PricingSection from './components/home/PricingSection';
 import AboutSection from './components/home/AboutSection';
 import LocationHoursSection from './components/home/LocationHoursSection';
 import ReviewsSection from './components/home/ReviewsSection';
 import Footer from './components/layout/Footer';
 import AllServicesPage from './components/services/AllServicesPage';
+import AboutPracticePage from './components/about/AboutPracticePage';
 import QuoteWizardModal from './components/wizard/QuoteWizardModal';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminLogin from './components/admin/AdminLogin';
@@ -17,7 +17,7 @@ import { BUSINESS_INFO } from './data/businessData';
 import { authApi, getStoredToken } from './services/api';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'services' | 'admin'
+  const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'services' | 'about' | 'admin'
   const [wizardOpen, setWizardOpen] = useState(false);
   const [wizardCategory, setWizardCategory] = useState(null);
   const [wizardService, setWizardService] = useState(null);
@@ -92,6 +92,8 @@ export default function App() {
         setCurrentPage('admin');
       } else if (hash === '#/services' || hash === '#services-all') {
         setCurrentPage('services');
+      } else if (hash === '#/about' || hash === '#about' || hash === '#/dental-practice' || hash.startsWith('#/about')) {
+        setCurrentPage('about');
       } else {
         setCurrentPage('home');
       }
@@ -106,10 +108,16 @@ export default function App() {
     setCurrentPage(page);
     if (page === 'services') {
       window.location.hash = '#/services';
+    } else if (page === 'about') {
+      window.location.hash = '#/about';
     } else if (page === 'admin') {
       window.location.hash = '#/admin';
     } else {
-      if (window.location.hash.startsWith('#/services') || window.location.hash.startsWith('#/admin')) {
+      if (
+        window.location.hash.startsWith('#/services') || 
+        window.location.hash.startsWith('#/admin') || 
+        window.location.hash.startsWith('#/about')
+      ) {
         window.history.pushState(null, '', window.location.pathname);
       }
     }
@@ -161,10 +169,15 @@ export default function App() {
         onToggleDarkMode={toggleDarkMode}
       />
 
-      {/* Main View: Landing Page OR All Services Page */}
+      {/* Main View: Landing Page OR All Services Page OR Dedicated About Page */}
       <main className="flex-grow">
         {currentPage === 'services' ? (
           <AllServicesPage 
+            onOpenWizard={handleOpenWizard}
+            onBackToHome={() => handleNavigate('home')}
+          />
+        ) : currentPage === 'about' ? (
+          <AboutPracticePage 
             onOpenWizard={handleOpenWizard}
             onBackToHome={() => handleNavigate('home')}
           />
@@ -176,8 +189,10 @@ export default function App() {
               onViewAllServices={() => handleNavigate('services')}
             />
             <ShowcaseSection onOpenWizard={() => handleOpenWizard()} />
-            <PricingSection onOpenWizard={handleOpenWizard} />
-            <AboutSection onOpenWizard={() => handleOpenWizard()} />
+            <AboutSection 
+              onOpenWizard={() => handleOpenWizard()} 
+              onNavigateToAbout={() => handleNavigate('about')}
+            />
             <ReviewsSection onOpenWizard={() => handleOpenWizard()} />
             <LocationHoursSection onOpenWizard={() => handleOpenWizard()} />
           </>

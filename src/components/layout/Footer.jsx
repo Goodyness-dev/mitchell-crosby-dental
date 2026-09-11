@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Phone, MapPin, ChevronRight, Sparkles, Mail, Printer, ArrowRight } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
@@ -7,6 +7,12 @@ export default function Footer({ onOpenWizard, onNavigate }) {
     e.preventDefault();
     if (target === 'services') {
       if (onNavigate) onNavigate('services');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (target === 'about') {
+      if (onNavigate) onNavigate('about');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
@@ -40,7 +46,7 @@ export default function Footer({ onOpenWizard, onNavigate }) {
               className="px-8 py-4 rounded-full bg-white text-neutral-950 hover:bg-neutral-200 font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-95 text-center cursor-pointer flex items-center justify-center space-x-2"
               aria-label="Request Appointment Online"
             >
-              <span>Book Appointment & Estimate</span>
+              <span>Book Appointment & Visit</span>
               <ArrowRight className="w-4 h-4" />
             </button>
             <a
@@ -77,10 +83,28 @@ export default function Footer({ onOpenWizard, onNavigate }) {
         {/* Quick Links */}
         <div>
           <h4 className="text-xs font-bold text-white uppercase tracking-[0.15em] mb-4">
-            Specialized Care
+            Practice & Care
           </h4>
           <ul className="space-y-2 text-xs">
-            {['CEREC Same-Day Crowns', 'Dental Implants', 'Cosmetic Veneers', 'Teeth Whitening', 'Family Cleanings', 'Emergency Relief'].map((s) => (
+            <li>
+              <button
+                onClick={(e) => handleLinkClick(e, 'about')}
+                className="hover:text-white transition flex items-center space-x-1.5 cursor-pointer font-bold text-neutral-300"
+              >
+                <ChevronRight className="w-3 h-3 text-shop-red" />
+                <span>About the Practice</span>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={(e) => handleLinkClick(e, 'about')}
+                className="hover:text-white transition flex items-center space-x-1.5 cursor-pointer text-neutral-400"
+              >
+                <ChevronRight className="w-3 h-3 text-shop-red" />
+                <span>Patient Forms & Registration</span>
+              </button>
+            </li>
+            {['CEREC Same-Day Crowns', 'Dental Implants', 'Cosmetic Veneers', 'Teeth Whitening', 'Family Cleanings'].map((s) => (
               <li key={s}>
                 <button
                   onClick={(e) => handleLinkClick(e, 'services')}

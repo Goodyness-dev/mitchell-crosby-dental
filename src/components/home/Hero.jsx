@@ -38,7 +38,7 @@ export default function Hero({ onOpenWizard }) {
                 className="px-8 py-4 rounded-full bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-100 font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center space-x-2.5 shadow-md active:scale-95 cursor-pointer"
                 aria-label="Request Dental Appointment Online"
               >
-                <span>Book Consultation & Estimate</span>
+                <span>Book Consultation & Visit</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
 

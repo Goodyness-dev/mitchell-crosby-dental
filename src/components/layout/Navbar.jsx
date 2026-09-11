@@ -16,9 +16,30 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
     e.preventDefault();
     setMobileMenuOpen(false);
 
+    if (target === '#' || target === 'home') {
+      if (onNavigate) onNavigate('home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     if (target === 'services') {
       if (onNavigate) onNavigate('services');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (target === 'about') {
+      if (onNavigate) onNavigate('about');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (target === 'about#patient-forms') {
+      if (onNavigate) onNavigate('about');
+      setTimeout(() => {
+        const el = document.getElementById('patient-forms');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
       return;
     }
 
@@ -27,7 +48,7 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
       setTimeout(() => {
         const el = document.querySelector(target);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      }, 150);
       return;
     }
 
@@ -40,9 +61,9 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
   };
 
   const navLinks = [
+    { name: 'About Practice', target: 'about' },
     { name: 'Services', target: 'services' },
-    { name: 'About Doctors', target: '#about' },
-    { name: 'Technology', target: '#amenities' },
+    { name: 'Patient Forms', target: 'about#patient-forms' },
     { name: 'Hours & Map', target: '#location' },
     { name: 'Reviews', target: '#reviews' },
   ];
@@ -69,7 +90,7 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
             className="h-10 sm:h-12 w-auto object-contain shrink-0 dark:brightness-125" 
           />
           <div className="flex flex-col">
-            <span className="font-editorial text-lg sm:text-xl font-extrabold tracking-tight text-neutral-900 dark:text-white leading-none">
+            <span className="font-editorial text-lg sm:text-xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-none">
               MITCHELL & <span className="text-shop-red">CROSBY</span>
             </span>
             <span className="text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-neutral-500 dark:text-neutral-400 font-semibold mt-1">
@@ -81,7 +102,9 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
         {/* Desktop Nav Links - SANA Pill Style */}
         <nav className="hidden lg:flex items-center px-4 py-1.5 rounded-full bg-neutral-100/80 dark:bg-neutral-900/80 border border-neutral-200/60 dark:border-neutral-800/80 backdrop-blur-xs space-x-1" aria-label="Main Navigation">
           {navLinks.map((link) => {
-            const isActive = link.target === 'services' && currentPage === 'services';
+            const isActive = 
+              (link.target === 'services' && currentPage === 'services') ||
+              (link.target === 'about' && currentPage === 'about');
             return (
               <button
                 key={link.name}
