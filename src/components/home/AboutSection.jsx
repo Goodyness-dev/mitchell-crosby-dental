@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Quote, Sparkles, CheckCircle2 } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
@@ -60,9 +60,38 @@ export default function AboutSection({ onOpenWizard }) {
             </div>
           </div>
 
-          {/* Right: History & Credentials Card */}
-          <div className="space-y-4">
-            <div className="p-8 rounded-3xl bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 shadow-xl space-y-6">
+          {/* Right: Doctors & History Cards */}
+          <div className="space-y-5">
+            {/* Meet the Doctors */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 shadow-md flex items-center space-x-3.5">
+                <img
+                  src="/images/dr-mitchell.jpg"
+                  alt="Dr. Jeffrey Mitchell, DDS"
+                  className="w-16 h-16 rounded-2xl object-cover shrink-0 border-2 border-shop-border"
+                />
+                <div>
+                  <h4 className="font-bold text-sm text-slate-900 dark:text-white">Dr. Jeffrey Mitchell</h4>
+                  <p className="text-xs text-shop-red font-bold">DDS • Univ. of Colorado</p>
+                  <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5">Casa Grande Native</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 shadow-md flex items-center space-x-3.5">
+                <img
+                  src="/images/dr-crosby.jpg"
+                  alt="Dr. David Crosby, DMD"
+                  className="w-16 h-16 rounded-2xl object-cover shrink-0 border-2 border-shop-border"
+                />
+                <div>
+                  <h4 className="font-bold text-sm text-slate-900 dark:text-white">Dr. David Crosby</h4>
+                  <p className="text-xs text-shop-red font-bold">DMD • Midwestern Univ.</p>
+                  <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5">Se Habla Español</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-7 sm:p-8 rounded-3xl bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 shadow-xl space-y-5">
               <h3 className="text-xl font-bold font-heading text-slate-900 dark:text-white">
                 Our Timeline & Community Story
               </h3>

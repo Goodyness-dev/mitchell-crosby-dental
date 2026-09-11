@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Phone, Menu, X, ChevronRight, Sun, Moon, Sparkles } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
@@ -63,9 +63,11 @@ export default function Navbar({ onOpenWizard, currentPage = 'home', onNavigate,
           className="flex items-center space-x-3 group text-left cursor-pointer"
           aria-label="Mitchell & Crosby Family Dentistry Home"
         >
-          <div className="w-10 h-10 rounded-2xl bg-shop-red text-white flex items-center justify-center shadow-md shadow-sky-900/30 shrink-0">
-            <Sparkles className="w-5 h-5" />
-          </div>
+          <img 
+            src="/logo.png" 
+            alt="Mitchell & Crosby Family Dentistry Logo" 
+            className="h-9 sm:h-11 w-auto object-contain shrink-0 dark:brightness-125" 
+          />
           <div className="flex flex-col">
             <span className="font-heading text-base sm:text-xl font-black tracking-tight text-gray-900 dark:text-white leading-tight">
               Mitchell & <span className="text-shop-red">Crosby</span>

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { ChevronRight, Phone, Sparkles, HeartHandshake, ShieldCheck } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessData';
 
@@ -8,8 +8,13 @@ export default function Hero({ onOpenWizard }) {
       {/* Full-width Hero with Calming Background */}
       <div className="relative min-h-[540px] sm:min-h-[620px] lg:min-h-[680px] flex items-center">
         {/* Background with gradient overlay */}
-        <div className="absolute inset-0 overflow-hidden bg-slate-950 bg-cover bg-center">
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-900/80 to-slate-900/60" />
+        <div className="absolute inset-0 overflow-hidden bg-slate-950">
+          <img
+            src="/images/storefront.jpg"
+            alt="Mitchell & Crosby Family Dentistry Casa Grande AZ"
+            className="w-full h-full object-cover opacity-20 scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-900/85 to-slate-900/70" />
         </div>
 
         {/* Hero Content */}
