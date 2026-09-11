@@ -18,13 +18,13 @@ export const BUSINESS_INFO = {
   googleMapsEmbedUrl: "https://maps.google.com/maps?q=721%20N%20Olive%20Ave%2C%20Casa%20Grande%2C%20AZ%2085122&t=&z=15&ie=UTF8&iwloc=&output=embed",
   
   hours: [
-    { day: "Monday", open: "8:00 AM", close: "5:00 PM", note: "General & Cosmetic Appointments" },
-    { day: "Tuesday", open: "8:00 AM", close: "5:00 PM", note: "CEREC Same-Day Crown Bays" },
-    { day: "Wednesday", open: "8:00 AM", close: "5:00 PM", note: "Implants & Restorative Care" },
-    { day: "Thursday", open: "8:00 AM", close: "5:00 PM", note: "Family & Pediatric Dentistry" },
-    { day: "Friday", open: "8:00 AM", close: "1:00 PM", note: "Every Other Friday (By Appt)" },
-    { day: "Saturday", open: "Closed", close: "Closed", note: "Emergency On-Call" },
-    { day: "Sunday", open: "Closed", close: "Closed", note: "Emergency On-Call" },
+    { day: "Monday", open: "8:00 AM", close: "5:00 PM", hours: "8:00 AM – 5:00 PM", note: "General & Cosmetic Appointments" },
+    { day: "Tuesday", open: "8:00 AM", close: "5:00 PM", hours: "8:00 AM – 5:00 PM", note: "CEREC Same-Day Crown Bays" },
+    { day: "Wednesday", open: "8:00 AM", close: "5:00 PM", hours: "8:00 AM – 5:00 PM", note: "Implants & Restorative Care" },
+    { day: "Thursday", open: "8:00 AM", close: "5:00 PM", hours: "8:00 AM – 5:00 PM", note: "Family & Pediatric Dentistry" },
+    { day: "Friday", open: "8:00 AM", close: "1:00 PM", hours: "8:00 AM – 1:00 PM", note: "Every Other Friday (By Appt)" },
+    { day: "Saturday", open: "Closed", close: "Closed", hours: "Closed (On-Call)", note: "Emergency On-Call" },
+    { day: "Sunday", open: "Closed", close: "Closed", hours: "Closed (On-Call)", note: "Emergency On-Call" },
   ],
 
   history: [

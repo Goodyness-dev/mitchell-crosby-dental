@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { MapPin, Clock, Navigation, Phone, ExternalLink, Mail, CheckCircle2 } from 'lucide-react';
 import { BUSINESS_INFO, isOpenNow } from '../../data/businessData';
 
@@ -53,6 +53,9 @@ export default function LocationHoursSection({ onOpenWizard }) {
                 <div className="divide-y divide-neutral-100 dark:divide-neutral-800 text-xs sm:text-sm">
                   {BUSINESS_INFO.hours.map((h) => {
                     const isToday = h.day.toLowerCase() === currentDayName.toLowerCase();
+                    const hoursString = h.hours || (h.open === 'Closed' ? 'Closed (On-Call)' : `${h.open} – ${h.close}`);
+                    const isClosed = hoursString.toLowerCase().includes('closed');
+
                     return (
                       <div
                         key={h.day}
@@ -65,8 +68,8 @@ export default function LocationHoursSection({ onOpenWizard }) {
                         <span className={isToday ? 'text-shop-red' : ''}>
                           {h.day}
                         </span>
-                        <span className={`font-mono ${h.hours.toLowerCase().includes('closed') ? 'text-neutral-400' : ''}`}>
-                          {h.hours}
+                        <span className={`font-mono ${isClosed ? 'text-neutral-400' : ''}`}>
+                          {hoursString}
                         </span>
                       </div>
                     );
