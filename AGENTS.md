@@ -1,4 +1,4 @@
-﻿# Antigravity Project Intelligence & Permanent Memory
+# Antigravity Project Intelligence & Permanent Memory
 > **Mitchell & Crosby Family Dentistry Web Platform & Staff Portal**
 > This file is loaded automatically by Antigravity at the start of every session and new chat.
 
@@ -33,10 +33,18 @@ When the user asks for new features, design iterations, or new websites, DO NOT 
 ---
 
 ## 🎬 HERO VIDEO SCROLL & SMOOTH SCROLL ARCHITECTURE
-- **Full-Screen Video Scroller**:
+- **Full-Screen Video Scroller (Desktop)**:
   - Video asset: `/A_cinematic_second_beauty_ad.mp4` in `public/`.
-  - Scrubbed via GSAP `ScrollTrigger` (`pin: true`, `scrub: 1`, `start: "top top"`, `end: "+=350%"`).
+  - Scrubbed via GSAP `ScrollTrigger` (`pin: true`, `scrub: 1.5`, `start: "top top"`, `end: "+=350%"`).
   - Never replace with SVG mouth illustrations when the user provides cinematic video.
+- **Mobile Hero Fallback Rule (< 768px)**:
+  - NEVER pin or force 350% scroll scrubbing on mobile touch devices. Mobile browser address bar resizes cause severe scroll jitter and trap users.
+  - On mobile screens, provide an instantaneous, high-contrast poster image fallback (`/images/hero-smile-poster.jpg` with `fetchpriority="high"`) and native 60/120Hz touch scrolling.
+  - Both CTA buttons ("Book Your Smile Appointment" and "Call (520) 836-7111") must be immediately visible and clickable on mobile load without requiring scrolling.
+- **Lightning Load Speed & Code-Splitting Directive**:
+  - Always code-split heavy secondary pages (`AdminLayout`, `AdminLogin`, `AllServicesPage`, `AboutPracticePage`) and modals (`QuoteWizardModal`) using `React.lazy()` and `<Suspense>`.
+  - Configure manual chunks in `vite.config.js` (`vendor`, `animations`).
+  - Preconnect & dns-prefetch fonts, and preload mobile hero poster image in `index.html`.
 - **Lenis Smooth Scrolling Rule**:
   - Lenis is initialized in `src/App.jsx` and exposed globally on `window.__lenis = lenis`.
   - When scrolling to anchors (`#services`, `#contact`, `#location`), ALWAYS use `window.__lenis.scrollTo(el, { offset: -75, duration: 1.2 })`.

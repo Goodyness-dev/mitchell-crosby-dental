@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { BUSINESS_INFO } from '../../data/businessData';
@@ -12,7 +12,26 @@ export default function SmileScrollHero({ onOpenWizard }) {
   const ctaContainerRef = useRef(null);
   const scrollIndicatorRef = useRef(null);
 
+  // Detect desktop vs mobile for selective video scrubbing vs lightweight instant image fallback
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    return window.innerWidth >= 768;
+  });
+
   useEffect(() => {
+    const handleResize = () => {
+      const desktop = window.innerWidth >= 768;
+      setIsDesktop(desktop);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Desktop GSAP Video Scrubbing ScrollTrigger
+  useEffect(() => {
+    if (!isDesktop) return;
+
     const video = videoRef.current;
     if (!video) return;
 
@@ -22,16 +41,15 @@ export default function SmileScrollHero({ onOpenWizard }) {
     let scrubTrigger;
 
     const setupScrollAnimation = () => {
-      const duration = video.duration || 10.006;
       video.currentTime = 0;
 
-      // GSAP ScrollTrigger to smoothly scrub video currentTime across a generous scroll distance
+      // GSAP ScrollTrigger to smoothly scrub video currentTime across a generous scroll distance on desktop only
       scrubTrigger = ScrollTrigger.create({
         trigger: containerRef.current,
         start: 'top top',
-        end: '+=350%', // Generous travel so it is smooth, deliberate, and not too fast
+        end: '+=350%',
         pin: true,
-        scrub: 1.5, // Smooth interpolation with inertia
+        scrub: 1.5,
         anticipatePin: 1,
         onUpdate: (self) => {
           const progress = self.progress;
@@ -62,7 +80,7 @@ export default function SmileScrollHero({ onOpenWizard }) {
             }
           }
 
-          // Fade in and scale active booking CTA as smile / title appears
+          // Fade in and scale active booking CTA as smile reveals
           if (ctaContainerRef.current) {
             if (progress > 0.42) {
               const ctaProgress = Math.min((progress - 0.42) / 0.25, 1);
@@ -89,88 +107,161 @@ export default function SmileScrollHero({ onOpenWizard }) {
       if (scrubTrigger) scrubTrigger.kill();
       video.removeEventListener('loadedmetadata', setupScrollAnimation);
     };
-  }, []);
+  }, [isDesktop]);
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen overflow-hidden bg-black text-white select-none"
+      className={`relative w-full ${isDesktop ? 'h-screen overflow-hidden' : 'min-h-[100svh] py-16'} bg-neutral-950 text-white select-none`}
       aria-label="Mitchell and Crosby Smile Transformation"
     >
-      {/* Full-Screen Video Background */}
+      {/* Background Media */}
       <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
-        <video
-          ref={videoRef}
-          src="/A_cinematic_second_beauty_ad.mp4"
-          muted
-          playsInline
-          preload="auto"
-          className="w-full h-full object-cover object-center opacity-100"
-        />
-        {/* Subtle dark vignette overlay to preserve text legibility over bright frames */}
-        <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+        {isDesktop ? (
+          // Desktop: Cinematic Video scrubbed via GSAP ScrollTrigger
+          <>
+            <video
+              ref={videoRef}
+              src="/A_cinematic_second_beauty_ad.mp4"
+              muted
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-cover object-center opacity-100"
+            />
+            <div className="absolute inset-0 bg-black/25 pointer-events-none" />
+          </>
+        ) : (
+          // Mobile: High-Speed Cinematic Poster Fallback (zero video load, zero touch-scroll lag)
+          <>
+            <img
+              src="/images/hero-smile-poster.jpg"
+              alt="Mitchell and Crosby Family Dentistry Smile Transformation"
+              fetchPriority="high"
+              className="w-full h-full object-cover object-center brightness-90 contrast-105"
+            />
+            {/* Multi-layered cinematic gradient for text legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-black/50 to-black/75 pointer-events-none" />
+            <div className="absolute inset-0 bg-radial-gradient from-transparent via-black/30 to-black/80 pointer-events-none" />
+          </>
+        )}
       </div>
 
       {/* Foreground Content Wrapper */}
-      <div className="relative z-10 w-full h-full flex flex-col justify-between items-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pointer-events-none">
-        
-        {/* Top Headline & Branding */}
-        <div 
-          ref={headlineRef}
-          className="max-w-4xl mx-auto text-center space-y-3 transition-opacity duration-300 pt-4"
-        >
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-[11px] font-bold tracking-[0.2em] uppercase text-sky-300 font-mono">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>// 01 ESTABLISHED 1953 • CASA GRANDE, AZ</span>
+      {isDesktop ? (
+        // Desktop Layout (Interactive progressive scroll reveal)
+        <div className="relative z-10 w-full h-full flex flex-col justify-between items-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pointer-events-none">
+          {/* Top Headline & Branding */}
+          <div 
+            ref={headlineRef}
+            className="max-w-4xl mx-auto text-center space-y-3 transition-opacity duration-300 pt-4"
+          >
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-[11px] font-bold tracking-[0.2em] uppercase text-sky-300 font-mono">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>// 01 ESTABLISHED 1953 • CASA GRANDE, AZ</span>
+            </div>
+
+            <h1 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]">
+              Compassionate Family Care, <br />
+              <span className="text-stroke" style={{ WebkitTextStroke: '1.5px #ffffff' }}>Modern Radiant Smiles.</span>
+            </h1>
+
+            <p className="text-xs sm:text-sm text-neutral-200 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] max-w-xl mx-auto leading-relaxed font-medium">
+              Casa Grande's trusted dental home for over 70 years. Scroll down to watch our signature single-visit smile transformation unfold.
+            </p>
           </div>
 
-          <h1 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]">
-            Compassionate Family Care, <br />
-            <span className="text-stroke" style={{ WebkitTextStroke: '1.5px #ffffff' }}>Modern Radiant Smiles.</span>
-          </h1>
+          {/* Center / Lower Third Interactive Action Buttons */}
+          <div 
+            ref={ctaContainerRef}
+            className="max-w-xl mx-auto text-center space-y-3.5 opacity-0 transform translate-y-4 transition-all duration-300 pointer-events-none"
+          >
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pointer-events-auto">
+              <button
+                onClick={() => onOpenWizard()}
+                className="w-full sm:w-auto px-8 py-4 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-2xl border border-white/25 active:scale-95 cursor-pointer card-thick-hover"
+                aria-label="Book Smile Appointment"
+              >
+                <span>Book Your Smile Appointment →</span>
+              </button>
 
-          <p className="text-xs sm:text-sm text-neutral-200 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] max-w-xl mx-auto leading-relaxed font-medium">
-            Casa Grande's trusted dental home for over 70 years. Scroll down to watch our signature single-visit smile transformation unfold.
-          </p>
-        </div>
+              <a
+                href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
+                className="w-full sm:w-auto px-7 py-4 rounded-full bg-white/95 hover:bg-white text-neutral-950 font-bold text-xs sm:text-sm uppercase tracking-wider shadow-2xl transition active:scale-95 card-thick-hover"
+              >
+                <span>Call {BUSINESS_INFO.phone}</span>
+              </a>
+            </div>
 
-        {/* Center / Lower Third Interactive Action Buttons (Reveals on Smile Reveal) */}
-        <div 
-          ref={ctaContainerRef}
-          className="max-w-xl mx-auto text-center space-y-3.5 opacity-0 transform translate-y-4 transition-all duration-300 pointer-events-none"
-        >
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pointer-events-auto">
-            <button
-              onClick={() => onOpenWizard()}
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-2xl border border-white/25 active:scale-95 cursor-pointer"
-              aria-label="Book Smile Appointment"
-            >
-              <span>Book Your Smile Appointment →</span>
-            </button>
-
-            <a
-              href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
-              className="w-full sm:w-auto px-7 py-4 rounded-full bg-white/95 hover:bg-white text-neutral-950 font-bold text-xs sm:text-sm uppercase tracking-wider shadow-2xl transition active:scale-95"
-            >
-              <span>Call {BUSINESS_INFO.phone}</span>
-            </a>
+            <div className="inline-flex items-center justify-center space-x-2 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-xs text-neutral-200 font-medium">
+              <span className="text-amber-400 tracking-wider">★★★★★</span>
+              <span>5.0 Google Rating • Over 70 Years Trusted in Casa Grande</span>
+            </div>
           </div>
 
-          <div className="inline-flex items-center justify-center space-x-2 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-xs text-neutral-200 font-medium">
-            <span className="text-amber-400 tracking-wider">★★★★★</span>
-            <span>5.0 Google Rating • Over 70 Years Trusted in Casa Grande</span>
+          {/* Bottom Scroll Prompt */}
+          <div 
+            ref={scrollIndicatorRef}
+            className="flex flex-col items-center space-y-1 text-[11px] uppercase tracking-[0.25em] font-bold text-neutral-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] pb-2 transition-opacity duration-300 font-mono"
+          >
+            <span>Scroll to reveal smile ↓</span>
           </div>
         </div>
+      ) : (
+        // Mobile Layout: Instant presentation with fully interactive CTAs, no scroll trapping
+        <div className="relative z-10 w-full min-h-[100svh] flex flex-col justify-between items-center px-4 py-8 text-center">
+          {/* Top Tag */}
+          <div className="pt-2">
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/25 text-[10px] font-bold tracking-[0.18em] uppercase text-sky-300 font-mono">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>// 01 ESTABLISHED 1953 • CASA GRANDE, AZ</span>
+            </div>
+          </div>
 
-        {/* Bottom Scroll Prompt */}
-        <div 
-          ref={scrollIndicatorRef}
-          className="flex flex-col items-center space-y-1 text-[11px] uppercase tracking-[0.25em] font-bold text-neutral-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] pb-2 transition-opacity duration-300 font-mono"
-        >
-          <span>Scroll to reveal smile ↓</span>
+          {/* Middle Body & Value Proposition */}
+          <div className="my-auto py-8 space-y-4 max-w-lg">
+            <h1 className="font-editorial text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.12] text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+              Compassionate Family Care, <br />
+              <span className="text-stroke" style={{ WebkitTextStroke: '1.2px #ffffff' }}>Modern Radiant Smiles.</span>
+            </h1>
+
+            <p className="text-xs sm:text-sm text-neutral-200 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] leading-relaxed font-medium px-2">
+              Casa Grande's trusted dental home for over 70 years. CEREC single-visit crowns, precision dental implants & gentle dentistry.
+            </p>
+
+            {/* Mobile Immediate CTAs */}
+            <div className="pt-4 flex flex-col gap-3 w-full max-w-xs mx-auto">
+              <button
+                onClick={() => onOpenWizard()}
+                className="w-full px-6 py-4 rounded-full bg-white text-neutral-950 font-extrabold text-xs uppercase tracking-wider shadow-2xl transition active:scale-95 cursor-pointer card-thick"
+                aria-label="Book Smile Appointment"
+              >
+                Book Smile Appointment →
+              </button>
+
+              <a
+                href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
+                className="w-full px-6 py-3.5 rounded-full bg-black/75 backdrop-blur-md hover:bg-black text-white font-bold text-xs uppercase tracking-wider border border-white/30 shadow-xl transition active:scale-95"
+              >
+                Call {BUSINESS_INFO.phone}
+              </a>
+            </div>
+
+            {/* Mobile Social Proof Pill */}
+            <div className="pt-2">
+              <div className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-[11px] text-neutral-200 font-medium">
+                <span className="text-amber-400 tracking-wider">★★★★★</span>
+                <span>5.0 Google Rating (140+ Reviews)</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Bottom Guidance */}
+          <div className="pb-2 flex flex-col items-center space-y-1 text-[10px] uppercase tracking-[0.2em] font-bold text-neutral-400 font-mono">
+            <span className="animate-bounce">↓</span>
+            <span>Scroll for services & clinic</span>
+          </div>
         </div>
-
-      </div>
+      )}
     </section>
   );
 }

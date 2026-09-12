@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -10,13 +10,15 @@ import AboutSection from './components/home/AboutSection';
 import LocationHoursSection from './components/home/LocationHoursSection';
 import ReviewsSection from './components/home/ReviewsSection';
 import Footer from './components/layout/Footer';
-import AllServicesPage from './components/services/AllServicesPage';
-import AboutPracticePage from './components/about/AboutPracticePage';
-import QuoteWizardModal from './components/wizard/QuoteWizardModal';
-import AdminLayout from './components/admin/AdminLayout';
-import AdminLogin from './components/admin/AdminLogin';
 import { BUSINESS_INFO } from './data/businessData';
 import { authApi, getStoredToken } from './services/api';
+
+// Code-split heavy routes & modals for instant initial page speed
+const AllServicesPage = lazy(() => import('./components/services/AllServicesPage'));
+const AboutPracticePage = lazy(() => import('./components/about/AboutPracticePage'));
+const QuoteWizardModal = lazy(() => import('./components/wizard/QuoteWizardModal'));
+const AdminLayout = lazy(() => import('./components/admin/AdminLayout'));
+const AdminLogin = lazy(() => import('./components/admin/AdminLogin'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -45,14 +47,15 @@ export default function App() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: isTouch ? 0.9 : 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 2,
+      touchMultiplier: 1.2,
     });
 
     window.__lenis = lenis;
@@ -238,23 +241,32 @@ export default function App() {
 
   // If on Admin route, render full-screen Admin portal
   if (currentPage === 'admin') {
-    return isAdminAuthenticated ? (
-      <AdminLayout
-        user={adminUser}
-        onLogout={() => {
-          setIsAdminAuthenticated(false);
-          setAdminUser(null);
-        }}
-        onBackToSite={() => handleNavigate('home')}
-      />
-    ) : (
-      <AdminLogin
-        onLoginSuccess={(user) => {
-          setIsAdminAuthenticated(true);
-          setAdminUser(user);
-        }}
-        onBackToSite={() => handleNavigate('home')}
-      />
+    return (
+      <Suspense fallback={
+        <div className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center space-y-4">
+          <div className="w-10 h-10 border-2 border-sky-500 border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs uppercase tracking-widest text-neutral-400 font-mono">Loading Staff Portal...</span>
+        </div>
+      }>
+        {isAdminAuthenticated ? (
+          <AdminLayout
+            user={adminUser}
+            onLogout={() => {
+              setIsAdminAuthenticated(false);
+              setAdminUser(null);
+            }}
+            onBackToSite={() => handleNavigate('home')}
+          />
+        ) : (
+          <AdminLogin
+            onLoginSuccess={(user) => {
+              setIsAdminAuthenticated(true);
+              setAdminUser(user);
+            }}
+            onBackToSite={() => handleNavigate('home')}
+          />
+        )}
+      </Suspense>
     );
   }
 
@@ -273,15 +285,27 @@ export default function App() {
       {/* Main View: Landing Page OR All Services Page OR Dedicated About Page */}
       <main className="flex-grow">
         {currentPage === 'services' ? (
-          <AllServicesPage 
-            onOpenWizard={handleOpenWizard}
-            onBackToHome={() => handleNavigate('home')}
-          />
+          <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black">
+              <div className="w-8 h-8 border-2 border-sky-500 border-t-transparent rounded-full animate-spin" />
+            </div>
+          }>
+            <AllServicesPage 
+              onOpenWizard={handleOpenWizard}
+              onBackToHome={() => handleNavigate('home')}
+            />
+          </Suspense>
         ) : currentPage === 'about' ? (
-          <AboutPracticePage 
-            onOpenWizard={handleOpenWizard}
-            onBackToHome={() => handleNavigate('home')}
-          />
+          <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black">
+              <div className="w-8 h-8 border-2 border-sky-500 border-t-transparent rounded-full animate-spin" />
+            </div>
+          }>
+            <AboutPracticePage 
+              onOpenWizard={handleOpenWizard}
+              onBackToHome={() => handleNavigate('home')}
+            />
+          </Suspense>
         ) : (
           <>
             <Hero onOpenWizard={handleOpenWizard} />
@@ -307,13 +331,17 @@ export default function App() {
         onScrollToSection={handleScrollToSection}
       />
 
-      {/* Quote Request Wizard Modal */}
-      <QuoteWizardModal
-        isOpen={wizardOpen}
-        onClose={handleCloseWizard}
-        initialCategory={wizardCategory}
-        initialService={wizardService}
-      />
+      {/* Quote Request Wizard Modal (Loaded on-demand) */}
+      {wizardOpen && (
+        <Suspense fallback={null}>
+          <QuoteWizardModal
+            isOpen={wizardOpen}
+            onClose={handleCloseWizard}
+            initialCategory={wizardCategory}
+            initialService={wizardService}
+          />
+        </Suspense>
+      )}
 
       {/* Sticky Mobile Bottom Bar */}
       <div className={`fixed bottom-0 left-0 right-0 z-30 sm:hidden ${darkMode ? 'bg-black/95 border-neutral-800' : 'bg-white/95 border-gray-200'} backdrop-blur-md border-t p-2.5 flex items-center gap-2.5 shadow-lg`}>
